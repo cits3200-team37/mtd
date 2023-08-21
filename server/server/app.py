@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
+from flask_cors import CORS
 from experiments.run import simulate_without_saving
 import networkx as nx
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/")
