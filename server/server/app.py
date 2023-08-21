@@ -32,3 +32,8 @@ def simulate():
         node["host"] = node["host"].to_json()
 
     return resulting_graph, 200
+
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    return {"health": "OK!"}, 200
