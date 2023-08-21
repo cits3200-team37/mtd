@@ -290,3 +290,112 @@ def execute_simulation(start_time=0, finish_time=None, scheme='random', mtd_inte
     # adversary.get_attack_stats().save_record(sim_time=mtd_interval, scheme=sim_item)
 
     return evaluation
+
+
+def simulate_without_saving(
+    start_time=0,
+    finish_time=None,
+    scheme="random",
+    mtd_interval=None,
+    custom_strategies=None,
+    checkpoints=None,
+    total_nodes=50,
+    total_endpoints=5,
+    total_subnets=8,
+    total_layers=4,
+    target_layer=4,
+    total_database=2,
+    terminate_compromise_ratio=0.8,
+    new_network=False,
+):
+    """
+
+    :param start_time: the time to start the simulation, need to load timestamp-based snapshots if set start_time > 0
+    :param finish_time: the time to finish the simulation. Set to None will run the simulation until
+    the network reached compromised threshold (compromise ratio > 0.9)
+    :param scheme: random, simultaneous, alternative, single, None
+    :param mtd_interval: the time interval to trigger an MTD(s)
+    :param custom_strategies: used for executing alternative scheme or single mtd strategy.
+    :param checkpoints: a list of time value to save snapshots as the simulation runs.
+    :param total_nodes: the number of nodes in the network (network size)
+    :param total_endpoints: the number of exposed nodes
+    :param total_subnets: the number of subnets (total_nodes - total_endpoints) / (total_subnets - 1) > 2
+    :param total_layers: the number of layers in the network
+    :param target_layer: the target layer in the network (for targetted attack scenario only)
+    :param total_database: the number of database nodes used for computing DAP algorithm
+    :param terminate_compromise_ratio: terminate the simulation if reached compromise ratio
+    :param new_network: True: create new snapshots based on network size, False: load snapshots based on network size
+    """
+    # initialise the simulation
+    env = simpy.Environment()
+    end_event = env.event()
+    snapshot_checkpoint = SnapshotCheckpoint(env=env, checkpoints=checkpoints)
+    time_network = None
+    adversary = None
+
+    # if start_time > 0:
+    #     try:
+    #         time_network, adversary = snapshot_checkpoint.load_snapshots_by_time(
+    #             start_time
+    #         )
+    #     except FileNotFoundError:
+    #         print("No timestamp-based snapshots available! Set start_time = 0 !")
+    #         return
+    # elif not new_network:
+    #     try:
+    #         (
+    #             time_network,
+    #             adversary,
+    #         ) = snapshot_checkpoint.load_snapshots_by_network_size(total_nodes)
+    #     except FileNotFoundError:
+    #         print("set new_network=True")
+    # else:
+
+    time_network = TimeNetwork(
+        total_nodes=total_nodes,
+        total_endpoints=total_endpoints,
+        total_subnets=total_subnets,
+        total_layers=total_layers,
+        target_layer=target_layer,
+        total_database=total_database,
+        terminate_compromise_ratio=terminate_compromise_ratio,
+    )
+
+    adversary = Adversary(network=time_network, attack_threshold=ATTACKER_THRESHOLD)
+    # snapshot_checkpoint.save_initialised(time_network, adversary)
+    snapshot_checkpoint.save_snapshots_by_network_size(time_network, adversary)
+
+    # start attack
+    attack_operation = AttackOperation(
+        env=env, end_event=end_event, adversary=adversary, proceed_time=0
+    )
+    attack_operation.proceed_attack()
+
+    # start mtd
+    if scheme != "None":
+        mtd_operation = MTDOperation(
+            env=env,
+            end_event=end_event,
+            network=time_network,
+            scheme=scheme,
+            attack_operation=attack_operation,
+            proceed_time=0,
+            mtd_trigger_interval=mtd_interval,
+            custom_strategies=custom_strategies,
+        )
+        mtd_operation.proceed_mtd()
+
+    # save snapshot by time
+    # if checkpoints is not None:
+    #     snapshot_checkpoint.proceed_save(time_network, adversary)
+
+    # start simulation
+
+    if finish_time is not None:
+        env.run(until=(finish_time - start_time))
+    else:
+        env.run(until=end_event)
+
+    evaluation = Evaluation(network=time_network, adversary=adversary)
+
+    return evaluation
