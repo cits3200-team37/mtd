@@ -19,9 +19,9 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from) => {
-    // console.log('beforeEach', to, from)
-    console.log(to, from,process.env);
-})
+// router.beforeEach((to, from) => {
+//     // console.log('beforeEach', to, from)
+//     console.log(to, from,process.env);
+// })
 
 export default router
