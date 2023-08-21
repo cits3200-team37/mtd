@@ -1,12 +1,24 @@
-import random, uuid
+import random
+import uuid
 import networkx as nx
 import mtdnetwork.data.constants as constants
+import mtdnetwork.component.services as services
+import mtdnetwork.component.time_network as TimeNetwork
 
 
 class Host:
-    def __init__(self, operating_system, os_version, host_id, host_ip, users_list,
-                 network, service_generator, k_nearest_neighbors_percent=0.5,
-                 prob_strogatz_rewire=0.5):
+    def __init__(
+        self,
+        operating_system: str,
+        os_version: str,
+        host_id: int,
+        host_ip: str,
+        users_list: list[tuple[str, bool]],
+        network: TimeNetwork,
+        service_generator: services.ServicesGenerator,
+        k_nearest_neighbors_percent: float = 0.5,
+        prob_strogatz_rewire: float = 0.5,
+    ):
         """
         Initialises the host with the specified Operating System with a random network of internal
         services that the host runs.
@@ -39,25 +51,24 @@ class Host:
             prob_strogatz_rewire:
                 the probability that an edge is rewired for the Watts-Strogatz random graph
         """
-        self.graph = None
-        self.os_type = operating_system
-        self.os_version = os_version
-        self.ip = host_ip
-        self.host_id = host_id
-        self.network = network
-        self.p_u_compromise = False
-        self.total_users = 0
-        self.uuid = str(uuid.uuid4())
+        self.graph: nx.Graph = None
+        self.os_type: str = operating_system
+        self.os_version: str = os_version
+        self.ip: str = host_ip
+        self.host_id: int = host_id
+        self.network: TimeNetwork = network
+        self.p_u_compromise: bool = False
+        self.total_users: int = 0
+        self.uuid: str = str(uuid.uuid4())
 
-        self.total_services = random.randint(constants.HOST_SERVICES_MIN, constants.HOST_SERVICES_MAX)
-        # +1 for the target service node the adversary needs to be adjacent inorder to compromise the host
-        self.total_nodes = self.total_services + 1
-        self.compromised = False
-        self.compromised_services = []
-        self.gen_internal_network(
-            k_nearest_neighbors_percent,
-            prob_strogatz_rewire
+        self.total_services: int = random.randint(
+            constants.HOST_SERVICES_MIN, constants.HOST_SERVICES_MAX
         )
+        # +1 for the target service node the adversary needs to be adjacent inorder to compromise the host
+        self.total_nodes: int = self.total_services + 1
+        self.compromised: bool = False
+        self.compromised_services: list[int] = []
+        self.gen_internal_network(k_nearest_neighbors_percent, prob_strogatz_rewire)
         self.setup_network(service_generator)
         self.set_host_users(users_list)
 
@@ -73,7 +84,10 @@ class Host:
         return list(dict(nx.get_node_attributes(self.graph, "service")).values())
 
     def get_test_values(self):
-        return [(nx.get_node_attributes(self.graph, "port")), (nx.get_node_attributes(self.graph, "service"))]
+        return [
+            (nx.get_node_attributes(self.graph, "port")),
+            (nx.get_node_attributes(self.graph, "service")),
+        ]
 
     def get_total_nodes(self):
         return self.total_nodes
@@ -96,7 +110,6 @@ class Host:
         return all_vulns
 
     def get_vulns_for_list(self, list):
-
         vulns = []
         for service in list:
             service_vulns = service.get_all_vulns()
@@ -119,8 +132,7 @@ class Host:
                 node_port = Host.get_random_port(existing_ports=port_addresses)
                 self.graph.nodes[node_id]["port"] = node_port
             self.graph.nodes[node_id]["service"] = service_generator.get_random_service(
-                self.os_type,
-                self.os_version
+                self.os_type, self.os_version
             )
 
     def set_compromised(self):
@@ -149,8 +161,11 @@ class Host:
             an action that will return if the adversary was succesfully in finding a user with a reused password
         """
         if self.possible_user_compromise():
-            c_reused_comp = True in [reused_pass for (username, reused_pass) in self.users.items() if
-                                     username in compromised_users]
+            c_reused_comp = True in [
+                reused_pass
+                for (username, reused_pass) in self.users.items()
+                if username in compromised_users
+            ]
             if c_reused_comp:
                 self.set_compromised()
 
@@ -171,9 +186,16 @@ class Host:
         Returns:
             an action that returns if the brute force worked
         """
-        attempt_users = [username for username in self.users.keys() if username in compromised_users]
+        attempt_users = [
+            username for username in self.users.keys() if username in compromised_users
+        ]
 
-        if random.random() < constants.HOST_MAX_PROB_FOR_USER_COMPROMISE * len(attempt_users) / self.total_users:
+        if (
+            random.random()
+            < constants.HOST_MAX_PROB_FOR_USER_COMPROMISE
+            * len(attempt_users)
+            / self.total_users
+        ):
             self.set_compromised()
             return True
         return False
@@ -250,7 +272,8 @@ class Host:
             if not services[ec_service_id].is_exploited():
                 continue
             for n_id in self.graph.neighbors(ec_service_id):
-                if n_id == self.target_node: continue
+                if n_id == self.target_node:
+                    continue
                 if not n_id in exposed_services and not n_id in adjacent_services:
                     adjacent_services.append(n_id)
 
@@ -288,28 +311,28 @@ class Host:
         discovered_service_ports = discovered_service_ports + self.exposed_endpoints
         exposed_services = self.get_services()
         port_numbers = nx.get_node_attributes(self.graph, "port")
-        shortest_path_to_target = dict(nx.single_target_shortest_path_length(
-            self.graph,
-            self.target_node
-        ))
+        shortest_path_to_target = dict(
+            nx.single_target_shortest_path_length(self.graph, self.target_node)
+        )
 
         result = [
             {
                 "service_id": host_id,
                 "port": port_numbers[host_id],
-                "service": exposed_services[host_id]
+                "service": exposed_services[host_id],
             }
             for host_id in exposed_services
-            if port_numbers[host_id] in discovered_service_ports and host_id not in ignore_services
+            if port_numbers[host_id] in discovered_service_ports
+            and host_id not in ignore_services
         ]
 
         return sorted(
             result,
             key=lambda host_dict: (
                 shortest_path_to_target[host_dict["service_id"]],
-                host_dict["service"].get_highest_roa_vuln()
+                host_dict["service"].get_highest_roa_vuln(),
             ),
-            reverse=True
+            reverse=True,
         )
 
     def port_scan(self):
@@ -333,8 +356,10 @@ class Host:
 
             if service.is_exploited():
                 for n in self.graph.neighbors(service_id):
-                    if n == self.target_node: continue
-                    if n in seen: continue
+                    if n == self.target_node:
+                        continue
+                    if n in seen:
+                        continue
                     service_q.append(n)
                     seen.append(n)
         return port_numbers
@@ -354,7 +379,9 @@ class Host:
         Returns:
             a hacker action for discovering if the vulnerabilities are present on the host and a possible method of exploitation
         """
-        services_dict = self.get_services_from_ports(discovered_service_ports, ignore_services=ignore_services)
+        services_dict = self.get_services_from_ports(
+            discovered_service_ports, ignore_services=ignore_services
+        )
         vulns = []
         discovery_time = 0
         for service_dict in services_dict:
@@ -370,30 +397,6 @@ class Host:
             else:
                 new_vulns.append(vuln)
         return new_vulns
-
-    # def total_exploit_time(self, vulns):
-    #     exploit_time = 0
-    #     for vuln in vulns:
-    #         exploit_time += vuln.exploit_time()
-    #     return exploit_time
-
-    # def exploit_vulns(self, vulns):
-    #     """
-    #     Tries exploiting the list of vulnerabilities that the hacker is trying to exploit on the Host
-    #
-    #     Parameters:
-    #         vulns:
-    #             the list of vulnerabilities that are trying to be exploited
-    #
-    #     Returns:
-    #         an action if that returns a dictionary of if a new service was exploited and if the host is compromised
-    #     """
-    #     exploit_time = 0
-    #     for vuln in vulns:
-    #         vuln.network(host=self)
-    #         exploit_time += vuln.exploit_time()
-    #
-    #     return self.check_compromised()
 
     def check_compromised(self):
         """
@@ -423,23 +426,18 @@ class Host:
         Returns all of the ports on the host
         """
         port_map = nx.get_node_attributes(self.graph, "port")
-        return sorted([
-            port_map[s]
-            for s in port_map
-        ], reverse=True)
+        return sorted([port_map[s] for s in port_map], reverse=True)
 
     def get_ports_for_services(self, services):
         port_map = nx.get_node_attributes(self.graph, "port")
-        return sorted([
-            port_map[s]
-            for s in services
-        ], reverse=True)
+        return sorted([port_map[s] for s in services], reverse=True)
 
     def get_os_type_and_version(self):
         return self.os_type, self.os_version
 
     def get_compromised_users(self):
-        if not self.compromised: return []
+        if not self.compromised:
+            return []
         return self.get_users()
 
     def get_users(self):
@@ -466,10 +464,7 @@ class Host:
             users_list:
                 the tuple users list specifying the username and if the user reuses their password
         """
-        self.users = {
-            user_tuple[0]: user_tuple[1]
-            for user_tuple in users_list
-        }
+        self.users = {user_tuple[0]: user_tuple[1] for user_tuple in users_list}
         for user_reuse in self.users.values():
             self.total_users += 1
             if user_reuse:
@@ -523,7 +518,9 @@ class Host:
             k = 2
 
         self.graph = nx.connected_watts_strogatz_graph(self.total_nodes, k, p)
-        results = self.graph_choose_target_and_exposed(self.graph, nx.diameter(self.graph) - 1)
+        results = self.graph_choose_target_and_exposed(
+            self.graph, nx.diameter(self.graph) - 1
+        )
 
         self.shortest_path_length = results[0]
         self.target_node = results[1]
@@ -531,17 +528,21 @@ class Host:
         self.adjacent_to_target = results[3]
 
         other_nodes = [
-            node_id for node_id in range(self.total_nodes)
+            node_id
+            for node_id in range(self.total_nodes)
             if node_id != self.target_node and not node_id in self.exposed_endpoints
         ]
 
         for o1_node in other_nodes:
-            exposed_neighbors = [n for n in self.graph.neighbors(o1_node) if n in self.exposed_endpoints]
+            exposed_neighbors = [
+                n for n in self.graph.neighbors(o1_node) if n in self.exposed_endpoints
+            ]
             if len(exposed_neighbors) == 0:
                 self.graph.add_edge(o1_node, random.choice(self.exposed_endpoints))
 
             for o2_node in other_nodes:
-                if o1_node == o2_node: continue
+                if o1_node == o2_node:
+                    continue
                 if self.graph.has_edge(o1_node, o2_node):
                     self.graph.remove_edge(o1_node, o2_node)
                 self.graph.add_edge(o1_node, self.target_node)
@@ -549,7 +550,8 @@ class Host:
 
         for e1_node in self.exposed_endpoints:
             for e2_node in self.exposed_endpoints:
-                if e1_node == e2_node: continue
+                if e1_node == e2_node:
+                    continue
                 if self.graph.has_edge(e1_node, e2_node):
                     self.graph.remove_edge(e1_node, e2_node)
                     if len(other_nodes) > 0:
@@ -579,7 +581,9 @@ class Host:
         """
         Draws the internal network for the Host
         """
-        return nx.draw_networkx(self.graph, node_color=self.colour_map, with_labels=True)
+        return nx.draw_networkx(
+            self.graph, node_color=self.colour_map, with_labels=True
+        )
 
     @staticmethod
     def get_random_os_version(operating_system):
@@ -597,7 +601,11 @@ class Host:
         """
         versions = constants.OS_VERSION_DICT[operating_system]
         total_versions = len(versions)
-        return random.choices(versions, weights=[total_versions - index for index in range(total_versions)], k=1)[0]
+        return random.choices(
+            versions,
+            weights=[total_versions - index for index in range(total_versions)],
+            k=1,
+        )[0]
 
     @staticmethod
     def get_random_os():
@@ -615,8 +623,8 @@ class Host:
         Parameters:
             existing_addresses:
                 a list of already allocated IP addresses on the network
-            
-        Returns:    
+
+        Returns:
             a IPv4 address
         """
         if existing_addresses is None:
@@ -675,3 +683,19 @@ class Host:
         #
 
         return shortest_path
+
+    def to_json(self):
+        # TODO: find out if graph object is required for plotting
+        return {
+            "osType": self.os_type,
+            "osVersion": self.os_version,
+            "ip": self.ip,
+            "hostId": self.host_id,
+            "pUCompromise": self.p_u_compromise,
+            "totalUsers": self.total_users,
+            "hostUuid": self.uuid,
+            "totalServices": self.total_services,
+            "totalNodes": self.total_nodes,
+            "compromised": self.compromised,
+            "compromisedServices": self.compromised_services,
+        }
