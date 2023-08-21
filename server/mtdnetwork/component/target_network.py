@@ -2,11 +2,23 @@ from mtdnetwork.component.network import Network
 
 
 class TargetNetwork(Network):
-
-    def __init__(self, total_nodes=200, total_endpoints=20, total_subnets=20, total_layers=5, target_layer=2,
-                 total_database=5):
-        super().__init__(total_nodes=total_nodes, total_endpoints=total_endpoints, total_subnets=total_subnets,
-                         total_layers=total_layers, target_layer=target_layer, total_database=total_database)
+    def __init__(
+        self,
+        total_nodes=200,
+        total_endpoints=20,
+        total_subnets=20,
+        total_layers=5,
+        target_layer=2,
+        total_database=5,
+    ):
+        super().__init__(
+            total_nodes=total_nodes,
+            total_endpoints=total_endpoints,
+            total_subnets=total_subnets,
+            total_layers=total_layers,
+            target_layer=target_layer,
+            total_database=total_database,
+        )
 
     def copy_network(self, network):
         self.total_nodes = network.total_nodes
@@ -25,5 +37,3 @@ class TargetNetwork(Network):
         self.scorer.set_initial_statistics(self)
         self.update_host_information()
         self.add_attack_path_exposure()
-
-

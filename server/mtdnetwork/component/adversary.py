@@ -17,13 +17,15 @@ class Adversary:
         self.curr_host = None
         self._curr_ports = []
         self._curr_vulns = []
-        self._max_attack_attempts = HACKER_ATTACK_ATTEMPT_MULTIPLER * network.get_total_nodes()
+        self._max_attack_attempts = (
+            HACKER_ATTACK_ATTEMPT_MULTIPLER * network.get_total_nodes()
+        )
         self._curr_attempts = 0
         self.target_compromised = False
         self.observed_changes = {}
 
         self._attack_stats = AttackStatistics()
-        self._curr_process = 'SCAN_HOST'
+        self._curr_process = "SCAN_HOST"
 
     def swap_hosts_in_compromised_hosts(self, host_id, other_host_id):
         """

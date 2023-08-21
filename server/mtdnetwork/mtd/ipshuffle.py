@@ -3,12 +3,13 @@ from mtdnetwork.component import host
 
 
 class IPShuffle(MTD):
-
     def __init__(self, network=None):
-        super().__init__(name="IPShuffle",
-                         mtd_type='shuffle',
-                         resource_type='network',
-                         network=network)
+        super().__init__(
+            name="IPShuffle",
+            mtd_type="shuffle",
+            resource_type="network",
+            network=network,
+        )
 
     def mtd_operation(self, adversary=None):
         hosts = self.network.get_hosts()

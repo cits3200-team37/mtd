@@ -4,7 +4,6 @@ from collections import deque
 
 
 class SnapshotCheckpoint:
-
     def __init__(self, env=None, checkpoints=None):
         self.env = env
         self._proceed_time = 0
@@ -28,8 +27,12 @@ class SnapshotCheckpoint:
                 continue
             yield self.env.timeout(checkpoint - last_checkpoint)
             last_checkpoint = checkpoint
-            NetworkSnapshot().save_network(time_network, str(self.env.now + self._proceed_time))
-            AdversarySnapshot().save_adversary(adversary, str(self.env.now + self._proceed_time))
+            NetworkSnapshot().save_network(
+                time_network, str(self.env.now + self._proceed_time)
+            )
+            AdversarySnapshot().save_adversary(
+                adversary, str(self.env.now + self._proceed_time)
+            )
 
     def load_snapshots_by_time(self, time):
         self.set_proceed_time(time)
@@ -39,14 +42,18 @@ class SnapshotCheckpoint:
 
     @staticmethod
     def load_snapshots_by_network_size(size):
-        time_network = NetworkSnapshot().load_network(str(size)+'n')
-        adversary = AdversarySnapshot().load_adversary(str(size)+'n')
+        time_network = NetworkSnapshot().load_network(str(size) + "n")
+        adversary = AdversarySnapshot().load_adversary(str(size) + "n")
         return time_network, adversary
 
     @staticmethod
     def save_snapshots_by_network_size(time_network, adversary):
-        NetworkSnapshot().save_network(time_network, str(time_network.get_total_nodes()) + 'n')
-        AdversarySnapshot().save_adversary(adversary, str(time_network.get_total_nodes()) + 'n')
+        NetworkSnapshot().save_network(
+            time_network, str(time_network.get_total_nodes()) + "n"
+        )
+        AdversarySnapshot().save_adversary(
+            adversary, str(time_network.get_total_nodes()) + "n"
+        )
 
     def save_initialised(self, time_network, adversary):
         NetworkSnapshot().save_network(time_network, str(self._proceed_time))
@@ -54,4 +61,3 @@ class SnapshotCheckpoint:
 
     def set_proceed_time(self, proceed_time):
         self._proceed_time = proceed_time
-
