@@ -1,0 +1,1315 @@
+{
+    "directed": false,
+    "graph": {},
+    "links": [
+        {
+            "source": 0,
+            "target": 7
+        },
+        {
+            "source": 1,
+            "target": 16
+        },
+        {
+            "source": 1,
+            "target": 17
+        },
+        {
+            "source": 2,
+            "target": 7
+        },
+        {
+            "source": 3,
+            "target": 11
+        },
+        {
+            "source": 4,
+            "target": 14
+        },
+        {
+            "source": 5,
+            "target": 6
+        },
+        {
+            "source": 5,
+            "target": 7
+        },
+        {
+            "source": 6,
+            "target": 8
+        },
+        {
+            "source": 6,
+            "target": 10
+        },
+        {
+            "source": 6,
+            "target": 20
+        },
+        {
+            "source": 6,
+            "target": 7
+        },
+        {
+            "source": 7,
+            "target": 9
+        },
+        {
+            "source": 7,
+            "target": 11
+        },
+        {
+            "source": 12,
+            "target": 13
+        },
+        {
+            "source": 12,
+            "target": 29
+        },
+        {
+            "source": 13,
+            "target": 14
+        },
+        {
+            "source": 13,
+            "target": 29
+        },
+        {
+            "source": 15,
+            "target": 16
+        },
+        {
+            "source": 16,
+            "target": 17
+        },
+        {
+            "source": 16,
+            "target": 19
+        },
+        {
+            "source": 17,
+            "target": 19
+        },
+        {
+            "source": 18,
+            "target": 19
+        },
+        {
+            "source": 18,
+            "target": 20
+        },
+        {
+            "source": 18,
+            "target": 21
+        },
+        {
+            "source": 18,
+            "target": 22
+        },
+        {
+            "source": 18,
+            "target": 23
+        },
+        {
+            "source": 18,
+            "target": 26
+        },
+        {
+            "source": 18,
+            "target": 28
+        },
+        {
+            "source": 18,
+            "target": 46
+        },
+        {
+            "source": 19,
+            "target": 22
+        },
+        {
+            "source": 19,
+            "target": 27
+        },
+        {
+            "source": 19,
+            "target": 41
+        },
+        {
+            "source": 20,
+            "target": 21
+        },
+        {
+            "source": 20,
+            "target": 24
+        },
+        {
+            "source": 20,
+            "target": 26
+        },
+        {
+            "source": 20,
+            "target": 42
+        },
+        {
+            "source": 20,
+            "target": 23
+        },
+        {
+            "source": 20,
+            "target": 37
+        },
+        {
+            "source": 21,
+            "target": 24
+        },
+        {
+            "source": 21,
+            "target": 25
+        },
+        {
+            "source": 22,
+            "target": 23
+        },
+        {
+            "source": 22,
+            "target": 25
+        },
+        {
+            "source": 23,
+            "target": 28
+        },
+        {
+            "source": 25,
+            "target": 27
+        },
+        {
+            "source": 27,
+            "target": 37
+        },
+        {
+            "source": 29,
+            "target": 30
+        },
+        {
+            "source": 29,
+            "target": 31
+        },
+        {
+            "source": 29,
+            "target": 32
+        },
+        {
+            "source": 29,
+            "target": 34
+        },
+        {
+            "source": 30,
+            "target": 33
+        },
+        {
+            "source": 33,
+            "target": 35
+        },
+        {
+            "source": 36,
+            "target": 37
+        },
+        {
+            "source": 37,
+            "target": 38
+        },
+        {
+            "source": 38,
+            "target": 39
+        },
+        {
+            "source": 40,
+            "target": 41
+        },
+        {
+            "source": 40,
+            "target": 42
+        },
+        {
+            "source": 40,
+            "target": 43
+        },
+        {
+            "source": 40,
+            "target": 49
+        },
+        {
+            "source": 41,
+            "target": 44
+        },
+        {
+            "source": 41,
+            "target": 47
+        },
+        {
+            "source": 41,
+            "target": 49
+        },
+        {
+            "source": 42,
+            "target": 43
+        },
+        {
+            "source": 42,
+            "target": 44
+        },
+        {
+            "source": 42,
+            "target": 45
+        },
+        {
+            "source": 44,
+            "target": 45
+        },
+        {
+            "source": 44,
+            "target": 46
+        },
+        {
+            "source": 45,
+            "target": 46
+        },
+        {
+            "source": 45,
+            "target": 47
+        },
+        {
+            "source": 45,
+            "target": 48
+        },
+        {
+            "source": 46,
+            "target": 48
+        }
+    ],
+    "multigraph": false,
+    "nodes": [
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    3,
+                    5,
+                    7
+                ],
+                "hostId": 0,
+                "hostUuid": "8bd3aeca-bbc4-47af-926a-f12220ce42c2",
+                "ip": "193.21.134.80",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 4
+            },
+            "id": 0,
+            "layer": 0,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [
+                    1,
+                    3,
+                    4
+                ],
+                "hostId": 1,
+                "hostUuid": "98c42c09-643b-41bd-af0c-86cc73d51f99",
+                "ip": "106.10.138.166",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 1,
+            "layer": 0,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    5,
+                    7
+                ],
+                "hostId": 2,
+                "hostUuid": "c7dc31ae-8125-4956-aa1b-b9ad406c7e7e",
+                "ip": "152.133.228.168",
+                "osType": "centos",
+                "osVersion": "5",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 4
+            },
+            "id": 2,
+            "layer": 0,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 3,
+                "hostUuid": "2268b201-1a27-47bd-bf38-ae32541b3bcd",
+                "ip": "88.104.165.34",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 5
+            },
+            "id": 3,
+            "layer": 0,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 4,
+                "hostUuid": "6710a8c9-3bf5-4d96-9314-df96fed3a49d",
+                "ip": "157.76.134.60",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 4
+            },
+            "id": 4,
+            "layer": 0,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    2
+                ],
+                "hostId": 5,
+                "hostUuid": "774eeffc-0313-4318-93a8-0da9f50d5fe9",
+                "ip": "22.232.124.81",
+                "osType": "centos",
+                "osVersion": "8",
+                "pUCompromise": false,
+                "totalNodes": 4,
+                "totalServices": 3,
+                "totalUsers": 5
+            },
+            "id": 5,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    5
+                ],
+                "hostId": 6,
+                "hostUuid": "c13192e3-535c-40de-a096-985f6ed74a50",
+                "ip": "208.120.195.98",
+                "osType": "windows",
+                "osVersion": "10",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 5
+            },
+            "id": 6,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    3,
+                    6,
+                    1,
+                    2,
+                    5,
+                    7
+                ],
+                "hostId": 7,
+                "hostUuid": "ee42713b-4ce5-410b-a718-510c6c08a710",
+                "ip": "14.147.131.206",
+                "osType": "ubuntu",
+                "osVersion": "18.04",
+                "pUCompromise": true,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 1
+            },
+            "id": 7,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    2,
+                    5,
+                    6,
+                    7
+                ],
+                "hostId": 8,
+                "hostUuid": "f70e893b-43c6-4e91-bc09-641580dabb20",
+                "ip": "170.236.180.191",
+                "osType": "windows",
+                "osVersion": "7",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 4
+            },
+            "id": 8,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [
+                    1,
+                    4
+                ],
+                "hostId": 9,
+                "hostUuid": "14040a41-3b4f-432b-b071-e9a8d1428d21",
+                "ip": "177.111.8.187",
+                "osType": "centos",
+                "osVersion": "8",
+                "pUCompromise": true,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 4
+            },
+            "id": 9,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [],
+                "hostId": 10,
+                "hostUuid": "a60088e2-2df5-48e2-8677-f839d448efb4",
+                "ip": "185.181.143.95",
+                "osType": "ubuntu",
+                "osVersion": "18.04",
+                "pUCompromise": true,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 5
+            },
+            "id": 10,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    3
+                ],
+                "hostId": 11,
+                "hostUuid": "7e361c74-3978-4fc3-bd88-438536ffd540",
+                "ip": "39.70.154.70",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 4,
+                "totalServices": 3,
+                "totalUsers": 4
+            },
+            "id": 11,
+            "layer": 1,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 12,
+                "hostUuid": "54643cc2-8c3b-4306-a541-e64e4e72e98e",
+                "ip": "140.229.15.5",
+                "osType": "centos",
+                "osVersion": "8",
+                "pUCompromise": false,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 5
+            },
+            "id": 12,
+            "layer": 1,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 13,
+                "hostUuid": "6e461fad-9c5b-413a-9293-fd1e099a7116",
+                "ip": "104.41.211.12",
+                "osType": "centos",
+                "osVersion": "4",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 13,
+            "layer": 1,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 14,
+                "hostUuid": "9fb8b30b-907e-4bb8-b4dc-c10fb4791f92",
+                "ip": "224.199.17.146",
+                "osType": "freebsd",
+                "osVersion": "13",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 5
+            },
+            "id": 14,
+            "layer": 1,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 15,
+                "hostUuid": "fe7f8366-4ef2-43c8-b519-1c992116366f",
+                "ip": "126.16.5.143",
+                "osType": "ubuntu",
+                "osVersion": "14.04",
+                "pUCompromise": true,
+                "totalNodes": 10,
+                "totalServices": 9,
+                "totalUsers": 2
+            },
+            "id": 15,
+            "layer": 1,
+            "subnet": 2
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 16,
+                "hostUuid": "205ac268-4f3f-45de-887a-c3040cffa6ec",
+                "ip": "145.43.256.47",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 16,
+            "layer": 1,
+            "subnet": 2
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 17,
+                "hostUuid": "7837a337-5d83-4a00-a7be-aa685f8e0f9c",
+                "ip": "53.74.104.9",
+                "osType": "windows",
+                "osVersion": "7",
+                "pUCompromise": false,
+                "totalNodes": 4,
+                "totalServices": 3,
+                "totalUsers": 5
+            },
+            "id": 17,
+            "layer": 1,
+            "subnet": 2
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7
+                ],
+                "hostId": 18,
+                "hostUuid": "5b5d3d4d-169b-4ce4-abb8-bb52c0a8efb3",
+                "ip": "252.4.172.209",
+                "osType": "windows",
+                "osVersion": "xp",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 5
+            },
+            "id": 18,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    2,
+                    6,
+                    9,
+                    10,
+                    11
+                ],
+                "hostId": 19,
+                "hostUuid": "23ab25fe-6eda-415b-b9e3-5335a380b700",
+                "ip": "228.167.88.150",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 5
+            },
+            "id": 19,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    2,
+                    4,
+                    5,
+                    6
+                ],
+                "hostId": 20,
+                "hostUuid": "a27e7c19-efd9-4cb2-a479-3d9d3d7850dc",
+                "ip": "123.251.71.70",
+                "osType": "windows",
+                "osVersion": "8",
+                "pUCompromise": true,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 4
+            },
+            "id": 20,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "hostId": 21,
+                "hostUuid": "8864bca9-25a0-4d48-91fe-e40f6ca1f8a8",
+                "ip": "39.132.107.117",
+                "osType": "windows",
+                "osVersion": "vista",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 21,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    5,
+                    7,
+                    9,
+                    11
+                ],
+                "hostId": 22,
+                "hostUuid": "7fe201d2-8c40-47f7-b992-300491ed9ad2",
+                "ip": "202.211.36.212",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 5
+            },
+            "id": 22,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    4,
+                    5,
+                    7
+                ],
+                "hostId": 23,
+                "hostUuid": "0f7b7c09-939e-4b42-aa86-3192e789922d",
+                "ip": "62.241.146.241",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 5
+            },
+            "id": 23,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 24,
+                "hostUuid": "67f2d6b6-5412-4909-a7d9-51c250da98db",
+                "ip": "146.115.198.156",
+                "osType": "freebsd",
+                "osVersion": "12",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 24,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 25,
+                "hostUuid": "95948bc1-838a-4d26-8745-d42f3adb873e",
+                "ip": "155.54.221.24",
+                "osType": "windows",
+                "osVersion": "10",
+                "pUCompromise": false,
+                "totalNodes": 7,
+                "totalServices": 6,
+                "totalUsers": 4
+            },
+            "id": 25,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    3,
+                    4
+                ],
+                "hostId": 26,
+                "hostUuid": "10f6ca6c-9f74-4231-b435-d6576b838e19",
+                "ip": "142.66.62.169",
+                "osType": "centos",
+                "osVersion": "6",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 26,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    3,
+                    4
+                ],
+                "hostId": 27,
+                "hostUuid": "e688fcde-1cce-41a5-9e62-0460c0da9936",
+                "ip": "111.113.166.196",
+                "osType": "freebsd",
+                "osVersion": "10",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 4
+            },
+            "id": 27,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    0,
+                    1,
+                    4,
+                    5,
+                    6,
+                    7
+                ],
+                "hostId": 28,
+                "hostUuid": "1e417d08-b563-49d7-8630-f08eeb82616f",
+                "ip": "153.238.64.236",
+                "osType": "freebsd",
+                "osVersion": "12",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 5
+            },
+            "id": 28,
+            "layer": 2,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 29,
+                "hostUuid": "ceaeb3ec-15ff-4b1e-a540-dfa54563cc5a",
+                "ip": "245.184.156.86",
+                "osType": "centos",
+                "osVersion": "8",
+                "pUCompromise": true,
+                "totalNodes": 4,
+                "totalServices": 3,
+                "totalUsers": 2
+            },
+            "id": 29,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 30,
+                "hostUuid": "adf2e277-e69d-4f17-b62c-183c53ec4c4b",
+                "ip": "129.122.10.196",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 11,
+                "totalServices": 10,
+                "totalUsers": 5
+            },
+            "id": 30,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 31,
+                "hostUuid": "44dab9b0-aef2-44e0-88ba-db77645b5158",
+                "ip": "43.195.165.156",
+                "osType": "freebsd",
+                "osVersion": "8",
+                "pUCompromise": false,
+                "totalNodes": 10,
+                "totalServices": 9,
+                "totalUsers": 4
+            },
+            "id": 31,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 32,
+                "hostUuid": "55c8c6a8-7556-4b01-9f1e-d5db0dfa57e6",
+                "ip": "219.185.208.186",
+                "osType": "freebsd",
+                "osVersion": "12",
+                "pUCompromise": true,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 1
+            },
+            "id": 32,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 33,
+                "hostUuid": "c81f52ce-5ce3-4858-bda2-f00eae3c2b85",
+                "ip": "17.210.233.227",
+                "osType": "freebsd",
+                "osVersion": "10",
+                "pUCompromise": false,
+                "totalNodes": 6,
+                "totalServices": 5,
+                "totalUsers": 5
+            },
+            "id": 33,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 34,
+                "hostUuid": "f5357392-4419-49a2-9e4e-d60992492827",
+                "ip": "169.211.66.83",
+                "osType": "ubuntu",
+                "osVersion": "20.04",
+                "pUCompromise": false,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 5
+            },
+            "id": 34,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 35,
+                "hostUuid": "abb3f80e-2c48-4092-867e-84cb9e616089",
+                "ip": "105.247.155.216",
+                "osType": "windows",
+                "osVersion": "10",
+                "pUCompromise": true,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 3
+            },
+            "id": 35,
+            "layer": 2,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 36,
+                "hostUuid": "c98f909f-4dd7-408b-90dc-5ce39a949b80",
+                "ip": "99.124.107.68",
+                "osType": "ubuntu",
+                "osVersion": "16.04",
+                "pUCompromise": false,
+                "totalNodes": 6,
+                "totalServices": 5,
+                "totalUsers": 5
+            },
+            "id": 36,
+            "layer": 3,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 37,
+                "hostUuid": "59ecd60c-f6ff-4202-822a-ffc1dd23a048",
+                "ip": "104.29.50.55",
+                "osType": "freebsd",
+                "osVersion": "13",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 4
+            },
+            "id": 37,
+            "layer": 3,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 38,
+                "hostUuid": "0084dd00-0b23-444e-91a3-c5055dda7f12",
+                "ip": "252.182.14.173",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 6,
+                "totalServices": 5,
+                "totalUsers": 5
+            },
+            "id": 38,
+            "layer": 3,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 39,
+                "hostUuid": "4c10d2c4-e69d-4b4f-bf8e-f946aa280610",
+                "ip": "14.161.55.42",
+                "osType": "centos",
+                "osVersion": "5",
+                "pUCompromise": false,
+                "totalNodes": 12,
+                "totalServices": 11,
+                "totalUsers": 5
+            },
+            "id": 39,
+            "layer": 3,
+            "subnet": 0
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    6,
+                    7,
+                    8
+                ],
+                "hostId": 40,
+                "hostUuid": "1304d8a0-3416-4ea6-bf39-a4eaadc68f98",
+                "ip": "41.197.185.64",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 5
+            },
+            "id": 40,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 41,
+                "hostUuid": "f915e315-de60-4993-86d2-1f2a121be0d7",
+                "ip": "167.233.212.200",
+                "osType": "windows",
+                "osVersion": "xp",
+                "pUCompromise": false,
+                "totalNodes": 4,
+                "totalServices": 3,
+                "totalUsers": 5
+            },
+            "id": 41,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    7,
+                    8
+                ],
+                "hostId": 42,
+                "hostUuid": "0ec1b35a-d3c0-44d3-9f13-91d0b7c59752",
+                "ip": "35.63.45.73",
+                "osType": "windows",
+                "osVersion": "8",
+                "pUCompromise": false,
+                "totalNodes": 9,
+                "totalServices": 8,
+                "totalUsers": 4
+            },
+            "id": 42,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [
+                    0,
+                    7,
+                    8,
+                    9
+                ],
+                "hostId": 43,
+                "hostUuid": "a50b6da5-fb24-4ba1-82aa-c396443dddf0",
+                "ip": "127.224.166.193",
+                "osType": "freebsd",
+                "osVersion": "13",
+                "pUCompromise": false,
+                "totalNodes": 10,
+                "totalServices": 9,
+                "totalUsers": 5
+            },
+            "id": 43,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    1,
+                    2,
+                    3
+                ],
+                "hostId": 44,
+                "hostUuid": "d8a72b20-cc99-4a65-a7eb-3e0fc35a66c8",
+                "ip": "249.191.55.34",
+                "osType": "centos",
+                "osVersion": "7",
+                "pUCompromise": false,
+                "totalNodes": 5,
+                "totalServices": 4,
+                "totalUsers": 5
+            },
+            "id": 44,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 45,
+                "hostUuid": "66fdc0b4-1664-4226-900e-b6741105aa17",
+                "ip": "162.208.253.185",
+                "osType": "ubuntu",
+                "osVersion": "18.04",
+                "pUCompromise": false,
+                "totalNodes": 6,
+                "totalServices": 5,
+                "totalUsers": 5
+            },
+            "id": 45,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": true,
+                "compromisedServices": [
+                    2,
+                    3,
+                    4
+                ],
+                "hostId": 46,
+                "hostUuid": "5f7406a2-26a3-4482-9986-5209cb52a49f",
+                "ip": "8.28.215.242",
+                "osType": "freebsd",
+                "osVersion": "12",
+                "pUCompromise": false,
+                "totalNodes": 8,
+                "totalServices": 7,
+                "totalUsers": 5
+            },
+            "id": 46,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 47,
+                "hostUuid": "8464f6ec-c5ee-4924-ac9e-485d45d15215",
+                "ip": "3.245.41.150",
+                "osType": "windows",
+                "osVersion": "8.1",
+                "pUCompromise": false,
+                "totalNodes": 7,
+                "totalServices": 6,
+                "totalUsers": 5
+            },
+            "id": 47,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 48,
+                "hostUuid": "8eb89c1c-8935-4953-84fd-5077799615b9",
+                "ip": "139.69.99.119",
+                "osType": "centos",
+                "osVersion": "5",
+                "pUCompromise": true,
+                "totalNodes": 11,
+                "totalServices": 10,
+                "totalUsers": 2
+            },
+            "id": 48,
+            "layer": 3,
+            "subnet": 1
+        },
+        {
+            "host": {
+                "compromised": false,
+                "compromisedServices": [],
+                "hostId": 49,
+                "hostUuid": "c389749e-cbd6-420e-82ad-418a57b02478",
+                "ip": "177.114.17.193",
+                "osType": "windows",
+                "osVersion": "10",
+                "pUCompromise": false,
+                "totalNodes": 7,
+                "totalServices": 6,
+                "totalUsers": 5
+            },
+            "id": 49,
+            "layer": 3,
+            "subnet": 1
+        }
+    ]
+}

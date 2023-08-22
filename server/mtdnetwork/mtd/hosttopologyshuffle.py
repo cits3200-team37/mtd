@@ -8,10 +8,12 @@ class HostTopologyShuffle(MTD):
     """
 
     def __init__(self, network=None):
-        super().__init__(name="HostTopologyShuffle",
-                         mtd_type='shuffle',
-                         resource_type='network',
-                         network=network)
+        super().__init__(
+            name="HostTopologyShuffle",
+            mtd_type="shuffle",
+            resource_type="network",
+            network=network,
+        )
 
     def random_different_host_id(self, curr_host_id, hosts_list):
         other_host_id = random.choice(hosts_list)
@@ -38,7 +40,9 @@ class HostTopologyShuffle(MTD):
                 continue
             if len(host_id_list_in_layer) == 1:
                 continue
-            other_host_id = self.random_different_host_id(host_id, host_id_list_in_layer)
+            other_host_id = self.random_different_host_id(
+                host_id, host_id_list_in_layer
+            )
             if other_host_id in seen or host_id in exposed_endpoints:
                 continue
             other_host_instance = hosts[other_host_id]

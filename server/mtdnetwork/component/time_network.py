@@ -5,9 +5,17 @@ import random
 
 
 class TimeNetwork(Network):
-
-    def __init__(self, total_nodes=50, total_endpoints=5, total_subnets=8, total_layers=4,
-                 target_layer=4, total_database=5, terminate_compromise_ratio=0.8):
+    def __init__(
+        self,
+        total_nodes=50,
+        total_endpoints=5,
+        total_subnets=8,
+        total_layers=4,
+        target_layer=4,
+        total_database=5,
+        terminate_compromise_ratio=0.8,
+        seed=None,
+    ):
         # default parameters
         self._mtd_stats = MTDStatistics()
         self._mtd_queue = []
@@ -15,8 +23,15 @@ class TimeNetwork(Network):
         self._unfinished_mtd = dict()
         if total_nodes < 2 * total_subnets:
             total_nodes = 2 * total_subnets
-        super().__init__(total_nodes=total_nodes, total_endpoints=total_endpoints, total_subnets=total_subnets,
-                         total_layers=total_layers, target_layer=target_layer, total_database=total_database)
+        super().__init__(
+            total_nodes=total_nodes,
+            total_endpoints=total_endpoints,
+            total_subnets=total_subnets,
+            total_layers=total_layers,
+            target_layer=target_layer,
+            total_database=total_database,
+            seed=seed,
+        )
         self.init_network()
 
     def setup_network(self):
@@ -37,7 +52,7 @@ class TimeNetwork(Network):
                 node_ip,
                 random.choices(self.users_list, k=self.users_per_host),
                 self,
-                self.service_generator
+                self.service_generator,
             )
 
     def is_compromised(self, compromised_hosts):
@@ -58,9 +73,3 @@ class TimeNetwork(Network):
 
     def set_unfinished_mtd(self, mtd):
         self._unfinished_mtd[mtd.get_resource_type()] = mtd
-
-
-
-
-
-

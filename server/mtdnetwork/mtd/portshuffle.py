@@ -3,12 +3,13 @@ from mtdnetwork.component import host
 
 
 class PortShuffle(MTD):
-
     def __init__(self, network=None):
-        super().__init__(name="PortShuffle",
-                         mtd_type='shuffle',
-                         resource_type='application',
-                         network=network)
+        super().__init__(
+            name="PortShuffle",
+            mtd_type="shuffle",
+            resource_type="application",
+            network=network,
+        )
 
     def mtd_operation(self, adversary=None):
         hosts = self.network.get_hosts()
@@ -22,8 +23,6 @@ class PortShuffle(MTD):
             for node_id in host_instance.graph.nodes:
                 if node_id == host_instance.target_node:
                     continue
-                new_port = host.Host.get_random_port(
-                    existing_ports=new_ports
-                )
+                new_port = host.Host.get_random_port(existing_ports=new_ports)
                 new_ports.append(new_port)
                 host_instance.graph.nodes[node_id]["port"] = new_port

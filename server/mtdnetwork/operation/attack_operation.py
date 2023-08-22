@@ -22,17 +22,17 @@ class AttackOperation:
         self._proceed_time = proceed_time
 
     def proceed_attack(self):
-        if self.adversary.get_curr_process() == 'SCAN_HOST':
+        if self.adversary.get_curr_process() == "SCAN_HOST":
             self._scan_host()
-        elif self.adversary.get_curr_process() == 'ENUM_HOST':
+        elif self.adversary.get_curr_process() == "ENUM_HOST":
             self._enum_host()
-        elif self.adversary.get_curr_process() == 'SCAN_PORT':
+        elif self.adversary.get_curr_process() == "SCAN_PORT":
             self._scan_port()
-        elif self.adversary.get_curr_process() == 'SCAN_NEIGHBOR':
+        elif self.adversary.get_curr_process() == "SCAN_NEIGHBOR":
             self._scan_neighbors()
-        elif self.adversary.get_curr_process() == 'EXPLOIT_VULN':
+        elif self.adversary.get_curr_process() == "EXPLOIT_VULN":
             self._exploit_vuln()
-        elif self.adversary.get_curr_process() == 'BRUTE_FORCE':
+        elif self.adversary.get_curr_process() == "BRUTE_FORCE":
             self._brute_force()
 
     def _execute_attack_action(self, time, attack_action):
@@ -43,33 +43,48 @@ class AttackOperation:
         """
         start_time = self.env.now + self._proceed_time
         try:
-            logging.info("Adversary: Start %s at %.1fs." % (self.adversary.get_curr_process(), start_time))
+            logging.info(
+                "Adversary: Start %s at %.1fs."
+                % (self.adversary.get_curr_process(), start_time)
+            )
             yield self.env.timeout(time)
         except simpy.Interrupt:
-            self.env.process(self._handle_interrupt(start_time, self.adversary.get_curr_process()))
+            self.env.process(
+                self._handle_interrupt(start_time, self.adversary.get_curr_process())
+            )
             return
         finish_time = self.env.now + self._proceed_time
-        logging.info("Adversary: Processed %s at %.1fs." % (self.adversary.get_curr_process(), finish_time))
-        self.adversary.get_attack_stats().append_attack_operation_record(self.adversary.get_curr_process(), start_time,
-                                                                         finish_time, self.adversary)
+        logging.info(
+            "Adversary: Processed %s at %.1fs."
+            % (self.adversary.get_curr_process(), finish_time)
+        )
+        self.adversary.get_attack_stats().append_attack_operation_record(
+            self.adversary.get_curr_process(), start_time, finish_time, self.adversary
+        )
         attack_action()
 
     def _scan_host(self):
         """
         raise an SCAN_HOST action
         """
-        self.adversary.set_curr_process('SCAN_HOST')
-        self._attack_process = self.env.process(self._execute_attack_action(ATTACK_DURATION['SCAN_HOST'],
-                                                                            self._execute_scan_host))
+        self.adversary.set_curr_process("SCAN_HOST")
+        self._attack_process = self.env.process(
+            self._execute_attack_action(
+                ATTACK_DURATION["SCAN_HOST"], self._execute_scan_host
+            )
+        )
 
     def _enum_host(self):
         """
         raise an ENUM_HOST action
         """
         if len(self.adversary.get_host_stack()) > 0:
-            self.adversary.set_curr_process('ENUM_HOST')
-            self._attack_process = self.env.process(self._execute_attack_action(ATTACK_DURATION['ENUM_HOST'],
-                                                                                self._execute_enum_host))
+            self.adversary.set_curr_process("ENUM_HOST")
+            self._attack_process = self.env.process(
+                self._execute_attack_action(
+                    ATTACK_DURATION["ENUM_HOST"], self._execute_enum_host
+                )
+            )
         else:
             self._scan_host()
 
@@ -77,9 +92,12 @@ class AttackOperation:
         """
         raise an SCAN_PORT action
         """
-        self.adversary.set_curr_process('SCAN_PORT')
-        self._attack_process = self.env.process(self._execute_attack_action(ATTACK_DURATION['SCAN_PORT'],
-                                                                            self._execute_scan_port))
+        self.adversary.set_curr_process("SCAN_PORT")
+        self._attack_process = self.env.process(
+            self._execute_attack_action(
+                ATTACK_DURATION["SCAN_PORT"], self._execute_scan_port
+            )
+        )
 
     def _exploit_vuln(self):
         """
@@ -87,25 +105,35 @@ class AttackOperation:
         """
         # exploit_time = exponential_variates(ATTACK_DURATION['EXPLOIT_VULN'][0], ATTACK_DURATION['EXPLOIT_VULN'][1])
         adversary = self.adversary
-        adversary.set_curr_vulns(adversary.get_curr_host().get_vulns(adversary.get_curr_ports()))
-        self.adversary.set_curr_process('EXPLOIT_VULN')
-        self._attack_process = self.env.process(self._execute_exploit_vuln(adversary.get_curr_vulns()))
+        adversary.set_curr_vulns(
+            adversary.get_curr_host().get_vulns(adversary.get_curr_ports())
+        )
+        self.adversary.set_curr_process("EXPLOIT_VULN")
+        self._attack_process = self.env.process(
+            self._execute_exploit_vuln(adversary.get_curr_vulns())
+        )
 
     def _brute_force(self):
         """
         raise an BRUTE_FORCE action
         """
-        self.adversary.set_curr_process('BRUTE_FORCE')
-        self._attack_process = self.env.process(self._execute_attack_action(ATTACK_DURATION['BRUTE_FORCE'],
-                                                                            self._execute_brute_force))
+        self.adversary.set_curr_process("BRUTE_FORCE")
+        self._attack_process = self.env.process(
+            self._execute_attack_action(
+                ATTACK_DURATION["BRUTE_FORCE"], self._execute_brute_force
+            )
+        )
 
     def _scan_neighbors(self):
         """
         raise an SCAN_NEIGHBOR action
         """
-        self.adversary.set_curr_process('SCAN_NEIGHBOR')
-        self._attack_process = self.env.process(self._execute_attack_action(ATTACK_DURATION['SCAN_NEIGHBOR'],
-                                                                            self._execute_scan_neighbors))
+        self.adversary.set_curr_process("SCAN_NEIGHBOR")
+        self._attack_process = self.env.process(
+            self._execute_attack_action(
+                ATTACK_DURATION["SCAN_NEIGHBOR"], self._execute_scan_neighbors
+            )
+        )
 
     def _handle_interrupt(self, start_time, name):
         """
@@ -114,21 +142,31 @@ class AttackOperation:
         :param name: the name of the attack action
         """
         adversary = self.adversary
-        adversary.get_attack_stats().append_attack_operation_record(name, start_time,
-                                                                    self.env.now + self._proceed_time,
-                                                                    adversary, self._interrupted_mtd)
+        adversary.get_attack_stats().append_attack_operation_record(
+            name,
+            start_time,
+            self.env.now + self._proceed_time,
+            adversary,
+            self._interrupted_mtd,
+        )
         # confusion penalty caused by MTD operation
-        yield self.env.timeout(exponential_variates(ATTACK_DURATION['PENALTY'], 0.5))
+        yield self.env.timeout(exponential_variates(ATTACK_DURATION["PENALTY"], 0.5))
 
-        if self._interrupted_mtd.get_resource_type() == 'network':
+        if self._interrupted_mtd.get_resource_type() == "network":
             self._interrupted_mtd = None
             adversary.set_curr_host_id(-1)
             adversary.set_curr_host(None)
-            logging.info('Adversary: Restarting with SCAN_HOST at %.1fs!' % (self.env.now + self._proceed_time))
+            logging.info(
+                "Adversary: Restarting with SCAN_HOST at %.1fs!"
+                % (self.env.now + self._proceed_time)
+            )
             self._scan_host()
-        elif self._interrupted_mtd.get_resource_type() == 'application':
+        elif self._interrupted_mtd.get_resource_type() == "application":
             self._interrupted_mtd = None
-            logging.info('Adversary: Restarting with SCAN_PORT at %.1fs!' % (self.env.now + self._proceed_time))
+            logging.info(
+                "Adversary: Restarting with SCAN_PORT at %.1fs!"
+                % (self.env.now + self._proceed_time)
+            )
             self._scan_port()
 
     def _execute_scan_host(self):
@@ -153,14 +191,21 @@ class AttackOperation:
             uncompromised_hosts = uncompromised_hosts + [
                 neighbor
                 for neighbor in network.graph.neighbors(c_host)
-                if neighbor not in compromised_hosts and neighbor not in network.exposed_endpoints and
-                   len(network.get_path_from_exposed(neighbor, graph=visible_network)[0]) > 0
+                if neighbor not in compromised_hosts
+                and neighbor not in network.exposed_endpoints
+                and len(
+                    network.get_path_from_exposed(neighbor, graph=visible_network)[0]
+                )
+                > 0
             ]
 
         # Add random element from 0 to 1 so the scan does not return the same order of hosts each time for the hacker
         uncompromised_hosts = sorted(
             uncompromised_hosts,
-            key=lambda host_id: network.get_path_from_exposed(host_id, graph=visible_network)[1] + random.random()
+            key=lambda host_id: network.get_path_from_exposed(
+                host_id, graph=visible_network
+            )[1]
+            + random.random(),
         )
 
         uncompromised_hosts = uncompromised_hosts + [
@@ -186,19 +231,26 @@ class AttackOperation:
         """
         adversary = self.adversary
         network = adversary.get_network()
-        adversary.set_host_stack(network.sort_by_distance_from_exposed_and_pivot_host(
-            adversary.get_host_stack(),
-            adversary.get_compromised_hosts(),
-            pivot_host_id=adversary.get_pivot_host_id()
-        ))
+        adversary.set_host_stack(
+            network.sort_by_distance_from_exposed_and_pivot_host(
+                adversary.get_host_stack(),
+                adversary.get_compromised_hosts(),
+                pivot_host_id=adversary.get_pivot_host_id(),
+            )
+        )
         adversary.set_curr_host_id(adversary.get_host_stack().pop(0))
         adversary.set_curr_host(network.get_host(adversary.get_curr_host_id()))
         # Sets node as unattackable if has been attack too many times
         adversary.get_attack_counter()[adversary.get_curr_host_id()] += 1
-        if adversary.get_attack_counter()[
-            adversary.get_curr_host_id()] == adversary.get_attack_threshold():
+        if (
+            adversary.get_attack_counter()[adversary.get_curr_host_id()]
+            == adversary.get_attack_threshold()
+        ):
             # target node feature
-            if adversary.get_curr_host_id() != network.get_target_node() and network.network_type == 0:
+            if (
+                adversary.get_curr_host_id() != network.get_target_node()
+                and network.network_type == 0
+            ):
                 adversary.get_stop_attack().append(adversary.get_curr_host_id())
 
         # Checks if max attack attempts has been reached, empty stacks if reached
@@ -228,7 +280,8 @@ class AttackOperation:
         adversary = self.adversary
         adversary.set_curr_ports(adversary.get_curr_host().port_scan())
         user_reuse = adversary.get_curr_host().can_auto_compromise_with_users(
-            adversary.get_compromised_users())
+            adversary.get_compromised_users()
+        )
         if user_reuse:
             self.update_compromise_progress(self.env.now, self._proceed_time)
             self._scan_neighbors()
@@ -244,23 +297,44 @@ class AttackOperation:
         """
         adversary = self.adversary
         for vuln in vulns:
-            exploit_time = exponential_variates(vuln.exploit_time(host=adversary.get_curr_host()), 0.5)
+            exploit_time = exponential_variates(
+                vuln.exploit_time(host=adversary.get_curr_host()), 0.5
+            )
             start_time = self.env.now + self._proceed_time
             try:
                 logging.info(
-                    "Adversary: Start %s %s on host %s at %.1fs." % (self.adversary.get_curr_process(), vuln.id,
-                                                                     self.adversary.get_curr_host_id(), start_time))
+                    "Adversary: Start %s %s on host %s at %.1fs."
+                    % (
+                        self.adversary.get_curr_process(),
+                        vuln.id,
+                        self.adversary.get_curr_host_id(),
+                        start_time,
+                    )
+                )
                 yield self.env.timeout(exploit_time)
             except simpy.Interrupt:
-                self.env.process(self._handle_interrupt(start_time, self.adversary.get_curr_process()))
+                self.env.process(
+                    self._handle_interrupt(
+                        start_time, self.adversary.get_curr_process()
+                    )
+                )
                 return
             finish_time = self.env.now + self._proceed_time
             logging.info(
-                "Adversary: Processed %s %s on host %s at %.1fs." % (self.adversary.get_curr_process(), vuln.id,
-                                                                     self.adversary.get_curr_host_id(), finish_time))
-            self.adversary.get_attack_stats().append_attack_operation_record(self.adversary.get_curr_process(),
-                                                                             start_time,
-                                                                             finish_time, self.adversary)
+                "Adversary: Processed %s %s on host %s at %.1fs."
+                % (
+                    self.adversary.get_curr_process(),
+                    vuln.id,
+                    self.adversary.get_curr_host_id(),
+                    finish_time,
+                )
+            )
+            self.adversary.get_attack_stats().append_attack_operation_record(
+                self.adversary.get_curr_process(),
+                start_time,
+                finish_time,
+                self.adversary,
+            )
             vuln.network(host=adversary.get_curr_host())
             # cumulative vulnerability exploitation attempts
             adversary.set_curr_attempts(adversary.get_curr_attempts() + 1)
@@ -268,7 +342,9 @@ class AttackOperation:
             for vuln in adversary.get_curr_vulns():
                 if vuln.is_exploited():
                     if vuln.exploitability == vuln.cvss / 5.5:
-                        vuln.exploitability = (1 - vuln.exploitability) / 2 + vuln.exploitability
+                        vuln.exploitability = (
+                            1 - vuln.exploitability
+                        ) / 2 + vuln.exploitability
                         if vuln.exploitability > 1:
                             vuln.exploitability = 1
                         # todo: record vulnerability roa, impact, and complexity
@@ -286,7 +362,8 @@ class AttackOperation:
         """
         adversary = self.adversary
         _brute_force_result = adversary.get_curr_host().compromise_with_users(
-            adversary.get_compromised_users())
+            adversary.get_compromised_users()
+        )
         if _brute_force_result:
             self.update_compromise_progress(self.env.now, self._proceed_time)
             self._scan_neighbors()
@@ -314,7 +391,9 @@ class AttackOperation:
         The pivot host needs to be a compromised host that the hacker can access
         """
         adversary = self.adversary
-        neighbors = list(adversary.get_network().get_neighbors(adversary.get_curr_host_id()))
+        neighbors = list(
+            adversary.get_network().get_neighbors(adversary.get_curr_host_id())
+        )
         if adversary.get_pivot_host_id() in neighbors:
             return
         for n in neighbors:
@@ -333,17 +412,25 @@ class AttackOperation:
             adversary.get_compromised_hosts().append(adversary.get_curr_host_id())
             adversary.get_attack_stats().update_compromise_host(adversary.curr_host)
             logging.info(
-                "Adversary: Host %i has been compromised at %.1fs!" % (
-                    adversary.get_curr_host_id(), now + proceed_time))
+                "Adversary: Host %i has been compromised at %.1fs!"
+                % (adversary.get_curr_host_id(), now + proceed_time)
+            )
             adversary.get_network().update_reachable_compromise(
-                adversary.get_curr_host_id(), adversary.get_compromised_hosts())
+                adversary.get_curr_host_id(), adversary.get_compromised_hosts()
+            )
 
             for user in adversary.get_curr_host().get_compromised_users():
                 if user not in adversary.get_compromised_users():
                     adversary.get_attack_stats().update_compromise_user(user)
-            adversary._compromised_users = list(set(
-                adversary.get_compromised_users() + adversary.get_curr_host().get_compromised_users()))
-            if adversary.get_network().is_compromised(adversary.get_compromised_hosts()):
+            adversary._compromised_users = list(
+                set(
+                    adversary.get_compromised_users()
+                    + adversary.get_curr_host().get_compromised_users()
+                )
+            )
+            if adversary.get_network().is_compromised(
+                adversary.get_compromised_hosts()
+            ):
                 # terminate the whole process
                 self.end_event.succeed()
                 return

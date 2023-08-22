@@ -34,7 +34,13 @@ class MTD:
         return self._priority >= other.get_priority()
 
     def __str__(self):
-        return self._name + ' ' + self._resource_type + ' ' + str(self._execution_time_mean)
+        return (
+            self._name
+            + " "
+            + self._resource_type
+            + " "
+            + str(self._execution_time_mean)
+        )
 
     def mtd_operation(self, adversary=None):
         raise NotImplementedError

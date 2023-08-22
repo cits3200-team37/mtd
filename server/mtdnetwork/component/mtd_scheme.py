@@ -13,43 +13,51 @@ from heapq import heappush, heappop
 
 
 class MTDScheme:
-
-    def __init__(self, scheme: str, network, mtd_trigger_interval=None, mtd_trigger_std=0.5, custom_strategies=None):
+    def __init__(
+        self,
+        scheme: str,
+        network,
+        mtd_trigger_interval=None,
+        mtd_trigger_std=0.5,
+        custom_strategies=None,
+    ):
         self._scheme = scheme
         self._mtd_trigger_interval = mtd_trigger_interval
         self._mtd_trigger_std = mtd_trigger_std
         self._mtd_register_scheme = None
         self._mtd_strategies = [
-                                CompleteTopologyShuffle,
-                                # HostTopologyShuffle,
-                                IPShuffle,
-                                OSDiversity,
-                                # PortShuffle,
-                                # OSDiversityAssignment,
-                                ServiceDiversity,
-                                # UserShuffle
-                                ]
+            CompleteTopologyShuffle,
+            # HostTopologyShuffle,
+            IPShuffle,
+            OSDiversity,
+            # PortShuffle,
+            # OSDiversityAssignment,
+            ServiceDiversity,
+            # UserShuffle
+        ]
         self._mtd_custom_strategies = custom_strategies
         self.network = network
         self._init_mtd_scheme(scheme)
 
     def _init_mtd_scheme(self, scheme):
+        # WARN: simultaneous and single scheme do not work
         """
         assign an MTD scheme based on the parameter
         """
         if self._mtd_custom_strategies is None:
             self._mtd_custom_strategies = self._mtd_strategies
         if self._mtd_trigger_interval is None:
-            self._mtd_trigger_interval, self._mtd_trigger_std = MTD_TRIGGER_INTERVAL[scheme]
-        if scheme == 'simultaneous':
+            self._mtd_trigger_interval, self._mtd_trigger_std = MTD_TRIGGER_INTERVAL[
+                scheme
+            ]
+        if scheme == "simultaneous":
             self._mtd_register_scheme = self._register_mtd_simultaneously
-        elif scheme == 'random':
+        elif scheme == "random":
             self._mtd_register_scheme = self._register_mtd_randomly
-        elif scheme == 'alternative':
-
+        elif scheme == "alternative":
             self._mtd_custom_strategies = deque(self._mtd_custom_strategies)
             self._mtd_register_scheme = self._register_mtd_alternatively
-        elif scheme == 'single':
+        elif scheme == "single":
             self._mtd_register_scheme = self._register_mtd_single
 
     def _mtd_register(self, mtd):
@@ -60,7 +68,9 @@ class MTDScheme:
             mtd_strategy = mtd(network=self.network)
         else:
             mtd_strategy = mtd
-        heappush(self.network.get_mtd_queue(), (mtd_strategy.get_priority(), mtd_strategy))
+        heappush(
+            self.network.get_mtd_queue(), (mtd_strategy.get_priority(), mtd_strategy)
+        )
 
     def _register_mtd_simultaneously(self):
         """

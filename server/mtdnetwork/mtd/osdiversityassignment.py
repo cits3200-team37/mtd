@@ -10,27 +10,32 @@ import re
 
 
 class OSDiversityAssignment(MTD):
-
     def __init__(self, network=None, os_types=OS_TYPES):
-        super().__init__(name="OSDiversity",
-                         mtd_type='diversity',
-                         resource_type='application',
-                         network=network)
+        super().__init__(
+            name="OSDiversity",
+            mtd_type="diversity",
+            resource_type="application",
+            network=network,
+        )
         self.os_types = os_types
         self._os_name = "DAP_OSDiversity_" + str(len(self.os_types))
         self.last_result = None
         self._checkpoint = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
 
     def mtd_operation(self, adversary=None):
-        diversity_assign = DiversityAssignment(graph=self.network.get_graph_copy(),
-                                               sources=self.network.get_exposed_endpoints(),
-                                               dests=self.network.get_database(),
-                                               os_types=self.os_types,
-                                               pos=self.network.pos,
-                                               colour_map=self.network.colour_map)
-        if not self.last_result or \
-                (len(self._checkpoint) != 0 and
-                 len(self.network.compromised_hosts) / self.network.total_nodes > self._checkpoint[0]):
+        diversity_assign = DiversityAssignment(
+            graph=self.network.get_graph_copy(),
+            sources=self.network.get_exposed_endpoints(),
+            dests=self.network.get_database(),
+            os_types=self.os_types,
+            pos=self.network.pos,
+            colour_map=self.network.colour_map,
+        )
+        if not self.last_result or (
+            len(self._checkpoint) != 0
+            and len(self.network.compromised_hosts) / self.network.total_nodes
+            > self._checkpoint[0]
+        ):
             self._checkpoint.pop(0)
             result = diversity_assign.objective()
             self.last_result = result
@@ -60,10 +65,13 @@ class OSDiversityAssignment(MTD):
                 if node_id == host_instance.target_node:
                     continue
                 curr_service = host_instance.graph.nodes[node_id]["service"]
-                if not service_generator.service_is_compatible_with_os(new_os, new_os_version, curr_service):
-                    host_instance.graph.nodes[node_id]["service"] = service_generator.get_random_service_latest_version(
-                        host_instance.os_type,
-                        host_instance.os_version
+                if not service_generator.service_is_compatible_with_os(
+                    new_os, new_os_version, curr_service
+                ):
+                    host_instance.graph.nodes[node_id][
+                        "service"
+                    ] = service_generator.get_random_service_latest_version(
+                        host_instance.os_type, host_instance.os_version
                     )
 
     def get_name(self):
@@ -120,7 +128,7 @@ class DiversityAssignment:
         dap_graph = self.gen_single_connection_graph()
         plt.figure(1, figsize=(15, 12))
         nx.draw(dap_graph, pos=self._pos, node_color=self._colour_map, with_labels=True)
-        plt.savefig('experimental_data/plots/dap_network.png')
+        plt.savefig("experimental_data/plots/dap_network.png")
 
     def calculate_variant_compromise_prob(self, nodes):
         """
@@ -154,7 +162,7 @@ class DiversityAssignment:
         for os_type in self.os_types:
             V[os_type] = set()
         for host_id in nodes:
-            host = self._graph.nodes[host_id]['host']
+            host = self._graph.nodes[host_id]["host"]
             if host.os_type not in V:
                 continue
             all_vulns = host.get_all_vulns()
@@ -164,7 +172,6 @@ class DiversityAssignment:
         return E
 
     def objective(self):
-
         # generate single connection graph
         dap_graph = self.gen_single_connection_graph()
 
@@ -175,7 +182,7 @@ class DiversityAssignment:
         N = list(dap_graph.nodes)[1:-1]
 
         for i in N:
-            if dap_graph.nodes[i]['host'].is_compromised():
+            if dap_graph.nodes[i]["host"].is_compromised():
                 dap_graph.remove_node(i)
 
         N = list(dap_graph.nodes)[1:-1]
@@ -193,14 +200,45 @@ class DiversityAssignment:
         prob = LpProblem("Diversity Assignment Problem", LpMaximize)
 
         # Define the decision variables
-        f = LpVariable.dicts('f', [(c, a, i, j) for c in C for a in M for i in M + N for j in M + N if j != i],
-                             lowBound=0, cat='Continuous')
-        s = LpVariable.dicts("s", [(v, x) for v in E.keys() for x in N], lowBound=0, upBound=1, cat='Binary')
+        f = LpVariable.dicts(
+            "f",
+            [
+                (c, a, i, j)
+                for c in C
+                for a in M
+                for i in M + N
+                for j in M + N
+                if j != i
+            ],
+            lowBound=0,
+            cat="Continuous",
+        )
+        s = LpVariable.dicts(
+            "s",
+            [(v, x) for v in E.keys() for x in N],
+            lowBound=0,
+            upBound=1,
+            cat="Binary",
+        )
 
         # Define the objective function
-        prob += 0.5 * (len(M) * (len(M) - 1) / 2) ** (-1) * lpSum([[
-            E[e] * f[(c, a, a, x)] if e in c else (1 - E[e]) * f[(c, a, a, x)]
-            for e in E.keys()] for c in C for a in M for x in N])
+        prob += (
+            0.5
+            * (len(M) * (len(M) - 1) / 2) ** (-1)
+            * lpSum(
+                [
+                    [
+                        E[e] * f[(c, a, a, x)]
+                        if e in c
+                        else (1 - E[e]) * f[(c, a, a, x)]
+                        for e in E.keys()
+                    ]
+                    for c in C
+                    for a in M
+                    for x in N
+                ]
+            )
+        )
 
         # Define the constraints
         for x in N:
@@ -208,21 +246,52 @@ class DiversityAssignment:
 
         for c in C:
             for a in M:
-                prob += lpSum(f[(c, a, x, i)] for x in N for i in remove_element(a, N + M) if x != i) - lpSum(
-                    f[(c, a, i, x)] for x in N for i in N + [a] if x != i) == 0
+                prob += (
+                    lpSum(
+                        f[(c, a, x, i)]
+                        for x in N
+                        for i in remove_element(a, N + M)
+                        if x != i
+                    )
+                    - lpSum(f[(c, a, i, x)] for x in N for i in N + [a] if x != i)
+                    == 0
+                )
 
-                prob += lpSum([f[(c, a, x, b)] for b in M if b != a for x in N if x != b]) <= 1
+                prob += (
+                    lpSum([f[(c, a, x, b)] for b in M if b != a for x in N if x != b])
+                    <= 1
+                )
 
                 prob += lpSum([f[(c, a, x, a)] for a in M for x in N if x != a]) == 0
 
-                prob += lpSum([f[(c, a, b, x)] for a in M for b in M if b != a for x in N]) == 0
+                prob += (
+                    lpSum([f[(c, a, b, x)] for a in M for b in M if b != a for x in N])
+                    == 0
+                )
 
-                prob += lpSum([f[(c, a, i, j)] if (i, j) in w else f[(c, a, i, j)] <= (len(M) - 1) * 1
-                               for i in N + M for j in N + M if i != j]) <= 0
+                prob += (
+                    lpSum(
+                        [
+                            f[(c, a, i, j)]
+                            if (i, j) in w
+                            else f[(c, a, i, j)] <= (len(M) - 1) * 1
+                            for i in N + M
+                            for j in N + M
+                            if i != j
+                        ]
+                    )
+                    <= 0
+                )
 
-                prob += lpSum([f[(c, a, x, i)] - 1 for x in N for i in N + M if i != x]) <= 0
+                prob += (
+                    lpSum([f[(c, a, x, i)] - 1 for x in N for i in N + M if i != x])
+                    <= 0
+                )
 
-                prob += lpSum([f[(c, a, i, x)] - 1 for x in N for i in N + M if i != x]) <= 0
+                prob += (
+                    lpSum([f[(c, a, i, x)] - 1 for x in N for i in N + M if i != x])
+                    <= 0
+                )
 
                 # prob += lpSum([f[(c, a, x, i)] - (len(M) - 1) * (1 - min([s[(v, x)] for v in E.keys() for x in N]))
                 #                for x in N for i in N + M if i != x]) <= 0
@@ -244,7 +313,7 @@ class DiversityAssignment:
         num_pattern = r"\d+(?:\.\d+)?"
         result = []
         for v in prob.variables():
-            if 's_' in v.name and v.varValue == 1.0:
+            if "s_" in v.name and v.varValue == 1.0:
                 # Use re.findall() to find all matches of the patterns in the input string
                 os_matches = re.findall(os_pattern, v.name)
                 num_matches = re.findall(num_pattern, v.name)
@@ -279,7 +348,7 @@ class DiversityAssignment:
                 if variant in C[i]:  # if variant is in c
                     prod *= E[variant]  # multiply by the probability of failure
                 else:
-                    prod *= (1 - E[variant])  # multiply by the probability of not failing
+                    prod *= 1 - E[variant]  # multiply by the probability of not failing
             ecc += prod * F[i]  # add product term times sum term to ecc
         return ecc
 
