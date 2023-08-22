@@ -422,7 +422,7 @@ def simulate_without_saving(
     # initialise the simulation
     env = simpy.Environment()
     end_event = env.event()
-    snapshot_checkpoint = SnapshotCheckpoint(env=env, checkpoints=checkpoints)
+    # snapshot_checkpoint = SnapshotCheckpoint(env=env, checkpoints=checkpoints)
     time_network = None
     adversary = None
 
@@ -456,7 +456,7 @@ def simulate_without_saving(
 
     adversary = Adversary(network=time_network, attack_threshold=ATTACKER_THRESHOLD)
     # snapshot_checkpoint.save_initialised(time_network, adversary)
-    snapshot_checkpoint.save_snapshots_by_network_size(time_network, adversary)
+    # snapshot_checkpoint.save_snapshots_by_network_size(time_network, adversary)
 
     # start attack
     attack_operation = AttackOperation(
