@@ -14,6 +14,7 @@ class TimeNetwork(Network):
         target_layer=4,
         total_database=5,
         terminate_compromise_ratio=0.8,
+        seed=None,
     ):
         # default parameters
         self._mtd_stats = MTDStatistics()
@@ -29,6 +30,7 @@ class TimeNetwork(Network):
             total_layers=total_layers,
             target_layer=target_layer,
             total_database=total_database,
+            seed=seed,
         )
         self.init_network()
 

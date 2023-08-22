@@ -400,6 +400,7 @@ def simulate_without_saving(
     total_database=2,
     terminate_compromise_ratio=0.8,
     new_network=False,
+    seed=None,
 ):
     """
 
@@ -452,6 +453,7 @@ def simulate_without_saving(
         target_layer=target_layer,
         total_database=total_database,
         terminate_compromise_ratio=terminate_compromise_ratio,
+        seed=seed,
     )
 
     adversary = Adversary(network=time_network, attack_threshold=ATTACKER_THRESHOLD)
