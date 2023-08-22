@@ -40,6 +40,7 @@ class MTDScheme:
         self._init_mtd_scheme(scheme)
 
     def _init_mtd_scheme(self, scheme):
+        # WARN: simultaneous and single scheme do not work
         """
         assign an MTD scheme based on the parameter
         """
