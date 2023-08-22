@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/simulate", methods=["GET"])
+@app.route("/simulate", methods=["POST"])
 def simulate():
     finish_time = request.json.get("finishTime")
     mtd_interval = request.json.get("mtdInterval")
