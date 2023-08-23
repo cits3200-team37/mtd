@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{vue,js}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "primary-navbar": "#282C34",
+      }
+    },
   },
   plugins: [],
 }
