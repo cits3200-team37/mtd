@@ -7,7 +7,6 @@
             <RouterLink to="/">home</RouterLink>
         </a>
     </div>
-
 </template>
 
 <script setup>
