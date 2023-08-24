@@ -50,7 +50,7 @@ const routes = ref([{
 ]);
 
 const handleRoute = async (route) => {
-    await routes.value.forEach((r) => {
+    routes.value.forEach((r) => {
         if (r.path != route.path) {
             r.active = false;
         } else {
