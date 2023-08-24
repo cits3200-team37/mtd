@@ -32,6 +32,8 @@
     "tailwindcss": "^3.3.3"
   },
   "dependencies": {
+    "@jamescoyle/vue-icon": "^0.1.2",
+    "@mdi/js": "^7.2.96",
     "@vitejs/plugin-vue": "^4.3.1",
     "electron-squirrel-startup": "^1.0.0",
     "vue": "^3.3.4",
