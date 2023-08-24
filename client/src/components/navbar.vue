@@ -1,10 +1,10 @@
 <template>
-    <nav class="w-20 bg-navbar-primary h-screen float-left mr-8">
+    <nav class="w-16 bg-navbar-primary h-screen float-left mr-8">
         <div class="flex flex-col items-center h-screen justify-between">
             <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
                 <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
-                    <svg-icon type="mdi" :path="route.icon" size="48" class="text-navbar-icon  hover:text-white"
-                        :class="{ 'text-white': route.active, 'offset-from-bottom': route.path === '/settings' }"></svg-icon>
+                    <svg-icon type="mdi" :path="route.icon" size="36" class="text-navbar-icon  hover:text-white"
+                        :class="{ 'text-white': route.active }"></svg-icon>
                 </div>
 
             </div>
@@ -61,9 +61,3 @@ const handleRoute = async (route) => {
     await router.push(route.path);
 }
 </script>
-<style scoped>
-.offset-from-bottom {
-    position: absolute;
-    bottom: 20px;
-}
-</style>
