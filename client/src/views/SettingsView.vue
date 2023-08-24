@@ -1,6 +1,6 @@
 <template>
     <h1>
-        home page
+        Settings page
     </h1>
 </template>
 

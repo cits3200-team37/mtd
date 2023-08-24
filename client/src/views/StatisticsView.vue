@@ -1,6 +1,6 @@
 <template>
     <h1>
-        home page
+        Statistics page
     </h1>
 </template>
 
