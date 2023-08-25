@@ -28,12 +28,11 @@
 
 import { createApp, onMounted } from "vue";
 import App from "./App.vue";
-import { createPinia } from 'pinia'
+import { createPinia } from "pinia";
 import router from "./router";
 import "./style.css";
 
-const pinia = createPinia()
-
+const pinia = createPinia();
 
 console.log(
   '👋 This message is being logged by "renderer.js", included via Vite',
