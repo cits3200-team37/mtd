@@ -2,7 +2,10 @@
     <div class="w-48 bg-navbar-primary h-screen border border-black border-100">
         <div class="flex flex-col items-center h-screen justify-between">
             <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
-                <!-- Parameter 1 becomes the form -->
+                <div class="flex flex-col bg-gray-700 hover:bg-gray-800 py-1 px-4 mt-3">
+                    <button @click="$emit('close')">Close</button>
+                </div>
+
                 <form class="simulation-form space-y-4">
                     <label class="text-white flex flex-col">
                         Network size list:
