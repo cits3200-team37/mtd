@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+import { app, BrowserWindow } from "electron";
 const path = require("path");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.

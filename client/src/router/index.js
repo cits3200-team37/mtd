@@ -41,9 +41,8 @@ const router = createRouter({
   ],
 });
 
-// router.beforeEach((to, from) => {
-//     // console.log('beforeEach', to, from)
-//     console.log(to, from,process.env);
-// })
+router.beforeEach((to, from) => {
+  document.title = to.name;
+});
 
 export default router;
