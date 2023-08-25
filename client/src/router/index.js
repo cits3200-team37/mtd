@@ -42,7 +42,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-    document.title = to.name;
-})
+  document.title = to.name;
+});
 
 export default router;
