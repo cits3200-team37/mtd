@@ -1,5 +1,5 @@
 <template>
-    <nav class="w-16 bg-navbar-primary h-screen border border-black border-100">
+    <nav class="w-16 bg-navbar-primary h-screen float-left mr-8">
         <div class="flex flex-col items-center h-screen justify-between">
             <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
                 <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
