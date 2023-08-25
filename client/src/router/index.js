@@ -6,7 +6,6 @@ import StatisticsView from "../views/StatisticsView.vue";
 import SettingsView from "../views/SettingsView.vue";
 
 const router = createRouter({
-    // mode: process.env.IS_ELECTRON ? 'hash' : 'history',
     history: createWebHistory(),
     routes: [
         {
@@ -41,9 +40,8 @@ const router = createRouter({
     ]
 })
 
-// router.beforeEach((to, from) => {
-//     // console.log('beforeEach', to, from)
-//     console.log(to, from,process.env);
-// })
+router.beforeEach((to, from) => {
+    document.title = to.name;
+})
 
 export default router

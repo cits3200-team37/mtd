@@ -25,7 +25,6 @@
  *  });
  * ```
  */
-
 import { createApp, onMounted } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -33,4 +32,3 @@ import './style.css'
 
 console.log('👋 This message is being logged by "renderer.js", included via Vite');
 createApp(App).use(router).mount('#app')
-
