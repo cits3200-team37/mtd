@@ -7,7 +7,7 @@ on:
 
 jobs:
   prettier:
-    name: Formatting
+    name: Client Code Formatting
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
