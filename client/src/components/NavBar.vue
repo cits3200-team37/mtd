@@ -1,5 +1,5 @@
 <template>
-    <nav class="w-16 bg-navbar-primary h-screen float-left mr-8">
+    <nav class="w-16 bg-navbar-primary h-screen border border-black border-100">
         <div class="flex flex-col items-center h-screen justify-between">
             <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
                 <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
@@ -21,7 +21,6 @@ import { mdiHomeOutline } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { mdiChartTimeline } from "@mdi/js";
 import { mdiSigma } from "@mdi/js";
-
 const routes = ref([{
     path: "/",
     active: true,
@@ -48,7 +47,6 @@ const routes = ref([{
     icon: mdiCog
 }
 ]);
-
 const handleRoute = async (route) => {
     routes.value.forEach((r) => {
         if (r.path != route.path) {
