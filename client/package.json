@@ -10,6 +10,7 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
+    "format": "prettier ./src --write",
     "dev": "vite dev"
   },
   "keywords": [],
