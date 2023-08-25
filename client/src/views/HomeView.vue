@@ -1,10 +1,5 @@
 <template>
-    <div class="min-h-screen">
-        <h1>
-            home page
-        </h1>
-    </div>
+  <h1>home page</h1>
 </template>
 
-<script setup>
-</script>
+<script setup></script>

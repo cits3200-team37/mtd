@@ -1,8 +1,5 @@
 <template>
-    <h1>
-        Settings page
-    </h1>
+  <h1>Settings page</h1>
 </template>
 
-<script setup>
-</script>
+<script setup></script>
