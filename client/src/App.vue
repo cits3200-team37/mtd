@@ -1,5 +1,5 @@
 <script setup>
-import NavBar from './components/NavBar.vue'
+import NavBar from './components/navbar.vue'
 import { RouterView } from 'vue-router';
 import router from './router'
 import { onMounted } from 'vue';
@@ -11,8 +11,10 @@ onMounted(async () => {
 </script>
 
 <template>
+    <div class = "flex">
     <NavBar />
-    <RouterView />
+    <RouterView /> 
+    </div>
 </template>
 
 
