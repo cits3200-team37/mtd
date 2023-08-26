@@ -65,6 +65,7 @@ class MTDStatistics:
             + ".csv",
             index=False,
         )
+        print("triggered")
 
     def get_total_attack_interrupted(self):
         return self._total_attack_interrupted

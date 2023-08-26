@@ -26,12 +26,17 @@ def simulate():
         total_nodes=total_nodes,
         seed=seed,
     )
-
+    # print(result)
+    data = []
+    # data.append(result._attack_record.to_json())
+    data.append(result.get_network().get_mtd_stats().get_record().to_json())
     resulting_graph = nx.node_link_data(result.get_network().graph)
+   
+    # print(data)
     for node in resulting_graph["nodes"]:
         node["host"] = node["host"].to_json()
 
-    return resulting_graph, 200
+    return data, 200
 
 
 @app.route("/health", methods=["GET"])
