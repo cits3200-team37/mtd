@@ -8,6 +8,21 @@ onMounted(async () => {
   console.log("mounted");
   await router.push("/");
 });
+
+
+/**Provide/Inject mechanism for ParamBar */
+const showParamBar = ref(true);
+provide('showParamBar', showParamBar);
+
+const closeParamBar = () => {
+    showParamBar.value = false;
+};
+provide('closeParamBar', closeParamBar);
+
+const reopenParamBar = () => {
+    showParamBar.value = true;
+};
+provide('reopenParamBar', reopenParamBar);
 </script>
 
 <template>
