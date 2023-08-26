@@ -1,16 +1,78 @@
 <script setup>
-import { inject } from "vue";
-import D3Chart from '../components/SimView/D3Chart.vue';
-import ParamBar from '../components/SimView/ParamBar/ParamBar.vue'
+import { ref } from "vue";
+// import D3Chart from '../components/SimView/D3Chart.vue';
+// import ParamBar from '../components/SimView/ParamBar/ParamBar.vue'
+import FormField from "../components/FormField.vue";
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiArrowLeft } from '@mdi/js';
+import { mdiArrowRight } from '@mdi/js';
 
 // Provide/Inject mechanism for ParamBar
-const showParamBar = inject('showParamBar');
-console.log("showParamBar:", showParamBar.value);
+// const showParamBar = inject('showParamBar');
+// console.log("showParamBar:", showParamBar.value);
+const isOpen = ref(true);
+
+const form = ref({
+    network_size_list: "",
+    start_time: "",
+    finish_time: "",
+    mtd_interval: "",
+    scheme: "",
+    total_nodes: "",
+});
+
+const handleSubmit = async () => {
+    console.log(form.value);
+};
+
 </script>
 
 <template>
-    <div class="h-screen flex">
-        <ParamBar v-if="showParamBar"/>
-        <D3Chart />
+    <div v-if="isOpen">
+        <div class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5">
+            <div class="flex flex-col items-center">
+                <button class="text-white bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                    @click="isOpen = !isOpen">Close</button>
+
+                <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
+                    <div>
+                        <FormField v-model="form.network_size_list" label="Network Size List" placeholder="Network Size"
+                            type="text" />
+                    </div>
+                    <div>
+                        <FormField v-model="form.start_time" label="Start Time" placeholder="Start Time" type="text" />
+                    </div>
+                    <div>
+                        <FormField v-model="form.finish_time" label="Finish Time" placeholder="Finish Time" type="text" />
+                    </div>
+                    <div>
+                        <FormField v-model="form.mtd_interval" label="MTD Interval" placeholder="MTD Interval"
+                            type="text" />
+                    </div>
+                    <div>
+                        <FormField v-model="form.scheme" label="Scheme" placeholder="Scheme" type="text" />
+                    </div>
+                    <div>
+                        <FormField v-model="form.total_nodes" label="Total Nodes" placeholder="Total Nodes" type="text" />
+                    </div>
+                    <div class="text-center">
+                        <!-- <PBRun /> -->
+                        <button>submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="w-6 min-h-screen float-left z-50">
+        <div class="min-h-screen flex items-center justify-center">
+            <div v-if="isOpen">
+                <button @click="isOpen = !isOpen" class="text-white">
+                    <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon></button>
+            </div>
+            <div v-else>
+                <button @click="isOpen = !isOpen" class="text-white">
+                    <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon></button>
+            </div>
+        </div>
     </div>
 </template>
