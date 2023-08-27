@@ -33,7 +33,7 @@ def simulate():
 
     return resulting_graph, 200
 
-@app.route("/schemes", method =["GET"])
+@app.route("/schemes", methods=["GET"])
 def schemes():
     return ["random", "simultaneous", "alternative", "single", "None"], 200
 
