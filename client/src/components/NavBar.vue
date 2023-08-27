@@ -3,7 +3,7 @@
         <div class="flex flex-col items-center h-screen justify-between">
             <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
                 <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
-                    <svg-icon type="mdi" :path="route.icon" size="36" class="text-navbar-icon  hover:text-white"
+                    <svg-icon type="mdi" :path="route.icon" size="36" class="text-navbar-icon  hover:text-white hover:cursor-pointer"
                         :class="{ 'text-white': route.active }"></svg-icon>
                 </div>
 
@@ -21,7 +21,6 @@ import { mdiHomeOutline } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { mdiChartTimeline } from "@mdi/js";
 import { mdiSigma } from "@mdi/js";
-// import { mdiKeyboardTab  } from "@mdi/js";
 
 const routes = ref([
   {

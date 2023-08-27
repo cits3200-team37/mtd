@@ -1,15 +1,9 @@
 <script setup>
 import { ref } from "vue";
-// import D3Chart from '../components/SimView/D3Chart.vue';
-// import ParamBar from '../components/SimView/ParamBar/ParamBar.vue'
 import FormField from "../components/FormField.vue";
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiArrowLeft } from '@mdi/js';
 import { mdiArrowRight } from '@mdi/js';
-
-// Provide/Inject mechanism for ParamBar
-// const showParamBar = inject('showParamBar');
-// console.log("showParamBar:", showParamBar.value);
 const isOpen = ref(true);
 
 const form = ref({
@@ -32,9 +26,7 @@ const handleSubmit = async () => {
         <div v-if="isOpen">
             <div class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5">
                 <div class="flex flex-col items-center">
-                    <button class="text-white bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-                        @click="isOpen = !isOpen">Close</button>
-
+                    <p class="text-lg pb-5 text-center">Simulation Parameters</p>
                     <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
                         <div>
                             <FormField v-model="form.network_size_list" label="Network Size List" placeholder="Network Size"
@@ -59,8 +51,7 @@ const handleSubmit = async () => {
                                 type="text" />
                         </div>
                         <div class="text-center">
-                            <!-- <PBRun /> -->
-                            <button>submit</button>
+                            <button class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -79,7 +70,7 @@ const handleSubmit = async () => {
                 </div>
             </div>
         </div>
-        <div class="border border-blue-200 bg-blue-200 flex-1">
+        <div class="border border-blue-200 bg-blue-200 flex-1 mr-2 my-2">
             <p>d3</p>
         </div>
 
