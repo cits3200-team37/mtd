@@ -58,6 +58,8 @@ def simulate():
         
     data["exposed_hosts"] = visible_hosts
 
+    data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
+
     return json.dumps(data), 200, {'Content-Type': 'application/json'}
 
 
