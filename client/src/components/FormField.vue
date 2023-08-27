@@ -1,6 +1,12 @@
 <template>
-    <label>{{ label }}</label>
-    <input :type="type" :placeholder="placeholder" class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full" @input="updateInput" :value="modelValue">
+  <label>{{ label }}</label>
+  <input
+    :type="type"
+    :placeholder="placeholder"
+    class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full"
+    @input="updateInput"
+    :value="modelValue"
+  />
 </template>
 
 <script setup>

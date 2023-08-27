@@ -1,15 +1,25 @@
 <template>
-    <nav class="w-16 bg-navbar-primary h-screen float-left">
-        <div class="flex flex-col items-center h-screen justify-between">
-            <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
-                <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
-                    <svg-icon type="mdi" :path="route.icon" size="36" class="text-navbar-icon  hover:text-white hover:cursor-pointer"
-                        :class="{ 'text-white': route.active }"></svg-icon>
-                </div>
-
-            </div>
+  <nav class="w-16 bg-navbar-primary h-screen float-left">
+    <div class="flex flex-col items-center h-screen justify-between">
+      <div
+        class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full"
+      >
+        <div
+          v-for="route in routes"
+          :key="route.path"
+          @click="handleRoute(route)"
+        >
+          <svg-icon
+            type="mdi"
+            :path="route.icon"
+            size="36"
+            class="text-navbar-icon hover:text-white hover:cursor-pointer"
+            :class="{ 'text-white': route.active }"
+          ></svg-icon>
         </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script setup>
