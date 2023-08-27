@@ -7,24 +7,26 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/simulate", methods=["POST"])
+@app.route("/simulate", methods=["POST", "GET"])
 def simulate():
-    finish_time = request.json.get("finishTime")
-    mtd_interval = request.json.get("mtdInterval")
-    scheme = request.json.get("scheme")
-    total_nodes = request.json.get("totalNodes")
-    seed = request.json.get("seed")
 
-    if not all([finish_time, mtd_interval, scheme, total_nodes]):
-        return {}, 400
+    print("hello")
+    # finish_time = request.json.get("finishTime")
+    # mtd_interval = request.json.get("mtdInterval")
+    # scheme = request.json.get("scheme")
+    # total_nodes = request.json.get("totalNodes")
+    # seed = request.json.get("seed")
+
+    # if not all([finish_time, mtd_interval, scheme, total_nodes]):
+    #     return {}, 400
 
     result = simulate_without_saving(
-        start_time=0,
-        finish_time=finish_time,
-        mtd_interval=mtd_interval,
-        scheme=scheme,
-        total_nodes=total_nodes,
-        seed=seed,
+        # start_time=0,
+        # finish_time=finish_time,
+        # mtd_interval=mtd_interval,
+        # scheme=scheme,
+        # total_nodes=total_nodes,
+        # seed=seed,
     )
 
     resulting_graph = nx.node_link_data(result.get_network().graph)

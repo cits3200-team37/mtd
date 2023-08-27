@@ -13,7 +13,7 @@ create_experiment_snapshots([25, 50, 75, 100])
 evaluation = execute_simulation(
     start_time=0, finish_time=3000, mtd_interval=200, scheme="random", total_nodes=100
 )
-
+print(evaluation.get_network())
 evaluation.get_network().draw()
 plt.show()
 

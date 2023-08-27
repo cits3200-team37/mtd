@@ -28,7 +28,13 @@ provide('reopenParamBar', reopenParamBar);
 
 <template>
     <div class="flex">
-        <NavBar />
-        <RouterView />
+      <div>
+        <NavBar /> <!-- NavBar with its own size -->
+      </div>
+      <div class="flex-1">
+        <RouterView /> <!-- RouterView takes up the remaining space -->
+      </div>
     </div>
-</template>
+  </template>
+  
+  
