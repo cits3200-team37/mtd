@@ -1,5 +1,5 @@
 <template>
-  <nav class="w-16 bg-navbar-primary h-screen float-left mr-8">
+  <nav class="w-16 bg-navbar-primary h-screen float-left">
     <div class="flex flex-col items-center h-screen justify-between">
       <div
         class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full"
@@ -13,7 +13,7 @@
             type="mdi"
             :path="route.icon"
             size="36"
-            class="text-navbar-icon hover:text-white"
+            class="text-navbar-icon hover:text-white hover:cursor-pointer"
             :class="{ 'text-white': route.active }"
           ></svg-icon>
         </div>
