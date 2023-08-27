@@ -1,5 +1,7 @@
 <template>
-  <div class="flex items-center justify-center h-screen bg-dark-background text-white">
+  <div
+    class="flex items-center justify-center h-screen bg-dark-background text-white"
+  >
     <div class="text-center">
       <h1 class="text-3xl font-semibold mb-2 px-20">
         Welcome to the Moving Target Defence Simulator
