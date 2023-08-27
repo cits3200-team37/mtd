@@ -34,17 +34,17 @@ const handleSubmit = async () => {
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 const width = 600;
 const height = 500;
-const svg = d3.select(".network-graph");
 
 const colorByCompromised = () => {
-  const nodes = d3.select(".network-graph").selectAll("circle");
+  const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
     .duration(300)
     .attr("fill", (d) => color(d.host.compromised));
 };
+
 const colorByLayer = () => {
-  const nodes = d3.select(".network-graph").selectAll("circle");
+  const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
     .duration(400)
@@ -52,30 +52,18 @@ const colorByLayer = () => {
 };
 
 const colorBySubnet = () => {
-  const nodes = d3.select(".network-graph").selectAll("circle");
+  const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
     .duration(400)
     .attr("fill", (d) => color(d.subnet));
 };
 
-const executeSimulation = async () => {
-  const data = await axios.post("http://localhost:8001/simulate", {
-    finishTime: 3000,
-    mtdInterval: 200,
-    scheme: "random",
-    totalNodes: 100,
-  });
-  resetGraph();
-  const graph = data.data;
-  plotNetwork(graph, ".network-graph");
-};
-
 const resetGraph = () => {
-  d3.selectAll(".network-graph > *").remove();
+  d3.selectAll("#network-graph > *").remove();
 };
 
-const plotNetwork = (graphData, cssSelector) => {
+const plotNetwork = (graphData) => {
   // Set the position attributes of links and nodes each time the simulation ticks.
   const ticked = () => {
     link
@@ -116,17 +104,24 @@ const plotNetwork = (graphData, cssSelector) => {
       "link",
       d3.forceLink(links).id((d) => d.id),
     )
-    .force("charge", d3.forceManyBody())
+    .force("charge", d3.forceManyBody().strength(-2))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
   // TODO: set width and height
   const svg = d3
-    .select(cssSelector)
-    .attr("width", width)
-    .attr("height", height)
+    .select("#network-graph")
+    .append("svg")
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("viewBox", [0, 0, width, height])
-    .attr("style", "max-width: 100%; height: auto;");
+    .attr("style", "max-width: 100%; height: max-height;")
+    .append("g")
+    .call(
+      d3.zoom().on("zoom", function () {
+        svg.attr("transform", d3.zoomTransform(this));
+      }),
+    );
 
   const link = svg
     .append("g")
@@ -220,6 +215,24 @@ const plotNetwork = (graphData, cssSelector) => {
               </button>
             </div>
           </form>
+          <button
+            @click="colorByLayer"
+            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+          >
+            Color By Layer
+          </button>
+          <button
+            @click="colorBySubnet"
+            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+          >
+            Color By Subnet
+          </button>
+          <button
+            @click="colorByCompromised"
+            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+          >
+            Color by Compromised
+          </button>
         </div>
       </div>
     </div>
@@ -237,8 +250,9 @@ const plotNetwork = (graphData, cssSelector) => {
         </div>
       </div>
     </div>
-    <div class="border border-blue-200 bg-blue-200 flex-1 mr-2 my-2">
-      <svg width="100%" height="100%" class="network-graph"></svg>
-    </div>
+    <div
+      id="network-graph"
+      class="border border-blue-200 bg-blue-200 flex-1 mr-2 my-2 max-h-screen"
+    ></div>
   </div>
 </template>
