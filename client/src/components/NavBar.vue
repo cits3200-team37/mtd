@@ -71,4 +71,18 @@ const handleRoute = async (route) => {
   route.active = true;
   await router.push(route.path);
 };
+
+// ability to handle route changes not from clicking on navbar
+router.afterEach(async (to, _) => {
+  const active = routes.value.filter((route) => route.active);
+  if (active[0].path != to.path) {
+    routes.value.forEach((route) => {
+      if (route.path != to.path) {
+        route.active = false;
+      } else {
+        route.active = true;
+      }
+    });
+  }
+});
 </script>
