@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { useChartStore } from '../stores/charts';
-import { onMounted, ref } from 'vue';
+import { useChartStore } from "../stores/charts";
+import { onMounted, ref } from "vue";
 
 const store = useChartStore();
 const data = ref();
@@ -24,6 +24,5 @@ onMounted(async () => {
     console.log(error);
   }
   isLoading.value = false;
-
 });
 </script>
