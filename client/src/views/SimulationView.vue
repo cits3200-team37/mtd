@@ -10,12 +10,12 @@ import axios from "axios";
 const isOpen = ref(true);
 
 const form = ref({
-  network_size_list: "",
-  start_time: "",
-  finish_time: "",
-  mtd_interval: "",
+  networkSizeList: "",
+  startTime: "",
+  finishTime: "",
+  mtdInterval: "",
   scheme: "",
-  total_nodes: "",
+  totalNodes: "",
 });
 
 const handleSubmit = async () => {
