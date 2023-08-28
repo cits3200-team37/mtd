@@ -2,25 +2,25 @@ import json
 
 
 def assert_response_equals_expected(response, expected):
-    assert response["directed"] == expected["directed"]
-    assert response["graph"] == expected["graph"]
-    assert response["multigraph"] == expected["multigraph"]
+    assert response["network"]["directed"] == expected["network"]["directed"]
+    assert response["network"]["graph"] == expected["network"]["graph"]
+    assert response["network"]["multigraph"] == expected["network"]["multigraph"]
 
     # check links match
-    assert len(response["links"]) == len(expected["links"])
-    for link in response["links"]:
-        assert link in expected["links"]
+    assert len(response["network"]["links"]) == len(expected["network"]["links"])
+    for link in response["network"]["links"]:
+        assert link in expected["network"]["links"]
 
-    assert len(response["nodes"]) == len(expected["nodes"])
+    assert len(response["network"]["nodes"]) == len(expected["network"]["nodes"])
 
-    for node in response["nodes"]:
+    for node in response["network"]["nodes"]:
         del node["host"]["hostUuid"]
 
-    for node in expected["nodes"]:
+    for node in expected["network"]["nodes"]:
         del node["host"]["hostUuid"]
 
-    for node in response["nodes"]:
-        assert node in expected["nodes"]
+    for node in response["network"]["nodes"]:
+        assert node in expected["network"]["nodes"]
 
 
 def test_mtd_simulation_none(client):
