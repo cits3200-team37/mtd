@@ -479,7 +479,6 @@ def simulate_without_saving(
             custom_strategies=custom_strategies,
         )
         mtd_operation.proceed_mtd()
-    
     # save snapshot by time
     # if checkpoints is not None:
     #     snapshot_checkpoint.proceed_save(time_network, adversary)
@@ -492,5 +491,4 @@ def simulate_without_saving(
         env.run(until=end_event)
 
     evaluation = Evaluation(network=time_network, adversary=adversary)
-    # print(mtd_operation.get_mtd_scheme()._scheme)
     return evaluation
