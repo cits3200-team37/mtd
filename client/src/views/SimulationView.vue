@@ -5,7 +5,9 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
 import * as d3 from "d3";
-import axios from "axios";
+import { useSimulationStore } from "../stores/simulation.js";
+
+const simulationStore = useSimulationStore();
 
 const isOpen = ref(true);
 
@@ -20,15 +22,9 @@ const form = ref({
 
 const handleSubmit = async () => {
   // TODO: refactor later with pinia
-
-  const data = await axios.post("http://localhost:8001/simulate", {
-    finishTime: Number(form.value.finish_time),
-    mtdInterval: Number(form.value.mtd_interval),
-    scheme: form.value.scheme,
-    totalNodes: Number(form.value.total_nodes),
-  });
+  const network = await simulationStore.simulate(form.value);
   resetGraph();
-  plotNetwork(data.data, ".network-graph");
+  plotNetwork(network, ".network-graph");
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -161,7 +157,7 @@ const plotNetwork = (graphData) => {
           <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
             <div>
               <FormField
-                v-model="form.network_size_list"
+                v-model="form.networkSizeList"
                 label="Network Size List"
                 placeholder="Network Size"
                 type="text"
@@ -169,7 +165,7 @@ const plotNetwork = (graphData) => {
             </div>
             <div>
               <FormField
-                v-model="form.start_time"
+                v-model="form.startTime"
                 label="Start Time"
                 placeholder="Start Time"
                 type="text"
@@ -177,7 +173,7 @@ const plotNetwork = (graphData) => {
             </div>
             <div>
               <FormField
-                v-model="form.finish_time"
+                v-model="form.finishTime"
                 label="Finish Time"
                 placeholder="Finish Time"
                 type="text"
@@ -185,7 +181,7 @@ const plotNetwork = (graphData) => {
             </div>
             <div>
               <FormField
-                v-model="form.mtd_interval"
+                v-model="form.mtdInterval"
                 label="MTD Interval"
                 placeholder="MTD Interval"
                 type="text"
@@ -201,7 +197,7 @@ const plotNetwork = (graphData) => {
             </div>
             <div>
               <FormField
-                v-model="form.total_nodes"
+                v-model="form.totalNodes"
                 label="Total Nodes"
                 placeholder="Total Nodes"
                 type="text"
