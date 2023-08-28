@@ -16,13 +16,10 @@
         <a
           href="https://github.com/cits3200-team37"
           target="_blank"
-          class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white "
+          class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiGithub"></path>
             </svg>
           </div>
@@ -35,9 +32,7 @@
           class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiFileDocument"></path>
             </svg>
           </div>
@@ -49,9 +44,7 @@
           class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiGraphOutline"></path>
             </svg>
           </div>
