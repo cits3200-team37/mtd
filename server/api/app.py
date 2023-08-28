@@ -2,7 +2,6 @@ from flask import Flask, request
 from flask_cors import CORS
 from experiments.run import simulate_without_saving
 import networkx as nx
-import json
 
 app = Flask(__name__)
 CORS(app)
@@ -27,26 +26,14 @@ def simulate():
         total_nodes=total_nodes,
         seed=seed,
     )
-
     data = {}
-
-    
-
     net_graph = nx.node_link_data(result._network.graph)
     for node in net_graph["nodes"]:
-            node["host"] = node["host"].to_json()
+        node["host"] = node["host"].to_json()
+
     data["network"] = net_graph
-
-    data["mtd_record"] = result._mtd_record.to_json()
-    data["attack_record"] = result._attack_record.to_json()
-    
-    ## redundant but easier to access, all in network ##
-
-    # data["hosts"] = result._network.get_hosts()
-    # data["unique_subnets"] = result._network.get_unique_subnets()
-    # data["subnets"] = result._network.get_subnets()
-    # data["layers"] = result._network.get_layers()
-
+    data["mtd_record"] = result._mtd_record.to_dict()
+    data["attack_record"] = result._attack_record.to_dict()
     data["comp_hosts"] = result._adversary.get_compromised_hosts()
 
     visible_hosts = []
@@ -55,12 +42,12 @@ def simulate():
 
     visible_hosts = visible_hosts + result._network.reachable
     visible_hosts = visible_hosts + result._network.exposed_endpoints
-        
+
     data["exposed_hosts"] = visible_hosts
 
     data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
 
-    return json.dumps(data), 200, {'Content-Type': 'application/json'}
+    return data, 200
 
 
 @app.route("/health", methods=["GET"])
