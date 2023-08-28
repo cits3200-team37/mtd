@@ -16,12 +16,12 @@
         <a
           href="https://github.com/cits3200-team37"
           target="_blank"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white "
         >
           <div class="h-12 w-12">
             <svg
               viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
+
             >
               <path :d="mdiGithub"></path>
             </svg>
@@ -32,12 +32,11 @@
         <a
           href="https://research-repository.uwa.edu.au/en/persons/jin-hong"
           target="_blank"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white"
         >
           <div class="h-12 w-12">
             <svg
               viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
             >
               <path :d="mdiFileDocument"></path>
             </svg>
@@ -47,12 +46,11 @@
 
         <a
           @click="toSimulateView()"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-navbar-icon hover:text-white"
         >
           <div class="h-12 w-12">
             <svg
               viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
             >
               <path :d="mdiGraphOutline"></path>
             </svg>
