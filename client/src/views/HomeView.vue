@@ -1,23 +1,78 @@
 <template>
-  <div class="min-h-screen flex flex-col justify-center items-center">
-    <h1>home page</h1>
-    <p class="font-bold">count: {{ clickerStore.count }}</p>
-    <button
-      class="py-2 px-2 my-4 rounded-sm bg-blue-400"
-      @click="incrementCount"
-    >
-      increment
-    </button>
+  <div
+    class="flex items-center justify-center h-screen bg-dark-background text-white"
+  >
+    <div class="text-center">
+      <h1 class="text-3xl font-semibold mb-2 px-20">
+        Welcome to the Moving Target Defence Simulator
+      </h1>
+      <p class="font-light text-navbar-icon">
+        Integrate time domain in the evaluation of Moving Target Defence
+      </p>
+
+      <div
+        class="flex justify-center items-center mt-3 space-x-20 max-w-full mx-auto"
+      >
+        <a
+          href="https://github.com/cits3200-team37"
+          target="_blank"
+          class="flex flex-col items-center mt-10 text-navbar-icon"
+        >
+          <div class="h-12 w-12">
+            <svg
+              viewBox="0 0 24 24"
+              class="fill-current text-navbar-icon hover:text-white"
+            >
+              <path :d="mdiGithub"></path>
+            </svg>
+          </div>
+          <span class="text-xs">GitHub</span>
+        </a>
+
+        <a
+          href="https://research-repository.uwa.edu.au/en/persons/jin-hong"
+          target="_blank"
+          class="flex flex-col items-center mt-10 text-navbar-icon"
+        >
+          <div class="h-12 w-12">
+            <svg
+              viewBox="0 0 24 24"
+              class="fill-current text-navbar-icon hover:text-white"
+            >
+              <path :d="mdiFileDocument"></path>
+            </svg>
+          </div>
+          <span class="text-xs">Documentation</span>
+        </a>
+
+        <a
+          @click="toSimulateView()"
+          class="flex flex-col items-center mt-10 text-navbar-icon"
+        >
+          <div class="h-12 w-12">
+            <svg
+              viewBox="0 0 24 24"
+              class="fill-current text-navbar-icon hover:text-white"
+            >
+              <path :d="mdiGraphOutline"></path>
+            </svg>
+          </div>
+          <span class="text-xs">Simulate</span>
+        </a>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useClickerStore } from "../stores/clicker";
+import { mdiGithub } from "@mdi/js";
+import { mdiFileDocument } from "@mdi/js";
+import { mdiGraphOutline } from "@mdi/js";
+import { useRouter } from "vue-router";
 
-const clickerStore = useClickerStore();
+const router = useRouter();
 
-const incrementCount = () => {
-  clickerStore.increment();
+const toSimulateView = async () => {
+  await router.push("/simulation");
 };
 </script>
