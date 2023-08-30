@@ -15,4 +15,5 @@ import DropDown from "./components/DropDown.vue"
 <template>
   <NavBar />
   <RouterView />
+  <DropDown :buttonLabel="'Options'" :menuOptions="['Option 1', 'Option 2', 'Option 3']" @optionSelected="handleOptionSelected" />
 </template>
