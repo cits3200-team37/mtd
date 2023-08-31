@@ -1,6 +1,6 @@
-site_name: MTDSimTime
-repo_url: https://github.com/benvarian/MTDSimTime
-repo_name: benvarian/MTDSimTime
+site_name: mtd
+repo_url: https://github.com/cits3200-team37/mtd
+repo_name: cits3200-team37/mtd
 
 theme:
   name: material
