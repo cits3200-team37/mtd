@@ -2,7 +2,11 @@
 
 ## `[POST] /simulate`
 
-Request body:
+#### Description
+
+This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
+
+#### Request body
 
 ```
 {
@@ -14,7 +18,7 @@ Request body:
 }
 ```
 
-Sample request:
+#### Sample request
 
 ```json
 {
@@ -25,7 +29,7 @@ Sample request:
 }
 ```
 
-Sample response:
+#### Sample response
 
 ```json
 {
@@ -79,9 +83,7 @@ Sample response:
 }
 ```
 
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
-
-#### Request Parameters:
+#### Request Parameters
 
 - `finishTime` is an optional parameter, if `finishTime` is not provided, the simulation runs till the network reaches compromised threshold (compromise ration > 0.9)
 - `mtdInterval` is the time imterval ot trigger MTD(s)
