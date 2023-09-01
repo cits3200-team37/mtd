@@ -15,7 +15,7 @@ def simulate():
     total_nodes = request.json.get("totalNodes")
     seed = request.json.get("seed")
 
-    if not all([finish_time, mtd_interval, scheme, total_nodes]):
+    if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
 
     result = simulate_without_saving(
