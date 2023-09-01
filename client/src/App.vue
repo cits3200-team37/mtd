@@ -1,5 +1,6 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
+import TitleBar from "./components/TitleBar.vue";
 import { RouterView } from "vue-router";
 import findVersion from "./helpers/findVersion";
 import { onMounted } from "vue";
@@ -13,6 +14,7 @@ onMounted(async () => {
 </script>
 
 <template>
+  <TitleBar />
   <NavBar />
   <RouterView />
 </template>
