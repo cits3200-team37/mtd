@@ -1,21 +1,11 @@
 <template>
   <nav class="w-16 bg-navbar-primary h-screen float-left">
     <div class="flex flex-col items-center h-screen justify-between">
-      <div
-        class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full"
-      >
-        <div
-          v-for="route in routes"
-          :key="route.path"
-          @click="handleRoute(route)"
-        >
-          <svg-icon
-            type="mdi"
-            :path="route.icon"
-            size="36"
-            class="text-navbar-icon hover:text-white hover:cursor-pointer"
-            :class="{ 'text-white': route.active }"
-          ></svg-icon>
+      <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
+        <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
+            <svg-icon type="mdi" :path="route.icon" size="36"
+              class="text-navbar-icon hover:text-white hover:cursor-pointer"
+              :class="{ 'text-white': route.active, 'absolute bottom-5': route.path == `/download` }"></svg-icon>
         </div>
       </div>
     </div>
@@ -23,7 +13,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import router from "../router";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiCog } from "@mdi/js";
@@ -31,6 +21,16 @@ import { mdiHomeOutline } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { mdiChartTimeline } from "@mdi/js";
 import { mdiSigma } from "@mdi/js";
+import { mdiDownload } from "@mdi/js";
+import findVersion from "../helpers/findVersion";
+
+onMounted(async () => {
+  try {
+    handleVersion(findVersion(window))
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 const routes = ref([
   {
@@ -57,6 +57,11 @@ const routes = ref([
     path: "/settings",
     active: false,
     icon: mdiCog,
+  },
+  {
+    path: "/download",
+    active: false,
+    icon: mdiDownload,
   },
 ]);
 
@@ -85,4 +90,17 @@ router.afterEach(async (to, _) => {
     });
   }
 });
+
+const handleVersion = async (version) => {
+  console.log(version);
+  // todo change this to only website when we deploy later 
+  // remove ! mark
+  if (!version) {
+    routes.value.forEach((route) => {
+      if (route.path == "/download") {
+        routes.value.splice(routes.value.indexOf(route), 1);
+      }
+    })
+  }
+}
 </script>
