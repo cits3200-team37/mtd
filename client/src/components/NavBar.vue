@@ -1,11 +1,24 @@
 <template>
   <nav class="w-16 bg-navbar-primary h-screen float-left">
     <div class="flex flex-col items-center h-screen justify-between">
-      <div class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full">
-        <div v-for="route in routes" :key="route.path" @click="handleRoute(route)">
-            <svg-icon type="mdi" :path="route.icon" size="36"
-              class="text-navbar-icon hover:text-white hover:cursor-pointer"
-              :class="{ 'text-white': route.active, 'absolute bottom-5': route.path == `/download` }"></svg-icon>
+      <div
+        class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full"
+      >
+        <div
+          v-for="route in routes"
+          :key="route.path"
+          @click="handleRoute(route)"
+        >
+          <svg-icon
+            type="mdi"
+            :path="route.icon"
+            size="36"
+            class="text-navbar-icon hover:text-white hover:cursor-pointer"
+            :class="{
+              'text-white': route.active,
+              'absolute bottom-5': route.path == `/download`,
+            }"
+          ></svg-icon>
         </div>
       </div>
     </div>
@@ -26,11 +39,11 @@ import findVersion from "../helpers/findVersion";
 
 onMounted(async () => {
   try {
-    handleVersion(findVersion(window))
+    handleVersion(findVersion(window));
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 const routes = ref([
   {
@@ -93,14 +106,14 @@ router.afterEach(async (to, _) => {
 
 const handleVersion = async (version) => {
   console.log(version);
-  // todo change this to only website when we deploy later 
+  // todo change this to only website when we deploy later
   // remove ! mark
   if (!version) {
     routes.value.forEach((route) => {
       if (route.path == "/download") {
         routes.value.splice(routes.value.indexOf(route), 1);
       }
-    })
+    });
   }
-}
+};
 </script>
