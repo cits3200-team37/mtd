@@ -45,4 +45,16 @@ module.exports = {
       },
     },
   ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "cits3200-team37",
+          name: "mtd",
+        },
+        prerelease: true,
+      },
+    },
+  ]
 };
