@@ -1,16 +1,14 @@
 <template>
-    <div class="drag w-screen inset-x-0 top-0 bg-navbar-primary h-8 pl-20 pt-1">
+    <div class="drag w-screen inset-x-0 top-0 bg-navbar-primary h-9 pl-20 p-1.5 ">
         <div class="flex flex-row items-center justify-center">
-            <div class="flex flex-row">
-                <button class="hover:bg-gray-500 hover:opacity-70 rounded-md px-2">
-                    <svg-icon type="mdi" color="white" size="22" :path="mdiArrowLeft" />
-                </button>
-                <button class="hover:bg-gray-500 hover:opacity-70 rounded-md px-2">
-                    <svg-icon type="mdi" color="white" size="22" :path="mdiArrowRight" />
-                </button>
-            </div>
-            <div class="rounded-md bg-blue-400 w-1/3 text-center">
-                <p class="">{{ router.currentRoute.value.name }}</p>
+            <button class="no-drag hover:bg-gray-500 hover:opacity-70 rounded-md px-2" @click="handleBack">
+                <svg-icon type="mdi" color="white" size="22" :path="mdiArrowLeft" />
+            </button>
+            <button class="no-drag hover:bg-gray-500 hover:opacity-70 rounded-md px-2" @click="handleForward">
+                <svg-icon type="mdi" color="white" size="22" :path="mdiArrowRight" />
+            </button>
+            <div class="no-drag rounded-md bg-dark-background w-1/3 text-center">
+                <p>{{ router.currentRoute.value.name }}</p>
             </div>
         </div>
     </div>
@@ -21,11 +19,21 @@ import svgIcon from '@jamescoyle/vue-icon';
 import { mdiArrowLeft } from '@mdi/js';
 import { mdiArrowRight } from '@mdi/js';
 import router from "../router"
-console.log(router);
+
+const handleBack = async () => {
+    router.back();
+}
+const handleForward = async () => {
+    router.forward();
+}
 </script>
 
-<style >
+<style scoped>
 .drag {
     -webkit-app-region: drag;
+}
+
+.no-drag {
+    -webkit-app-region: no-drag;
 }
 </style>

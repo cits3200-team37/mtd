@@ -1,8 +1,8 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
 import TitleBar from "./components/TitleBar.vue";
-import { RouterView } from "vue-router";
 import findVersion from "./helpers/findVersion";
+import { RouterView } from "vue-router";
 import { onMounted } from "vue";
 // ! needs to be uncommented out for prod
 // import router from "./router";
