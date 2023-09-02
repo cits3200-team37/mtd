@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed, defineProps} from "vue";
 import FormField from "../components/FormField.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
@@ -18,13 +18,24 @@ const form = ref({
 const handleSubmit = async () => {
   console.log(form.value);
 };
+
+const props = defineProps(['theme']);
+
+const themeClass = computed(() => {
+  switch (props.theme) {
+    case 'dark': return ['bg-dark-background', 'text-dark-text'];
+    case 'light': return ['bg-light-background', 'text-light-text'];
+    case 'blue': return ['bg-blue-background', 'text-blue-text'];
+    default: return [];
+  }
+});
 </script>
 
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-row" :class="themeClass">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5"
+        class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5" :class="themeClass"
       >
         <div class="flex flex-col items-center">
           <p class="text-lg pb-5 text-center">Simulation Parameters</p>
