@@ -70,6 +70,11 @@ const resetGraph = () => {
 };
 
 const plotNetwork = (graphData) => {
+  const { width, height } = d3
+    .select("#network-graph")
+    .node()
+    .getBoundingClientRect();
+
   // Set the position attributes of links and nodes each time the simulation ticks.
   const ticked = () => {
     link
