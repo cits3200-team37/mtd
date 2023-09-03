@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";       
+import { ref, onMounted } from "vue";
 import * as d3 from "d3";
 
 const svg = ref(null);

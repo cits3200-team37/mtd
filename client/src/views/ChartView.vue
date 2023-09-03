@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Chart page</h1>      
+    <h1>Chart page</h1>
     <div v-if="data != null">
       Updated
       <AbyHost :attackRecord="data" />
