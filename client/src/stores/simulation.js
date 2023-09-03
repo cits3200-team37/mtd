@@ -8,7 +8,6 @@ export const useSimulationStore = defineStore("simulation", {
   }),
   actions: {
     async simulate(simulateFormValues) {
-      console.log("fetching...");
       this.parameters = {
         networkSizeList: Number(simulateFormValues.networkSizeList),
         startTime: Number(simulateFormValues.startTime),
@@ -21,8 +20,9 @@ export const useSimulationStore = defineStore("simulation", {
         "http://localhost:8001/simulate",
         this.parameters,
       );
-      this.network = data;
-      return this.network;
+      const { network } = data;
+      this.network = network;
+      // TODO: set other response variables related to the data object from the api call
     },
   },
 });

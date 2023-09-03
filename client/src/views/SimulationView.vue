@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
@@ -8,6 +8,12 @@ import * as d3 from "d3";
 import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
+
+onMounted(() => {
+  if (simulationStore.network && simulationStore.parameters) {
+    plotNetwork(simulationStore.network, ".network-graph");
+  }
+});
 
 const isOpen = ref(true);
 
@@ -22,10 +28,9 @@ const form = ref({
 
 const handleSubmit = async () => {
   // do not look in store for existing network graph as we run a new simulation
-  const { network } = await simulationStore.simulate(form.value);
-  console.log(network);
+  await simulationStore.simulate(form.value);
   resetGraph();
-  plotNetwork(network, ".network-graph");
+  plotNetwork(simulationStore.network, ".network-graph");
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
