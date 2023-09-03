@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed, defineProps} from "vue";
+import { ref, computed, defineProps } from "vue";
 import FormField from "../components/FormField.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
-import useTheme from '../stores/useTheme';
+import useTheme from "../stores/useTheme";
 
 const isOpen = ref(true);
 
@@ -25,10 +25,14 @@ const { theme } = useTheme();
 
 const themeClass = computed(() => {
   switch (theme.value) {
-    case 'dark': return ['bg-dark-background', 'text-dark-text'];
-    case 'light': return ['bg-light-background', 'text-light-text'];
-    case 'blue': return ['bg-blue-background', 'text-blue-text'];
-    default: return [];
+    case "dark":
+      return ["bg-dark-background", "text-dark-text"];
+    case "light":
+      return ["bg-light-background", "text-light-text"];
+    case "blue":
+      return ["bg-blue-background", "text-blue-text"];
+    default:
+      return [];
   }
 });
 </script>
@@ -37,7 +41,8 @@ const themeClass = computed(() => {
   <div class="flex flex-row" :class="themeClass">
     <div v-if="isOpen">
       <div
-        class="w-48 min-h-screen border border-black border-100 float-left px-5 pt-5" :class="themeClass"
+        class="w-48 min-h-screen border border-black border-100 float-left px-5 pt-5"
+        :class="themeClass"
       >
         <div class="flex flex-col items-center">
           <p class="text-lg pb-5 text-center">Simulation Parameters</p>
@@ -91,9 +96,7 @@ const themeClass = computed(() => {
               />
             </div>
             <div class="text-center">
-              <button
-                class="py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
+              <button class="py-1 px-4 mt-3 w-full text-center rounded-md mb-4">
                 Submit
               </button>
             </div>

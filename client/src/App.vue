@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, watch } from "vue";
 import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
 import useTheme from "./stores/useTheme.js";
@@ -16,5 +16,5 @@ const { theme } = useTheme();
 
 <template>
   <NavBar />
-  <RouterView :theme="theme"/>
+  <RouterView :theme="theme" />
 </template>
