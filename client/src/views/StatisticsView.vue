@@ -2,6 +2,7 @@
   <div v-if="isLoading == false">
     <div class="flex flex-col items-center h-screen" :class="themeClass">
       <h1>Statistics page</h1>
+    </div>
     {{ data }}
   </div>
   <div v-else>
