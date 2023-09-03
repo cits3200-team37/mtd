@@ -31,7 +31,6 @@ const props = defineProps({
 });
 
 const emits = defineEmits();
-
 const isMenuOpen = ref(false);
 const selectedOption = ref(null);
 
@@ -54,7 +53,5 @@ const ChevronDownIcon = {
 };
 </script>
   
-<style scoped>
-
-</style>
+<style scoped></style>
   
