@@ -17,11 +17,11 @@ export const useSimulationStore = defineStore("simulation", {
         scheme: simulateFormValues.scheme,
         totalNodes: Number(simulateFormValues.totalNodes),
       };
-      const response = await axios.post(
+      const { data } = await axios.post(
         "http://localhost:8001/simulate",
         this.parameters,
       );
-      this.network = response.data;
+      this.network = data;
       return this.network;
     },
   },
