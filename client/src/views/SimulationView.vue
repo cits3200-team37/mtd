@@ -21,8 +21,9 @@ const form = ref({
 });
 
 const handleSubmit = async () => {
-  // TODO: refactor later with pinia
-  const network = await simulationStore.simulate(form.value);
+  // do not look in store for existing network graph as we run a new simulation
+  const { network } = await simulationStore.simulate(form.value);
+  console.log(network);
   resetGraph();
   plotNetwork(network, ".network-graph");
 };
