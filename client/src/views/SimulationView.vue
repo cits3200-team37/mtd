@@ -9,12 +9,6 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-onMounted(() => {
-  if (simulationStore.network && simulationStore.parameters) {
-    plotNetwork(simulationStore.network, ".network-graph");
-  }
-});
-
 const isOpen = ref(true);
 
 const form = ref({
@@ -24,6 +18,13 @@ const form = ref({
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+});
+
+onMounted(() => {
+  if (simulationStore.network) {
+    // if there already exists a network from past simulation
+    plotNetwork(simulationStore.network, ".network-graph");
+  }
 });
 
 const handleSubmit = async () => {
