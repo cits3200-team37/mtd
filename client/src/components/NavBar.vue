@@ -1,8 +1,8 @@
 <template>
-  <nav class="w-16 bg-navbar-primary h-screen float-left">
-    <div class="flex flex-col items-center h-screen justify-between">
+  <nav class="w-16 bg-navbar-primary h-[calc(100vh-36px)] float-left">
+    <div class="flex flex-col items-center h-full justify-between">
       <div
-        class="flex flex-col flex-nowrap py-6 space-y-8 relative text-center justify-normal h-full"
+        class="flex flex-col flex-nowrap py-4 space-y-8 relative text-center justify-normal h-full"
       >
         <div
           v-for="route in routes"
@@ -105,7 +105,6 @@ router.afterEach(async (to, _) => {
 });
 
 const handleVersion = async (version) => {
-  console.log(version);
   // todo change this to only website when we deploy later
   // remove ! mark
   if (!version) {
