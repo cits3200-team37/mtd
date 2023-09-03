@@ -29,6 +29,7 @@ const themeClass = computed(() => {
     default:
       return [];
   }
+});
 
 const store = useChartStore();
 const data = ref();
