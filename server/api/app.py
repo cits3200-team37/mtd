@@ -15,7 +15,7 @@ def simulate():
     total_nodes = request.json.get("totalNodes")
     seed = request.json.get("seed")
 
-    if not all([finish_time, mtd_interval, scheme, total_nodes]):
+    if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
 
     result = simulate_without_saving(
@@ -26,12 +26,28 @@ def simulate():
         total_nodes=total_nodes,
         seed=seed,
     )
-
-    resulting_graph = nx.node_link_data(result.get_network().graph)
-    for node in resulting_graph["nodes"]:
+    data = {}
+    net_graph = nx.node_link_data(result._network.graph)
+    for node in net_graph["nodes"]:
         node["host"] = node["host"].to_json()
 
-    return resulting_graph, 200
+    data["network"] = net_graph
+    data["mtd_record"] = result._mtd_record.to_dict()
+    data["attack_record"] = result._attack_record.to_dict()
+    data["comp_hosts"] = result._adversary.get_compromised_hosts()
+
+    visible_hosts = []
+    for c_host in result._network.reachable:
+        visible_hosts = visible_hosts + list(result._network.graph.neighbors(c_host))
+
+    visible_hosts = visible_hosts + result._network.reachable
+    visible_hosts = visible_hosts + result._network.exposed_endpoints
+
+    data["exposed_hosts"] = visible_hosts
+
+    data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
+
+    return data, 200
 
 
 @app.route("/health", methods=["GET"])

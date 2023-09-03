@@ -192,12 +192,12 @@ class MTDOperation:
             "MTD: %s finished in %.1fs at %.1fs."
             % (mtd.get_name(), duration, finish_time)
         )
-        # release resource
-        self._get_mtd_resource(mtd).release(request)
         # append execution records
         self.network.get_mtd_stats().append_mtd_operation_record(
             mtd, start_time, finish_time, duration
         )
+        # release resource
+        self._get_mtd_resource(mtd).release(request)
         # interrupt adversary
         self._interrupt_adversary(env, mtd)
 
