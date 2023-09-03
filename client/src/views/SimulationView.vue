@@ -109,6 +109,7 @@ const plotNetwork = (graphData) => {
   // setup graph
   const links = graphData.links.map((d) => ({ ...d }));
   const nodes = graphData.nodes.map((d) => ({ ...d }));
+
   const simulation = d3
     .forceSimulation(nodes)
     .force(
@@ -123,8 +124,8 @@ const plotNetwork = (graphData) => {
   const svg = d3
     .select("#network-graph")
     .append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
+    .attr("width", width)
+    .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .attr("style", "max-width: 100%; height: max-height;")
     .append("g")
