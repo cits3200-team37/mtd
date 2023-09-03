@@ -38,8 +38,6 @@ const handleSubmit = async () => {
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
-const width = 600;
-const height = 500;
 
 const colorByCompromised = () => {
   const nodes = d3.select("#network-graph").selectAll("circle");
@@ -116,7 +114,7 @@ const plotNetwork = (graphData) => {
       "link",
       d3.forceLink(links).id((d) => d.id),
     )
-    .force("charge", d3.forceManyBody().strength(-2))
+    .force("charge", d3.forceManyBody().strength(-10))
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
@@ -127,7 +125,6 @@ const plotNetwork = (graphData) => {
     .attr("width", width)
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
-    .attr("style", "max-width: 100%; height: max-height;")
     .append("g")
     .call(
       d3.zoom().on("zoom", function () {
@@ -148,17 +145,36 @@ const plotNetwork = (graphData) => {
     .append("g")
     .attr("stroke", "#fff")
     .attr("stroke-width", 1.5)
-    .attr("class", "node")
     .selectAll()
     .data(nodes)
     .join("circle")
-    .attr("r", 5)
+    .attr("class", "node")
+    .attr("r", 8)
     .attr("fill", (d) => color(d.layer));
 
   node.append("title").text((d) => d.id);
   node.call(
     d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
   );
+
+  d3.selectAll(".node")
+    .on("mouseover", (e, d) => {
+      const left = e.clientX + 40 + "px";
+      const top = e.clientY - 50 + "px";
+      const { host } = d;
+      const html = `Host ID: ${host.hostId} <br/> IP: ${host.ip} <br/> OS type: ${host.osType} <br/> OS version: ${host.osVersion} <br/> Total Users: ${host.totalUsers} <br/> Total Services: ${host.totalServices} <br/> Compromised: ${host.compromised}`;
+      d3.select("#node-tooltip")
+        .html(html)
+        .attr(
+          "class",
+          "visible absolute bg-gray-700 text-center rounded-lg py-1 px-4 opacity-90",
+        )
+        .style("left", left)
+        .style("top", top);
+    })
+    .on("mouseout", () => {
+      d3.select("#node-tooltip").attr("class", "invisible").html(null);
+    });
 };
 </script>
 
@@ -267,4 +283,5 @@ const plotNetwork = (graphData) => {
       class="border border-blue-200 bg-blue-200 flex-1 mr-2 my-2 max-h-screen"
     ></div>
   </div>
+  <div id="node-tooltip" class="absolute invisible"></div>
 </template>
