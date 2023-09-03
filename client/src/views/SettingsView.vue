@@ -9,18 +9,13 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue';
 import { computed } from 'vue';
+import useTheme from "../stores/useTheme.js";
 
-const props = defineProps(['theme']);
-const emit = defineEmits();
-
-const setTheme = (newTheme) => {
-  emit('change-theme', newTheme);
-};
+const { theme, setTheme } = useTheme();
 
 const themeClass = computed(() => {
-  switch (props.theme) {
+  switch (theme.value) {
     case 'dark': return ['bg-dark-background', 'text-dark-text'];
     case 'light': return ['bg-light-background', 'text-light-text'];
     case 'blue': return ['bg-blue-background', 'text-blue-text'];

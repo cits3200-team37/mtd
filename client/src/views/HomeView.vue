@@ -69,7 +69,8 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
-import { computed, defineProps } from 'vue';
+import { computed } from 'vue';
+import useTheme from '../stores/useTheme';
 
 const router = useRouter();
 
@@ -77,10 +78,10 @@ const toSimulateView = async () => {
   await router.push("/simulation");
 };
 
-const props = defineProps(['theme']);
+const { theme } = useTheme();
 
 const themeClass = computed(() => {
-  switch (props.theme) {
+  switch (theme.value) {
     case 'dark': return ['bg-dark-background', 'text-dark-text'];
     case 'light': return ['bg-light-background', 'text-light-text'];
     case 'blue': return ['bg-blue-background', 'text-blue-text'];
