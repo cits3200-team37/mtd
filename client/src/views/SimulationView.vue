@@ -278,10 +278,7 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div
-      id="network-graph"
-      class="border border-blue-200 bg-blue-200 flex-1 mr-2 my-2 max-h-screen"
-    ></div>
+    <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
   </div>
   <div id="node-tooltip" class="absolute invisible"></div>
 </template>
