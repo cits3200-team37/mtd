@@ -58,6 +58,17 @@ const colorByCompromised = () => {
     .attr("fill", (d) => color(d.host.compromised));
 };
 
+const zoom = d3.zoom().on("zoom", function () {
+  d3.select("#network-zoom-area").attr("transform", d3.zoomTransform(this));
+});
+
+const resetZoom = () => {
+  d3.select("#network-zoom-area")
+    .transition()
+    .duration(750)
+    .call(zoom.transform, d3.zoomIdentity);
+};
+
 const colorByLayer = () => {
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
@@ -136,11 +147,8 @@ const plotNetwork = (graphData) => {
     .attr("height", height)
     .attr("viewBox", [0, 0, width, height])
     .append("g")
-    .call(
-      d3.zoom().on("zoom", function () {
-        svg.attr("transform", d3.zoomTransform(this));
-      }),
-    )
+    .attr("id", "network-zoom-area")
+    .call(zoom)
     .on("dblclick.zoom", null);
 
   const link = svg
