@@ -49,6 +49,10 @@ def simulate():
 
     return data, 200
 
+@app.route("/schemes", methods=["GET"])
+def schemes():
+    return ["random", "simultaneous", "alternative", "single", "None"], 200
+
 
 @app.route("/health", methods=["GET"])
 def health_check():
