@@ -141,7 +141,8 @@ const plotNetwork = (graphData) => {
       d3.zoom().on("zoom", function () {
         svg.attr("transform", d3.zoomTransform(this));
       }),
-    );
+    )
+    .on("dblclick.zoom", null);
 
   const link = svg
     .append("g")
