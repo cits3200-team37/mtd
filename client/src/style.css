@@ -24,9 +24,9 @@
         --navbar-icon-color: 164 164 164; */
     }
 
-    /* .theme-blue {
-        --background-color:  #00A4DB;
+    .theme-blue {
+        --background-color: 135,206,235;
         --text-color: #f7f7f7;
-    } */
+    }
 }
 

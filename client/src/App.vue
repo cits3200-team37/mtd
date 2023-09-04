@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
 import { onMounted } from "vue";
@@ -18,15 +18,13 @@ onMounted(async () => {
 });
 
 window.addEventListener('theme-changed', (e) => {
-  // console.log(e.detail.storage);
   theme.value = e.detail.storage;
 });
 
 </script>
-
 <template>
-  <div class="text-text-color bg-background-color">
-    {{ theme }}
+  <div class="bg-background-color text-text-color"
+    :class="{ 'theme-dark': theme == 'dark', 'theme-light': theme == 'light', 'theme-blue': theme == 'blue' }">
     <TitleBar />
     <NavBar />
     <RouterView />

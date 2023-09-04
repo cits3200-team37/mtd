@@ -4,7 +4,6 @@ import FormField from "../components/FormField.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
-// import useTheme from "../stores/useTheme";
 
 const isOpen = ref(true);
 
@@ -20,21 +19,6 @@ const form = ref({
 const handleSubmit = async () => {
   console.log(form.value);
 };
-
-// const { theme } = useTheme();
-
-// const themeClass = computed(() => {
-//   switch (theme.value) {
-//     case "dark":
-//       return ["bg-dark-background", "text-dark-text"];
-//     case "light":
-//       return ["bg-light-background", "text-light-text"];
-//     case "blue":
-//       return ["bg-blue-background", "text-blue-text"];
-//     default:
-//       return [];
-//   }
-// });
 </script>
 
 <template>
