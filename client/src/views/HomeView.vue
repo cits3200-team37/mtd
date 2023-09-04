@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center h-screen" :class="themeClass">
+  <div class="flex items-center justify-center h-screen">
     <div class="text-center">
       <h1 class="text-3xl font-semibold mb-2 px-20">
         Welcome to the Moving Target Defence Simulator
@@ -58,8 +58,8 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
-import { computed } from "vue";
-import useTheme from "../stores/useTheme";
+// import { computed } from "vue";
+// import useTheme from "../stores/useTheme";
 
 const router = useRouter();
 
@@ -67,18 +67,18 @@ const toSimulateView = async () => {
   await router.push("/simulation");
 };
 
-const { theme } = useTheme();
+// const { theme } = useTheme();
 
-const themeClass = computed(() => {
-  switch (theme.value) {
-    case "dark":
-      return ["bg-dark-background", "text-dark-text"];
-    case "light":
-      return ["bg-light-background", "text-light-text"];
-    case "blue":
-      return ["bg-blue-background", "text-blue-text"];
-    default:
-      return [];
-  }
-});
+// const themeClass = computed(() => {
+//   switch (theme.value) {
+//     case "dark":
+//       return ["bg-dark-background", "text-dark-text"];
+//     case "light":
+//       return ["bg-light-background", "text-light-text"];
+//     case "blue":
+//       return ["bg-blue-background", "text-blue-text"];
+//     default:
+//       return [];
+//   }
+// });
 </script>

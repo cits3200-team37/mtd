@@ -3,22 +3,31 @@ export default {
   content: ["./index.html", "./src/**/*.{vue,js}"],
   theme: {
     extend: {
+      textColor: {
+        "text-color": `rgb(var(--text-color))`,
+      },
+      backgroundColor: {
+        "background-color": 'rgb(var(--background-color))',
+      },
       colors: {
-        "navbar-primary": "#1f1f1f",
-        "navbar-icon": "#A4A4A4",
+        "navbar-primary": `rgb(var(--navbar-color))`,
+        "navbar-icon": `rgb(var(--navbar-icon-color))`,
+        //   // "navbar-primary": "#1f1f1f",
+        //   // "navbar-icon": "#A4A4A4",
 
-        // Theme Variants
-        // Dark Theme:
+        //   // // Theme Variants
+        //   // // Dark Theme:
         "dark-background": "#313338",
-        "dark-text": "#ffffff",
+        //   // "dark-text": "#ffffff",
 
-        // Light Theme:
-        "light-background": "#FFFFE0",
-        "light-text": "#333333",
+        //   // // Light Theme:
+        //   // "light-background": "#FFFFE0",
+        //   // "light-text": "#333333",
 
-        // Blue Theme:
-        "blue-background": "#00A4DB",
-        "blue-text": "#f7f7f7",
+        //   // // Blue Theme:
+        //   // "blue-background": "#00A4DB",
+        //   // "blue-text": "#f7f7f7",
+        // },
       },
     },
   },
