@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
+import ToolTip from "../components/ToolTip.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -10,6 +11,16 @@ import { useSimulationStore } from "../stores/simulation.js";
 const simulationStore = useSimulationStore();
 
 const isOpen = ref(true);
+const showTooltip = ref(false);
+
+const currentHost = ref({
+  ip: "",
+  osType: "",
+  osVersion: "",
+  totalUsers: 0,
+  totalServices: 0,
+  compromised: false,
+});
 
 const form = ref({
   networkSizeList: "",
@@ -159,21 +170,17 @@ const plotNetwork = (graphData) => {
 
   d3.selectAll(".node")
     .on("mouseover", (e, d) => {
+      // NOTE: arbitrary px values cannot be used in runtime.
+      // set manually with d3 and raw css
       const left = e.clientX + 40 + "px";
       const top = e.clientY - 50 + "px";
       const { host } = d;
-      const html = `Host ID: ${host.hostId} <br/> IP: ${host.ip} <br/> OS type: ${host.osType} <br/> OS version: ${host.osVersion} <br/> Total Users: ${host.totalUsers} <br/> Total Services: ${host.totalServices} <br/> Compromised: ${host.compromised}`;
-      d3.select("#node-tooltip")
-        .html(html)
-        .attr(
-          "class",
-          "visible absolute bg-gray-700 text-center rounded-lg py-1 px-4 opacity-90",
-        )
-        .style("left", left)
-        .style("top", top);
+      currentHost.value = { ...host };
+      d3.select("#node-tooltip").style("left", left).style("top", top);
+      showTooltip.value = true;
     })
     .on("mouseout", () => {
-      d3.select("#node-tooltip").attr("class", "invisible").html(null);
+      showTooltip.value = false;
     });
 };
 </script>
@@ -280,5 +287,15 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
   </div>
-  <div id="node-tooltip" class="absolute invisible"></div>
+  <!-- NOTE: use v-show here as we only want to toggle css properties. Inefficient and will not work with v-if directive  -->
+  <ToolTip
+    id="node-tooltip"
+    v-show="showTooltip"
+    :ip="currentHost.ip"
+    :osType="currentHost.osType"
+    :osVersion="currentHost.osVersion"
+    :totalUsers="currentHost.totalUsers"
+    :totalServices="currentHost.totalServices"
+    :compromised="currentHost.compromised"
+  />
 </template>
