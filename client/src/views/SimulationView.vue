@@ -199,116 +199,127 @@ const plotNetwork = (graphData) => {
 <template>
   <div class="flex flex-row">
     <div v-if="isOpen">
-      <div class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5">
-
-      <div class="tabs">
-        <div
-          class="tab text-xs text-center"
-          :class="{ 'bg-gray-500': isInputView }"
-          @click="() => {isInputView = true}"
-        >
-          Simulation Inputs
+      <div
+        class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5"
+      >
+        <div class="tabs">
+          <div
+            class="tab text-xs text-center"
+            :class="{ 'bg-gray-500': isInputView }"
+            @click="
+              () => {
+                isInputView = true;
+              }
+            "
+          >
+            Simulation Inputs
+          </div>
+          <div
+            class="tab text-xs text-center"
+            :class="{ 'bg-gray-500': !isInputView }"
+            @click="
+              () => {
+                isInputView = false;
+              }
+            "
+          >
+            Visualisation Options
+          </div>
         </div>
-        <div
-          class="tab text-xs text-center"
-          :class="{ 'bg-gray-500': !isInputView }"
-          @click="() => {isInputView = false}"
-        >
-          Visualisation Options
-        </div>
-      </div>
 
         <div v-if="isInputView">
-
-            <div class="flex flex-col items-center">
-              <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
-              <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
-                <div>
-                  <FormField
-                    v-model="form.networkSizeList"
-                    label="Network Size List"
-                    placeholder="Network Size"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <FormField
-                    v-model="form.startTime"
-                    label="Start Time"
-                    placeholder="Start Time"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <FormField
-                    v-model="form.finishTime"
-                    label="Finish Time"
-                    placeholder="Finish Time"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <FormField
-                    v-model="form.mtdInterval"
-                    label="MTD Interval"
-                    placeholder="MTD Interval"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <FormField
-                    v-model="form.scheme"
-                    label="Scheme"
-                    placeholder="Scheme"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <FormField
-                    v-model="form.totalNodes"
-                    label="Total Nodes"
-                    placeholder="Total Nodes"
-                    type="text"
-                  />
-                </div>
-                <div class="text-center">
-                  <button
-                    class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </form>
-            </div>
+          <div class="flex flex-col items-center">
+            <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <form
+              class="flex flex-col space-y-2"
+              @submit.prevent="handleSubmit"
+            >
+              <div>
+                <FormField
+                  v-model="form.networkSizeList"
+                  label="Network Size List"
+                  placeholder="Network Size"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.startTime"
+                  label="Start Time"
+                  placeholder="Start Time"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.finishTime"
+                  label="Finish Time"
+                  placeholder="Finish Time"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.mtdInterval"
+                  label="MTD Interval"
+                  placeholder="MTD Interval"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.scheme"
+                  label="Scheme"
+                  placeholder="Scheme"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalNodes"
+                  label="Total Nodes"
+                  placeholder="Total Nodes"
+                  type="text"
+                />
+              </div>
+              <div class="text-center">
+                <button
+                  class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
         <div v-else>
-            <div class="flex flex-col items-center">
-              <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
-              <button
-                @click="colorByLayer"
-                class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
-                Color By Layer
-              </button>
-              <button
-                @click="colorBySubnet"
-                class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
-                Color By Subnet
-              </button>
-              <button
-                @click="colorByCompromised"
-                class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
-                Color by Compromised
-              </button>
-              <button
-                @click="resetZoom"
-                class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
-                Reset Zoom
-              </button>
-            </div>
+          <div class="flex flex-col items-center">
+            <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
+            <button
+              @click="colorByLayer"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color By Layer
+            </button>
+            <button
+              @click="colorBySubnet"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color By Subnet
+            </button>
+            <button
+              @click="colorByCompromised"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color by Compromised
+            </button>
+            <button
+              @click="resetZoom"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Reset Zoom
+            </button>
+          </div>
         </div>
       </div>
     </div>
