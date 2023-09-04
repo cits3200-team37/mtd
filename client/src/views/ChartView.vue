@@ -12,7 +12,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useChartStore } from "../stores/charts";
-import AbyHost from "../components/AttackbyHostChart.vue";
+import AbyHost from "../components/charts/AttackbyHostChart.vue";
 
 const store = useChartStore();
 const data = ref();
