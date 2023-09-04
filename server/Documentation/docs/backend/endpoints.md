@@ -98,9 +98,6 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
 - `totalNodes` is the number of nodes in the network (network size)
     - Stable test limit: 20 <= `totalNodes` <= 1000
 - `seed` can be provided to replicate simulations.
-- `checkpoints` is a list of time value to save snapshots as simulation runs
-    - Stable test limit: No apparent limit (even negative integers do not produce an error)
-    - Logical limit: Positive integers
 - `totalEndpoints` is the number of exposed nodes
     - Stable test limit: `totalEndpoints` > 0 and `totalEndpoints` < `totalNodes`
 -  `totalSubnets` is the number of subnets
@@ -114,5 +111,4 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
     - No known limit causes error
 - `terminateCompromiseRatio` is the compromised ratio at which the simulation will terminate
     - Logical limit: 0.0 < `terminateCompromiseRatio` <= 1.0
-- `newNetwork` is a boolean value; `True` creates new snapshots based on network size, `False` loads snapshots based on network size
 
