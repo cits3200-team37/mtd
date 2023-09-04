@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col px-10 pt-12">
+  <div class="h-[calc(100vh-36px)] flex flex-col px-10 pt-12">
     <p class="text-3xl pb-4">Downloads</p>
     <p class="text-xl">
       Latest Version <span class="">{{ version }}</span>
