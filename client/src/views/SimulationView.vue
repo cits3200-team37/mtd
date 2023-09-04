@@ -169,6 +169,7 @@ const plotNetwork = (graphData) => {
     .join("circle")
     .attr("class", "node")
     .attr("r", 8)
+    .style("cursor", "pointer")
     .attr("fill", (d) => color(d.layer));
 
   node.append("title").text((d) => d.id);
