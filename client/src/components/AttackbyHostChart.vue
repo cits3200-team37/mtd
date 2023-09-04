@@ -52,8 +52,8 @@ const attackRecordArray = Object.values(attackRecord.current_host_uuid)
 // Function to create the Gantt chart with legend
 const createChart = () => {
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-  const width = 1000 - margin.left - margin.right;
-  const height = 400 - margin.top - margin.bottom;
+  const width = 800 - margin.left - margin.right;
+  const height = 300 - margin.top - margin.bottom;
 
   const svgContainer = d3
     .select(svg.value)
