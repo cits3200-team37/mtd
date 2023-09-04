@@ -287,10 +287,9 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
   </div>
-  <!-- NOTE: use v-show here as we only want to toggle css properties. Inefficient and will not work with v-if directive  -->
   <ToolTip
     id="node-tooltip"
-    v-show="showTooltip"
+    :showTooltip="showTooltip"
     :ip="currentHost.ip"
     :osType="currentHost.osType"
     :osVersion="currentHost.osVersion"
