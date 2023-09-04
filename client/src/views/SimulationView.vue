@@ -276,6 +276,12 @@ const plotNetwork = (graphData) => {
           >
             Color by Compromised
           </button>
+          <button
+            @click="resetZoom"
+            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+          >
+            Reset Zoom
+          </button>
         </div>
       </div>
     </div>
