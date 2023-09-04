@@ -287,6 +287,7 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
   </div>
+  <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
     id="node-tooltip"
     :showTooltip="showTooltip"
