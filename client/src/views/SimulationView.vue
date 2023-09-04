@@ -129,7 +129,6 @@ const plotNetwork = (graphData) => {
     .force("center", d3.forceCenter(width / 2, height / 2))
     .on("tick", ticked);
 
-  // TODO: set width and height
   const svg = d3
     .select("#network-graph")
     .append("svg")
