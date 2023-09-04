@@ -17,14 +17,19 @@ onMounted(async () => {
   // await router.push("/");
 });
 
-window.addEventListener('theme-changed', (e) => {
+window.addEventListener("theme-changed", (e) => {
   theme.value = e.detail.storage;
 });
-
 </script>
 <template>
-  <div class="bg-background-color text-text-color"
-    :class="{ 'theme-dark': theme == 'dark', 'theme-light': theme == 'light', 'theme-blue': theme == 'blue' }">
+  <div
+    class="bg-background-color text-text-color"
+    :class="{
+      'theme-dark': theme == 'dark',
+      'theme-light': theme == 'light',
+      'theme-blue': theme == 'blue',
+    }"
+  >
     <TitleBar />
     <NavBar />
     <RouterView />

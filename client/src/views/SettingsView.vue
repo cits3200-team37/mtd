@@ -11,6 +11,10 @@
 <script setup>
 const setTheme = (theme) => {
   localStorage.setItem("user-theme", theme);
-  window.dispatchEvent(new CustomEvent('theme-changed', { detail: { storage: localStorage.getItem('user-theme') } }));
+  window.dispatchEvent(
+    new CustomEvent("theme-changed", {
+      detail: { storage: localStorage.getItem("user-theme") },
+    }),
+  );
 };
 </script>

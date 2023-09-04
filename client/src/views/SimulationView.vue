@@ -22,11 +22,10 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="flex flex-row" >
+  <div class="flex flex-row">
     <div v-if="isOpen">
       <div
         class="w-48 min-h-screen border border-black border-100 float-left px-5 pt-5"
-      
       >
         <div class="flex flex-col items-center">
           <p class="text-lg pb-5 text-center">Simulation Parameters</p>
