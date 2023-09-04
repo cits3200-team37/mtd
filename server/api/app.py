@@ -14,18 +14,36 @@ def simulate():
     scheme = request.json.get("scheme")
     total_nodes = request.json.get("totalNodes")
     seed = request.json.get("seed")
+    start_time = request.json.get("startTime")
+    total_layers = request.json.get("totalLayers")
+    total_endpoints = request.json.get("totalEndpoints")
+    total_subnets = request.json.get("totalSubnets")
+    total_layers = request.json.get("totalLayers")
+    target_layer = request.json.get("targetLayer")
+    total_database = request.json.get("totalDatabase")
+    terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
 
-    if not all([finish_time, mtd_interval, scheme, total_nodes]):
+    
+
+    if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
 
     result = simulate_without_saving(
-        start_time=0,
+        start_time=start_time,
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
         total_nodes=total_nodes,
         seed=seed,
+        total_endpoints=total_endpoints,
+        total_subnets=total_subnets,
+        total_layers=total_layers,
+        target_layer=target_layer,
+        total_database=total_database,
+        new_network=new_network,
+        terminate_compromise_ratio=termiate_compromise_ratio
     )
+
     data = {}
     net_graph = nx.node_link_data(result._network.graph)
     for node in net_graph["nodes"]:
