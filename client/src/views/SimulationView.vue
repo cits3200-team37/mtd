@@ -204,26 +204,26 @@ const plotNetwork = (graphData) => {
       >
         <div class="tabs">
           <div
-            class="tab text-xs text-center bg-red-100 text-black"
-            :class="{ underline: isInputView }"
+            class="tab text-xs p-1 pl-2 text-center bg-neutral-800 text-white rounded-l-md"
+            :class="{ 'bg-neutral-700': isInputView }"
             @click="
               () => {
                 isInputView = true;
               }
             "
           >
-            Simulation Inputs
+            Simulation
           </div>
           <div
-            class="tab text-xs text-center bg-red-100 text-black"
-            :class="{ underline: !isInputView }"
+            class="tab text-xs p-1 pr-2 text-center bg-neutral-800 text-white rounded-r-md"
+            :class="{ 'bg-neutral-700': !isInputView }"
             @click="
               () => {
                 isInputView = false;
               }
             "
           >
-            Visualisation Options
+            Visualisation
           </div>
         </div>
 
