@@ -202,10 +202,10 @@ const plotNetwork = (graphData) => {
       <div
         class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5"
       >
-        <div class="tabs">
+        <div class="tabs ">
           <div
-            class="tab text-xs text-center"
-            :class="{ 'bg-gray-500': isInputView }"
+            class="tab text-xs text-center bg-red-100 text-black"
+            :class="{ 'underline': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -215,8 +215,8 @@ const plotNetwork = (graphData) => {
             Simulation Inputs
           </div>
           <div
-            class="tab text-xs text-center"
-            :class="{ 'bg-gray-500': !isInputView }"
+            class="tab text-xs text-center bg-red-100 text-black"
+            :class="{ 'underline': !isInputView }"
             @click="
               () => {
                 isInputView = false;
