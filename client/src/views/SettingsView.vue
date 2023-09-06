@@ -1,7 +1,9 @@
 <template>
-  <div class="h-[calc(100vh-36px)]">
-    <h1>Settings page</h1>
+  <div class="h-[calc(100vh-36px)] flex flex-row">
+    <chart />
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import chart from "../components/charts/AttackOperation.vue";
+</script>

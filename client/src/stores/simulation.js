@@ -5,6 +5,7 @@ export const useSimulationStore = defineStore("simulation", {
   state: () => ({
     parameters: null,
     network: null,
+    attackRecord: null,
   }),
   actions: {
     async simulate(simulateFormValues) {
@@ -21,8 +22,10 @@ export const useSimulationStore = defineStore("simulation", {
         "http://localhost:8001/simulate",
         reqBody,
       );
-      const { network } = data;
+      console.log(data);
+      const { network, attack_record } = data;
       this.network = network;
+      this.attackRecord = attack_record;
       // TODO: set other response variables related to the data object from the api call
     },
   },
