@@ -11,7 +11,7 @@ export const useChartStore = defineStore("charts", {
       const dummyObject = {
         finishTime: 3000,
         mtdInterval: 20,
-        scheme: "None",
+        scheme: "random",
         totalNodes: 50,
       };
       const { data, status } = await server.post("/simulate", dummyObject);
