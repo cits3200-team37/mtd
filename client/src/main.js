@@ -40,10 +40,7 @@ const handleWindowMinimise = async () => {
 };
 const handleWindowClose = async () => {
   if (BrowserWindow.getFocusedWindow().closable) {
-    console.log("closeable");
     BrowserWindow.getFocusedWindow().close();
-  } else {
-    console.log("not closeable");
   }
 };
 // This method will be called when Electron has finished
