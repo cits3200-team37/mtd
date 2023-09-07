@@ -45,7 +45,7 @@ const attackRecordArray = Object.values(attackRecord.current_host_uuid)
     start_time: attackRecord.start_time[i],
     duration: attackRecord.duration[i],
     color: attackActionLegend.find(
-      (entry) => entry.name === attackRecord.name[i]
+      (entry) => entry.name === attackRecord.name[i],
     ).color,
   }));
 
@@ -134,7 +134,7 @@ const createChart = () => {
     .append("rect")
     .attr("class", "bar")
     .attr("x", (d) => xScale(d.start_time))
-    .attr("y", (d) => yScale(d.currentHostToken) + yScale.bandwidth() / 2 - 4 )
+    .attr("y", (d) => yScale(d.currentHostToken) + yScale.bandwidth() / 2 - 4)
     .attr("width", (d) => xScale(d.duration))
     .attr("height", 8)
     .attr("fill", (d) => d.color);
