@@ -29,7 +29,7 @@ def simulate():
         return {}, 400
 
     result = simulate_without_saving(
-        start_time=start_time,
+        start_time=0,
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
@@ -40,7 +40,7 @@ def simulate():
         total_layers=total_layers,
         target_layer=target_layer,
         total_database=total_database,
-        terminate_compromise_ratio=terminate_compromise_ratio
+        terminate_compromise_ratio=0.8
     )
 
     data = {}
