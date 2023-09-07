@@ -6,6 +6,7 @@ if (require("electron-squirrel-startup")) {
   app.quit();
 }
 
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -62,15 +63,14 @@ app.on("window-all-closed", () => {
   }
 });
 
-app.on("activate", () => {
+app.on("activate", async () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+   await createWindow();
   }
   ipcMain.on('window-minimise', handleWindowMinimise)
   ipcMain.on('window-close', handleWindowClose)
-
 });
 
 // In this file you can include the rest of your app's specific main process
