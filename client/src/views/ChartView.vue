@@ -2,7 +2,8 @@
   <div class="flex flex-col items-center h-screen">
     <div v-if="data != null">
       Updated
-      <AbyHost :attackRecord="data" />
+      <AttackbyHost :attackRecord="data" />
+      <AttackOperation :attackRecord="data" />
     </div>
     <div v-else>null</div>
   </div>
@@ -11,7 +12,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useChartStore } from "../stores/charts";
-import AbyHost from "../components/charts/AttackbyHostChart.vue";
+import AttackbyHost from "../components/charts/AttackbyHost.vue";
+import AttackOperation from "../components/charts/AttackOperation.vue";
 
 const store = useChartStore();
 const data = ref();
