@@ -32,9 +32,6 @@ const createWindow = () => {
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
     );
   }
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
 };
 
 // handle ipc calls regarding windows and linux window management
@@ -75,3 +72,6 @@ app.on("activate", async () => {
 // code. You can also put them in separate files and import them here.
 ipcMain.on('window-minimise', handleWindowMinimise)
 ipcMain.on('window-close', handleWindowClose)
+ipcMain.handle('operating-system', (event,args) => {
+  return process.platform
+})

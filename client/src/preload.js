@@ -4,5 +4,6 @@ import  { contextBridge, ipcRenderer } from 'electron'
 
 contextBridge.exposeInMainWorld('electronAPI', {
     windowMinimise: () => ipcRenderer.send('window-minimise'),
-    windowClose: () => ipcRenderer.send('window-close')
+    windowClose: () => ipcRenderer.send('window-close'),
+    operatingSystem: () => ipcRenderer.invoke('operating-system'),
 })
