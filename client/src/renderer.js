@@ -36,18 +36,18 @@ const pinia = createPinia();
 createApp(App).use(router).use(pinia).mount("#app");
 
 const handleMinimise = () => {
-    try {
-        window.electronAPI.windowMinimise();
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    window.electronAPI.windowMinimise();
+  } catch (error) {
+    console.log(error);
+  }
 };
 const handleClose = () => {
-    try {
-        window.electronAPI.windowClose();
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    window.electronAPI.windowClose();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
-export { handleClose, handleMinimise }
+export { handleClose, handleMinimise };

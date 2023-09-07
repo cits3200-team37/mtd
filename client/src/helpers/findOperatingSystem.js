@@ -1,3 +1,3 @@
 export default function findOperatingSystem() {
-    return process.platform
+  return process.platform;
 }
