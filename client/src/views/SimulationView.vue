@@ -200,7 +200,7 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5"
+        class="w-48 bg-navbar-primary h-[calc(100vh-36px)] border border-black border-100 float-left px-5 pt-5 overflow-y-auto"
       >
         <div class="flex flex-row">
           <div
@@ -323,8 +323,8 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div class="w-6 min-h-screen float-left z-50">
-      <div class="min-h-screen flex items-center justify-center">
+    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
+      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
         <div v-if="isOpen">
           <button @click="isOpen = !isOpen" class="text-white">
             <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
@@ -337,7 +337,7 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
+    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
