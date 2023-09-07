@@ -13,6 +13,8 @@ const simulationStore = useSimulationStore();
 const isOpen = ref(true);
 const showTooltip = ref(false);
 
+const isInputView = ref(true);
+
 const currentHost = ref({
   ip: "",
   osType: "",
@@ -198,94 +200,131 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 min-h-screen border border-black border-100 float-left px-5 pt-5"
+        class="w-48 bg-navbar-primary h-[calc(100vh-36px)] border border-black border-100 float-left px-5 pt-5 overflow-y-auto"
       >
-        <div class="flex flex-col items-center">
-          <p class="text-lg pb-5 text-center">Simulation Parameters</p>
-          <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
-            <div>
-              <FormField
-                v-model="form.networkSizeList"
-                label="Network Size List"
-                placeholder="Network Size"
-                type="text"
-              />
-            </div>
-            <div>
-              <FormField
-                v-model="form.startTime"
-                label="Start Time"
-                placeholder="Start Time"
-                type="text"
-              />
-            </div>
-            <div>
-              <FormField
-                v-model="form.finishTime"
-                label="Finish Time"
-                placeholder="Finish Time"
-                type="text"
-              />
-            </div>
-            <div>
-              <FormField
-                v-model="form.mtdInterval"
-                label="MTD Interval"
-                placeholder="MTD Interval"
-                type="text"
-              />
-            </div>
-            <div>
-              <FormField
-                v-model="form.scheme"
-                label="Scheme"
-                placeholder="Scheme"
-                type="text"
-              />
-            </div>
-            <div>
-              <FormField
-                v-model="form.totalNodes"
-                label="Total Nodes"
-                placeholder="Total Nodes"
-                type="text"
-              />
-            </div>
-            <div class="text-center">
-              <button class="py-1 px-4 mt-3 w-full text-center rounded-md mb-4">
-                Submit
-              </button>
-            </div>
-          </form>
-          <button
-            @click="colorByLayer"
-            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+        <div class="flex flex-row">
+          <div
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-neutral-800 text-white rounded-l-md"
+            :class="{ 'bg-teal-700': isInputView }"
+            @click="
+              () => {
+                isInputView = true;
+              }
+            "
           >
-            Color By Layer
-          </button>
-          <button
-            @click="colorBySubnet"
-            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            Simulation
+          </div>
+          <div
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-neutral-800 text-white rounded-r-md"
+            :class="{ 'bg-teal-700': !isInputView }"
+            @click="
+              () => {
+                isInputView = false;
+              }
+            "
           >
-            Color By Subnet
-          </button>
-          <button
-            @click="colorByCompromised"
-            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-          >
-            Color by Compromised
-          </button>
-          <button
-            @click="resetZoom"
-            class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-          >
-            Reset Zoom
-          </button>
+            Visualisation
+          </div>
+        </div>
+
+        <div v-if="isInputView">
+          <div class="flex flex-col items-center">
+            <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <form
+              class="flex flex-col space-y-2"
+              @submit.prevent="handleSubmit"
+            >
+              <div>
+                <FormField
+                  v-model="form.networkSizeList"
+                  label="Network Size List"
+                  placeholder="Network Size"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.startTime"
+                  label="Start Time"
+                  placeholder="Start Time"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.finishTime"
+                  label="Finish Time"
+                  placeholder="Finish Time"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.mtdInterval"
+                  label="MTD Interval"
+                  placeholder="MTD Interval"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.scheme"
+                  label="Scheme"
+                  placeholder="Scheme"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalNodes"
+                  label="Total Nodes"
+                  placeholder="Total Nodes"
+                  type="text"
+                />
+              </div>
+              <div class="text-center">
+                <button
+                  class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div v-else>
+          <div class="flex flex-col items-center">
+            <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
+            <button
+              @click="colorByLayer"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color By Layer
+            </button>
+            <button
+              @click="colorBySubnet"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color By Subnet
+            </button>
+            <button
+              @click="colorByCompromised"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Color by Compromised
+            </button>
+            <button
+              @click="resetZoom"
+              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Reset Zoom
+            </button>
+          </div>
         </div>
       </div>
     </div>
-    <div class="w-6 min-h-screen float-left z-50">
-      <div class="min-h-screen flex items-center justify-center">
+    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
+      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
         <div v-if="isOpen">
           <button @click="isOpen = !isOpen" class="text-white">
             <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
@@ -298,7 +337,7 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 my-2 max-h-screen"></div>
+    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
