@@ -4,7 +4,7 @@
     <div v-if="data != null">
       Updated
       <AttackbyHost :attackRecord="data" />
-      <AttackOp :attackRecord="data" />
+      <AttackOperation :attackRecord="data" />
     </div>
     <div v-else>null</div>
   </div>
@@ -13,8 +13,8 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { useChartStore } from "../stores/charts";
-import AttackbyHost from "../components/charts/AttackbyHostChart.vue";
-import AttackOp from "../components/charts/AttackOp.vue";
+import AttackbyHost from "../components/charts/AttackbyHost.vue";
+import AttackOperation from "../components/charts/AttackOperation.vue";
 
 const store = useChartStore();
 const data = ref();
