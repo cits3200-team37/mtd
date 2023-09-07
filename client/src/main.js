@@ -69,9 +69,9 @@ app.on("activate", async () => {
   if (BrowserWindow.getAllWindows().length === 0) {
    await createWindow();
   }
-  ipcMain.on('window-minimise', handleWindowMinimise)
-  ipcMain.on('window-close', handleWindowClose)
 });
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+ipcMain.on('window-minimise', handleWindowMinimise)
+ipcMain.on('window-close', handleWindowClose)
