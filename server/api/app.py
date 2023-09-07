@@ -35,12 +35,6 @@ def simulate():
         scheme=scheme,
         total_nodes=total_nodes,
         seed=seed,
-        total_endpoints=total_endpoints,
-        total_subnets=total_subnets,
-        total_layers=total_layers,
-        target_layer=target_layer,
-        total_database=total_database,
-        terminate_compromise_ratio=0.8
     )
 
     data = {}
