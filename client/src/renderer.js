@@ -26,7 +26,7 @@
  * ```
  */
 
-import { createApp, onMounted } from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import { createPinia } from "pinia";
 import router from "./router";
@@ -34,3 +34,20 @@ import "./style.css";
 
 const pinia = createPinia();
 createApp(App).use(router).use(pinia).mount("#app");
+
+const handleMinimise = () => {
+    try {
+        window.electronAPI.windowMinimise();
+    } catch (error) {
+        console.log(error);
+    }
+};
+const handleClose = () => {
+    try {
+        window.electronAPI.windowClose();
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export { handleClose, handleMinimise }

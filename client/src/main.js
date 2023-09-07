@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 const path = require("path");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -19,7 +19,7 @@ const createWindow = () => {
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
     },
   });
 
@@ -36,6 +36,18 @@ const createWindow = () => {
   // mainWindow.webContents.openDevTools();
 };
 
+// handle ipc calls regarding windows and linux window management
+const handleWindowMinimise = async () => {
+  BrowserWindow.getFocusedWindow().minimize();
+};
+const handleWindowClose = async () => {
+  if (BrowserWindow.getFocusedWindow().closable) {
+    console.log("closeable");
+    BrowserWindow.getFocusedWindow().close();
+  } else {
+    console.log("not closeable");
+  }
+};
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -56,6 +68,9 @@ app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
+  ipcMain.on('window-minimise', handleWindowMinimise)
+  ipcMain.on('window-close', handleWindowClose)
+
 });
 
 // In this file you can include the rest of your app's specific main process

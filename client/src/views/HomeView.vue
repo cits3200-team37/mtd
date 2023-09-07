@@ -60,9 +60,7 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
-
 const toSimulateView = async () => {
   await router.push("/simulation");
 };
