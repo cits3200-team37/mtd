@@ -2,23 +2,36 @@
   <nav class="w-16 bg-navbar-primary h-[calc(100vh-36px)] float-left">
     <div class="flex flex-col items-center h-full justify-between">
       <div
-        class="flex flex-col flex-nowrap py-4 space-y-8 relative text-center justify-normal h-full"
+        class="flex flex-col flex-nowrap py-4 space-y-8 relative text-center justify-normal h-full w-full"
       >
         <div
           v-for="route in routes"
           :key="route.path"
           @click="handleRoute(route)"
         >
-          <svg-icon
-            type="mdi"
-            :path="route.icon"
-            size="36"
-            class="text-navbar-icon hover:text-white hover:cursor-pointer"
+          <div
+            class="flex flex-col"
             :class="{
-              'text-white': route.active,
-              'absolute bottom-5': route.path == `/download`,
+              'absolute inset-x-0 bottom-3': route.path == `/download`,
             }"
-          ></svg-icon>
+          >
+            <div v-if="route.active">
+              <div
+                class="top left-0 absolute h-9 bg-white w-1 rounded-md"
+              ></div>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <svg-icon
+                type="mdi"
+                :path="route.icon"
+                size="36"
+                class="text-navbar-icon hover:text-white hover:cursor-pointer"
+                :class="{
+                  'text-white': route.active,
+                }"
+              ></svg-icon>
+            </div>
+          </div>
         </div>
       </div>
     </div>
