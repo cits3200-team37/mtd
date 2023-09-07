@@ -40,8 +40,7 @@ def simulate():
         total_layers=total_layers,
         target_layer=target_layer,
         total_database=total_database,
-        new_network=new_network,
-        terminate_compromise_ratio=termiate_compromise_ratio
+        terminate_compromise_ratio=terminate_compromise_ratio
     )
 
     data = {}
