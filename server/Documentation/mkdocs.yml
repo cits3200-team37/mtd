@@ -1,6 +1,6 @@
-site_name: MTDSimTime
-repo_url: https://github.com/benvarian/MTDSimTime
-repo_name: benvarian/MTDSimTime
+site_name: mtd
+repo_url: https://github.com/cits3200-team37/mtd
+repo_name: cits3200-team37/mtd
 
 theme:
   name: material
@@ -18,13 +18,13 @@ theme:
   palette:
     - scheme: default
       toggle:
-        icon: material/toggle-switch-off-outline 
+        icon: material/toggle-switch-off-outline
         name: Switch to dark mode
       primary: blue
-    - scheme: slate 
+    - scheme: slate
       toggle:
         icon: material/toggle-switch
-        name: Switch to light mode    
+        name: Switch to light mode
       primary: blue
 
 markdown_extensions:
@@ -42,7 +42,7 @@ markdown_extensions:
   - attr_list
 
 nav:
- - Home: index.md
- - Code Review: codereview.md
- - Back End:
+  - Home: index.md
+  - Code Review: codereview.md
+  - Back End:
       - End points: backend/endpoints.md

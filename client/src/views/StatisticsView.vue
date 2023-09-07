@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoading == false">
+  <div v-if="isLoading == false" class="h-[calc(100vh-36px)]">
     <h1>Statistics page</h1>
     {{ data }}
   </div>
