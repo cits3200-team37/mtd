@@ -198,7 +198,7 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-navbar-primary min-h-screen border border-black border-100 float-left px-5 pt-5"
+        class="w-48 min-h-screen border border-black border-100 float-left px-5 pt-5"
       >
         <div class="flex flex-col items-center">
           <p class="text-lg pb-5 text-center">Simulation Parameters</p>
@@ -252,9 +252,7 @@ const plotNetwork = (graphData) => {
               />
             </div>
             <div class="text-center">
-              <button
-                class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              >
+              <button class="py-1 px-4 mt-3 w-full text-center rounded-md mb-4">
                 Submit
               </button>
             </div>

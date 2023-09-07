@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>Chart page</h1>
+  <div class="flex flex-col items-center h-screen">
     <div v-if="data != null">
       Updated
       <AbyHost :attackRecord="data" />
