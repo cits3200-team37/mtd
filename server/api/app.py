@@ -23,8 +23,6 @@ def simulate():
     total_database = request.json.get("totalDatabase")
     terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
 
-    
-
     if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
 
@@ -66,6 +64,10 @@ def simulate():
     data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
 
     return data, 200
+
+@app.route("/schemes", methods=["GET"])
+def schemes():
+    return ["random", "simultaneous", "alternative", "single", "None"], 200
 
 
 @app.route("/health", methods=["GET"])

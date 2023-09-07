@@ -4,6 +4,7 @@ import SimulationView from "../views/SimulationView.vue";
 import ChartView from "../views/ChartView.vue";
 import StatisticsView from "../views/StatisticsView.vue";
 import SettingsView from "../views/SettingsView.vue";
+import DownloadView from "../views/DownloadView.vue";
 
 const router = createRouter({
   // mode: process.env.IS_ELECTRON ? 'hash' : 'history',
@@ -33,6 +34,11 @@ const router = createRouter({
       path: "/settings",
       name: "Settings",
       component: SettingsView,
+    },
+    {
+      path: "/download",
+      name: "Download",
+      component: DownloadView,
     },
     {
       path: "/:pathMatch(.*)*",

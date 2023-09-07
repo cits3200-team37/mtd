@@ -1,6 +1,8 @@
 <template>
   <div v-if="isLoading == false">
-    <h1>Statistics page</h1>
+    <div class="flex flex-col items-center h-[calc(100vh-36px)]">
+      <h1>Statistics page</h1>
+    </div>
     {{ data }}
   </div>
   <div v-else>
