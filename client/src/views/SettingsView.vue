@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center h-screen">
+  <div class="flex flex-col items-center h-[calc(100vh-36px)]">
     <h1>Settings page</h1>
     <h2>Theme Variants:</h2>
     <button @click="setTheme('dark')">Dark Theme</button>
