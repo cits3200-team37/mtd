@@ -27,42 +27,64 @@ const errors = ref({
 
 const handleSubmit = async () => {
   // Reset errors
-  Object.keys(errors.value).forEach(key => {
+  Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
   });
 
   const networkSizes = form.value.network_size_list.split(",");
   for (let size of networkSizes) {
-      let parsedSize = parseInt(size.trim());
-      if (isNaN(parsedSize)) {
-          errors.value.network_size_list = "Network Size List must be a list of numbers separated by commas";
-          isValid.value = false;
-          break; 
-      } else if (parsedSize < 20) {
-          errors.value.network_size_list = "Each number in Network Size List must be 20 or greater";
-          isValid.value = false;
-          break; 
-      }
+    let parsedSize = parseInt(size.trim());
+    if (isNaN(parsedSize)) {
+      errors.value.network_size_list =
+        "Network Size List must be a list of numbers separated by commas";
+      isValid.value = false;
+      break;
+    } else if (parsedSize < 20) {
+      errors.value.network_size_list =
+        "Each number in Network Size List must be 20 or greater";
+      isValid.value = false;
+      break;
+    }
   }
 
-  if (!form.value.start_time || isNaN(form.value.start_time) || form.value.start_time < 0) {
+  if (
+    !form.value.start_time ||
+    isNaN(form.value.start_time) ||
+    form.value.start_time < 0
+  ) {
     errors.value.start_time = "Start Time must be a non-negative number";
     isValid.value = false;
   }
 
-  if (!form.value.finish_time || isNaN(form.value.finish_time) || form.value.finish_time <= form.value.start_time) {
-    errors.value.finish_time = "Finish Time must be a number greater than Start Time";
+  if (
+    !form.value.finish_time ||
+    isNaN(form.value.finish_time) ||
+    form.value.finish_time <= form.value.start_time
+  ) {
+    errors.value.finish_time =
+      "Finish Time must be a number greater than Start Time";
     isValid.value = false;
   }
 
-  if (!form.value.mtd_interval || isNaN(form.value.mtd_interval) || form.value.start_time < 0) {
+  if (
+    !form.value.mtd_interval ||
+    isNaN(form.value.mtd_interval) ||
+    form.value.start_time < 0
+  ) {
     errors.value.mtd_interval = "MTD Interval must be a non-negative number";
     isValid.value = false;
   }
 
-  const validSchemes = ["random", "simultaneous", "alternative", "single", "None"];
+  const validSchemes = [
+    "random",
+    "simultaneous",
+    "alternative",
+    "single",
+    "None",
+  ];
   if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
-    errors.value.scheme = "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+    errors.value.scheme =
+      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
     isValid.value = false;
   }
 
@@ -77,7 +99,7 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
-  
+
   console.log(form.value);
 };
 </script>
@@ -97,7 +119,9 @@ const handleSubmit = async () => {
                 label="Network Size List"
                 placeholder="Network Size"
                 type="text"
-                :color="errors.network_size_list ? 'border-red-500 border-4' : ''"
+                :color="
+                  errors.network_size_list ? 'border-red-500 border-4' : ''
+                "
               />
             </div>
             <p class="text-red-500">{{ errors.network_size_list }}</p>
