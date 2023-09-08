@@ -45,12 +45,12 @@ onMounted(() => {
 
 const isValid = ref(true);
 const errors = ref({
-  network_size_list: "",
-  start_time: "",
-  finish_time: "",
-  mtd_interval: "",
+  networkSizeList: "",
+  startTime: "",
+  finishTime: "",
+  mtdInterval: "",
   scheme: "",
-  total_nodes: "",
+  totalNodes: "",
 });
 
 const handleSubmit = async () => {
@@ -59,16 +59,16 @@ const handleSubmit = async () => {
     errors.value[key] = "";
   });
 
-  const networkSizes = form.value.network_size_list.split(",");
+  const networkSizes = form.value.networkSizeList.split(",");
   for (let size of networkSizes) {
     let parsedSize = parseInt(size.trim());
     if (isNaN(parsedSize)) {
-      errors.value.network_size_list =
+      errors.value.networkSizeList =
         "Network Size List must be a list of numbers separated by commas";
       isValid.value = false;
       break;
     } else if (parsedSize < 20) {
-      errors.value.network_size_list =
+      errors.value.networkSizeList =
         "Each number in Network Size List must be 20 or greater";
       isValid.value = false;
       break;
@@ -76,30 +76,30 @@ const handleSubmit = async () => {
   }
 
   if (
-    !form.value.start_time ||
-    isNaN(form.value.start_time) ||
-    form.value.start_time < 0
+    !form.value.startTime ||
+    isNaN(form.value.startTime) ||
+    form.value.startTime < 0
   ) {
-    errors.value.start_time = "Start Time must be a non-negative number";
+    errors.value.startTime = "Start Time must be a non-negative number";
     isValid.value = false;
   }
 
   if (
-    !form.value.finish_time ||
-    isNaN(form.value.finish_time) ||
-    form.value.finish_time <= form.value.start_time
+    !form.value.finishTime ||
+    isNaN(form.value.finishTime) ||
+    form.value.finishTime <= form.value.startTime
   ) {
-    errors.value.finish_time =
+    errors.value.finishTime =
       "Finish Time must be a number greater than Start Time";
     isValid.value = false;
   }
 
   if (
-    !form.value.mtd_interval ||
-    isNaN(form.value.mtd_interval) ||
-    form.value.start_time < 0
+    !form.value.mtdInterval ||
+    isNaN(form.value.mtdInterval) ||
+    form.value.startTime < 0
   ) {
-    errors.value.mtd_interval = "MTD Interval must be a non-negative number";
+    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
     isValid.value = false;
   }
 
@@ -116,11 +116,11 @@ const handleSubmit = async () => {
     isValid.value = false;
   }
 
-  if (!form.value.total_nodes || isNaN(form.value.total_nodes)) {
-    errors.value.total_nodes = "Total Nodes must be a number";
+  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
+    errors.value.totalNodes = "Total Nodes must be a number";
     isValid.value = false;
-  } else if (parseInt(form.value.total_nodes) < 20) {
-    errors.value.total_nodes = "Total Nodes must be 20 or greater";
+  } else if (parseInt(form.value.totalNodes) < 20) {
+    errors.value.totalNodes = "Total Nodes must be 20 or greater";
     isValid.value = false;
   }
 
@@ -327,41 +327,41 @@ const plotNetwork = (graphData) => {
                   placeholder="Network Size"
                   type="text"
                   :color="
-                    errors.network_size_list ? 'border-red-500 border-4' : ''
+                    errors.networkSizeList ? 'border-red-500 border-4' : ''
                   "
                 />
               </div>
-              <p class="text-red-500">{{ errors.network_size_list }}</p>
+              <p class="text-red-500">{{ errors.networkSizeList }}</p>
               <div>
                 <FormField
                   v-model="form.startTime"
                   label="Start Time"
                   placeholder="Start Time"
                   type="text"
-                  :color="errors.start_time ? 'border-red-500 border-4' : ''"
+                  :color="errors.startTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.start_time }}</p>
+              <p class="text-red-500">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
-                  :color="errors.finish_time ? 'border-red-500 border-4' : ''"
+                  :color="errors.finishTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.finish_time }}</p>
+              <p class="text-red-500">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
-                  :color="errors.mtd_interval ? 'border-red-500 border-4' : ''"
+                  :color="errors.mtdInterval ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.mtd_interval }}</p>
+              <p class="text-red-500">{{ errors.mtdInterval }}</p>
               <div>
                 <FormField
                   v-model="form.scheme"
@@ -378,10 +378,10 @@ const plotNetwork = (graphData) => {
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
-                  :color="errors.total_nodes ? 'border-red-500 border-4' : ''"
+                  :color="errors.totalNodes ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.total_nodes }}</p>
+              <p class="text-red-500">{{ errors.totalNodes }}</p>
               <div class="text-center">
                 <button
                   class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
