@@ -15,6 +15,7 @@ const form = ref({
   total_nodes: "",
 });
 
+const isValid = ref(true);
 const errors = ref({
   network_size_list: "",
   start_time: "",
@@ -35,42 +36,48 @@ for (let size of networkSizes) {
     let parsedSize = parseInt(size.trim());
     if (isNaN(parsedSize)) {
         errors.value.network_size_list = "Network Size List must be a list of numbers separated by commas";
-        return; 
+        isValid.value = false;
+        break; 
     } else if (parsedSize < 20) {
         errors.value.network_size_list = "Each number in Network Size List must be 20 or greater";
-        return; 
+        isValid.value = false;
+        break; 
     }
 }
 
   if (!form.value.start_time || isNaN(form.value.start_time) || form.value.start_time < 0) {
     errors.value.start_time = "Start Time must be a non-negative number";
-    return; 
+    isValid.value = false;
   }
 
   if (!form.value.finish_time || isNaN(form.value.finish_time) || form.value.finish_time <= form.value.start_time) {
     errors.value.finish_time = "Finish Time must be a number greater than Start Time";
-    return; 
+    isValid.value = false;
   }
 
   if (!form.value.mtd_interval || isNaN(form.value.mtd_interval) || form.value.start_time < 0) {
     errors.value.mtd_interval = "MTD Interval must be a non-negative number";
-    return; 
+    isValid.value = false;
   }
 
   const validSchemes = ["random", "simultaneous", "alternative", "single", "None"];
   if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
     errors.value.scheme = "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
-    return; 
+    isValid.value = false;
   }
 
   if (!form.value.total_nodes || isNaN(form.value.total_nodes)) {
     errors.value.total_nodes = "Total Nodes must be a number";
-    return; 
+    isValid.value = false;
   } else if (parseInt(form.value.total_nodes) < 20) {
     errors.value.total_nodes = "Total Nodes must be 20 or greater";
-    return; 
+    isValid.value = false;
   }
 
+  if (!isValid.value) {
+    return;
+  }
+  
   console.log(form.value);
 };
 </script>
@@ -92,6 +99,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.network_size_list }}</p>
             <div>
               <FormField
                 v-model="form.start_time"
@@ -100,6 +108,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.start_time }}</p>
             <div>
               <FormField
                 v-model="form.finish_time"
@@ -108,6 +117,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.finish_time }}</p>
             <div>
               <FormField
                 v-model="form.mtd_interval"
@@ -116,6 +126,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.mtd_interval }}</p>
             <div>
               <FormField
                 v-model="form.scheme"
@@ -124,6 +135,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.scheme }}</p>
             <div>
               <FormField
                 v-model="form.total_nodes"
@@ -132,6 +144,7 @@ for (let size of networkSizes) {
                 type="text"
               />
             </div>
+            <p class="text-red-500">{{ errors.total_nodes }}</p>
             <div class="text-center">
               <button
                 class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
