@@ -32,18 +32,18 @@ const handleSubmit = async () => {
   });
 
   const networkSizes = form.value.network_size_list.split(",");
-for (let size of networkSizes) {
-    let parsedSize = parseInt(size.trim());
-    if (isNaN(parsedSize)) {
-        errors.value.network_size_list = "Network Size List must be a list of numbers separated by commas";
-        isValid.value = false;
-        break; 
-    } else if (parsedSize < 20) {
-        errors.value.network_size_list = "Each number in Network Size List must be 20 or greater";
-        isValid.value = false;
-        break; 
-    }
-}
+  for (let size of networkSizes) {
+      let parsedSize = parseInt(size.trim());
+      if (isNaN(parsedSize)) {
+          errors.value.network_size_list = "Network Size List must be a list of numbers separated by commas";
+          isValid.value = false;
+          break; 
+      } else if (parsedSize < 20) {
+          errors.value.network_size_list = "Each number in Network Size List must be 20 or greater";
+          isValid.value = false;
+          break; 
+      }
+  }
 
   if (!form.value.start_time || isNaN(form.value.start_time) || form.value.start_time < 0) {
     errors.value.start_time = "Start Time must be a non-negative number";
@@ -97,6 +97,7 @@ for (let size of networkSizes) {
                 label="Network Size List"
                 placeholder="Network Size"
                 type="text"
+                :color="errors.network_size_list ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.network_size_list }}</p>
@@ -106,6 +107,7 @@ for (let size of networkSizes) {
                 label="Start Time"
                 placeholder="Start Time"
                 type="text"
+                :color="errors.start_time ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.start_time }}</p>
@@ -115,6 +117,7 @@ for (let size of networkSizes) {
                 label="Finish Time"
                 placeholder="Finish Time"
                 type="text"
+                :color="errors.finish_time ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.finish_time }}</p>
@@ -124,6 +127,7 @@ for (let size of networkSizes) {
                 label="MTD Interval"
                 placeholder="MTD Interval"
                 type="text"
+                :color="errors.mtd_interval ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.mtd_interval }}</p>
@@ -133,6 +137,7 @@ for (let size of networkSizes) {
                 label="Scheme"
                 placeholder="Scheme"
                 type="text"
+                :color="errors.scheme ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.scheme }}</p>
@@ -142,6 +147,7 @@ for (let size of networkSizes) {
                 label="Total Nodes"
                 placeholder="Total Nodes"
                 type="text"
+                :color="errors.total_nodes ? 'border-red-500 border-4' : ''"
               />
             </div>
             <p class="text-red-500">{{ errors.total_nodes }}</p>

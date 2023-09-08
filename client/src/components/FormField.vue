@@ -3,7 +3,7 @@
   <input
     :type="type"
     :placeholder="placeholder"
-    class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full"
+    :class="`p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full ${color}`"
     @input="updateInput"
     :value="modelValue"
   />
@@ -15,6 +15,7 @@ const props = defineProps({
   modelValue: { type: [String, Number], default: "" },
   placeholder: { type: String, default: "" },
   type: { type: String, default: "text" },
+  color: { type: String, default: "" },
 });
 const emit = defineEmits(["update:modelValue", "update"]);
 
