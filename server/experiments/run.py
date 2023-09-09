@@ -418,6 +418,19 @@ def simulate_without_saving(
     :param terminate_compromise_ratio: terminate the simulation if reached compromise ratio
     :param new_network: True: create new snapshots based on network size, False: load snapshots based on network size
     """
+    if total_endpoints is None:
+        total_endpoints = 5
+    if total_subnets is None:
+        total_subnets = 8
+    if total_layers is None:
+        total_layers = 4
+    if target_layer is None:
+        target_layer = 4
+    if total_database is None:
+        total_database = 2
+    if terminate_compromise_ratio is None:
+        terminate_compromise_ratio = 0.8
+
     # initialise the simulation
     env = simpy.Environment()
     end_event = env.event()
