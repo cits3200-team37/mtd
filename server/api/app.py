@@ -42,6 +42,14 @@ def simulate():
     target_layer = request.json.get("targetLayer")
     total_database = request.json.get("totalDatabase")
     terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
+    strategies = request.json.get("strategies")
+
+    if scheme is not None and scheme != "random":
+        if strategies is None:
+            return {"error": "MTD strategy not specified"}, 400
+        for strategy in strategies:
+            if strategy not in strategy_mapping.keys():
+                return {"error": f"Strategy '{strategy}' does not exist"}, 400
 
     if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
