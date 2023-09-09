@@ -57,6 +57,9 @@ def simulate():
                 return {"error": f"Strategy '{strategy}' does not exist"}, 400
             custom_strategies.append(strategy_mapping.get(strategy))
 
+    if scheme == "single" and len(custom_strategies) == 1:
+        return {"error": "More than one strategy specified for single scheme"}, 400
+
     result = simulate_without_saving(
         finish_time=finish_time,
         mtd_interval=mtd_interval,
@@ -69,6 +72,7 @@ def simulate():
         target_layer=target_layer,
         total_database=total_database,
         terminate_compromise_ratio=terminate_compromise_ratio,
+        custom_strategies=custom_strategies,
     )
 
     data = {}
