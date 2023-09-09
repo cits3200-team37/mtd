@@ -391,7 +391,6 @@ def simulate_without_saving(
     scheme="random",
     mtd_interval=None,
     custom_strategies=None,
-    checkpoints=None,
     total_nodes=50,
     total_endpoints=5,
     total_subnets=8,
@@ -399,7 +398,6 @@ def simulate_without_saving(
     target_layer=4,
     total_database=2,
     terminate_compromise_ratio=0.8,
-    new_network=False,
     seed=None,
 ):
     """
