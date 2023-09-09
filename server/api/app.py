@@ -14,7 +14,6 @@ def simulate():
     scheme = request.json.get("scheme")
     total_nodes = request.json.get("totalNodes")
     seed = request.json.get("seed")
-    start_time = request.json.get("startTime")
     total_layers = request.json.get("totalLayers")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
@@ -22,8 +21,6 @@ def simulate():
     target_layer = request.json.get("targetLayer")
     total_database = request.json.get("totalDatabase")
     terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
-
-    
 
     if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
@@ -64,6 +61,7 @@ def simulate():
     data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
 
     return data, 200
+
 
 @app.route("/schemes", methods=["GET"])
 def schemes():
