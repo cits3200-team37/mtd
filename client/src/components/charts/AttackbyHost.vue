@@ -29,7 +29,7 @@ if (colors.length >= uniqueNames.length) {
 
 // Derive uniqueHosts and hostToken as arrays
 const uniqueHosts = Array.from(
-  new Set(Object.values(attackRecord.current_host_uuid)),
+  new Set(Object.values(attackRecord.current_host_uuid))
 );
 const hostToken = uniqueHosts.map((host, i) => ({
   host,
@@ -45,7 +45,7 @@ const attackRecordArray = Object.values(attackRecord.current_host_uuid)
     start_time: attackRecord.start_time[i],
     duration: attackRecord.duration[i],
     color: attackActionLegend.find(
-      (entry) => entry.name === attackRecord.name[i],
+      (entry) => entry.name === attackRecord.name[i]
     ).color,
   }));
 
@@ -145,7 +145,7 @@ const createChart = () => {
     .attr("class", "legend")
     .attr(
       "transform",
-      `translate(10, ${height - (attackActionLegend.length * 15 + 20)})`,
+      `translate(10, ${height - (attackActionLegend.length * 15 + 20)})`
     );
 
   // Legend border
