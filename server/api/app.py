@@ -48,7 +48,7 @@ def simulate():
     if not all([mtd_interval, scheme, total_nodes]):
         return {}, 400
 
-    if scheme is not None and scheme != "random":
+    if scheme is not None and scheme not in ["random", "None"]:
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
         custom_strategies = []
