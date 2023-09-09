@@ -29,12 +29,17 @@ def simulate():
         return {}, 400
 
     result = simulate_without_saving(
-        start_time=0,
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
         total_nodes=total_nodes,
         seed=seed,
+        total_endpoints=total_endpoints,
+        total_subnets=total_subnets,
+        total_layers=total_layers,
+        target_layer=target_layer,
+        total_database=total_database,
+        terminate_compromise_ratio=terminate_compromise_ratio,
     )
 
     data = {}
