@@ -44,6 +44,9 @@ def simulate():
     terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
     strategies = request.json.get("strategies")
 
+    if not all([mtd_interval, scheme, total_nodes]):
+        return {}, 400
+
     if scheme is not None and scheme != "random":
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
