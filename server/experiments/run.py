@@ -488,7 +488,9 @@ def simulate_without_saving(
             attack_operation=attack_operation,
             proceed_time=0,
             mtd_trigger_interval=mtd_interval,
-            custom_strategies=custom_strategies,
+            custom_strategies=custom_strategies
+            if scheme != "single"
+            else custom_strategies[0],
         )
         mtd_operation.proceed_mtd()
     # save snapshot by time
