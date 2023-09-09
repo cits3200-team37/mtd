@@ -1,10 +1,31 @@
 from flask import Flask, request
 from flask_cors import CORS
 from experiments.run import simulate_without_saving
+from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
+from mtdnetwork.mtd.ipshuffle import IPShuffle
+from mtdnetwork.mtd.osdiversity import OSDiversity
+from mtdnetwork.mtd.servicediversity import ServiceDiversity
 import networkx as nx
 
 app = Flask(__name__)
 CORS(app)
+
+
+strategy_mapping = {
+    "IP Shuffle": IPShuffle,
+    "OS Diversity": OSDiversity,
+    "Service Diversity": ServiceDiversity,
+    "Complete Topology Shuffle": CompleteTopologyShuffle,
+}
+
+
+@app.route("/strategies", methods=["GET"])
+def strategies():
+    # Provides the currently availble strategies
+
+    # NOTE: this is so that strategies can be added in future
+    # update strategy_mapping to add strategy
+    return list(strategy_mapping.keys()), 200
 
 
 @app.route("/simulate", methods=["POST"])
