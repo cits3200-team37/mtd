@@ -42,7 +42,7 @@ markdown_extensions:
   - attr_list
 
 nav:
-  - Home: index.md
-  - Code Review: codereview.md
-  - Back End:
+ - Home: index.md
+ - Code Review: codereview.md
+ - Back End:
       - End points: backend/endpoints.md
