@@ -21,7 +21,7 @@ const attackRecord = props.attackRecord;
 const uniqueNames = Array.from(new Set(Object.values(attackRecord.name)));
 
 const interruptLoc = Array.from(
-  new Set(Object.values(attackRecord.interrupted_in))
+  new Set(Object.values(attackRecord.interrupted_in)),
 );
 let interruptLegend = null;
 if (colors.length >= interruptLoc.length) {
@@ -46,7 +46,7 @@ const attackRecordArray = Object.values(attackRecord.current_host_uuid).map(
     start_time: attackRecord.start_time[i],
     duration: attackRecord.duration[i],
     color: "blue",
-  })
+  }),
 );
 
 const interruptedRecordArray = Object.values(attackRecord.interrupted_by)
@@ -56,13 +56,13 @@ const interruptedRecordArray = Object.values(attackRecord.interrupted_by)
     attackName: attackRecord.name[i],
     finish_time: attackRecord.finish_time[i],
     color: interruptLegend.find(
-      (entry) => entry.name === attackRecord.interrupted_in[i]
+      (entry) => entry.name === attackRecord.interrupted_in[i],
     ).color,
   }))
   .filter((entry) => entry.interrupted_by !== "None");
 
 const compromiseHostRecordArray = Object.values(
-  attackRecord.compromise_host_uuid
+  attackRecord.compromise_host_uuid,
 )
   .map((compromise_host_uuid, i) => ({
     compromise_host_uuid,

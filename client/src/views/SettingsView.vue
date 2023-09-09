@@ -14,7 +14,7 @@ const setTheme = (theme) => {
   window.dispatchEvent(
     new CustomEvent("theme-changed", {
       detail: { storage: localStorage.getItem("user-theme") },
-    })
+    }),
   );
 };
 </script>
