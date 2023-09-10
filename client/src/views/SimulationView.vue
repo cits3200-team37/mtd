@@ -7,11 +7,13 @@ import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
 import * as d3 from "d3";
 import { useSimulationStore } from "../stores/simulation.js";
+import Modal from "../components/Modal.vue";
 
 const simulationStore = useSimulationStore();
 
 const isOpen = ref(true);
 const showTooltip = ref(false);
+const showModal = ref(false);
 
 const isInputView = ref(true);
 
@@ -23,6 +25,9 @@ const currentHost = ref({
   totalServices: 0,
   compromised: false,
 });
+
+const modalServiceGraph = ref(null);
+const compromisedServiceIds = ref(null);
 
 const form = ref({
   networkSizeList: "",
@@ -174,7 +179,9 @@ const plotNetwork = (graphData) => {
     .style("cursor", "pointer")
     .attr("fill", (d) => color(d.layer))
     .on("dblclick", (e, d) => {
-      console.log("double clicked!");
+      compromisedServiceIds.value = d.host.compromisedServices;
+      modalServiceGraph.value = d.host.graph;
+      showModal.value = true;
     });
 
   node.append("title").text((d) => d.id);
@@ -345,12 +352,13 @@ const plotNetwork = (graphData) => {
   <transition
     enter-from-class="opacity-0"
     leave-to-class="opacity-0"
-    enter-active-class="transition duration-400"
-    leave-active-class="transition duration-400"
+    enter-active-class="transition duration-200"
+    leave-active-class="transition duration-200"
   >
     <Modal
       v-if="showModal"
       :serviceGraph="modalServiceGraph"
+      :compromisedServiceIds="compromisedServiceIds"
       @close="showModal = false"
     />
   </transition>
