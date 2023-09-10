@@ -18,7 +18,6 @@ const props = defineProps(["serviceGraph"]);
 const emit = defineEmits(["close"]);
 
 const plotNetwork = (graphData) => {
-  console.log(graphData);
   const { width, height } = d3
     .select("#service-graph")
     .node()
@@ -95,7 +94,14 @@ const plotNetwork = (graphData) => {
     .join("circle")
     .attr("class", "node")
     .attr("r", 8)
-    .style("cursor", "pointer");
+    .style("cursor", "pointer")
+    .attr("fill", (d) => {
+      if (d.service && d.service.exploitValue > 0) {
+        // if there is a service and has been exploited
+        return "#FF0000";
+      }
+      return "#1f77b4";
+    });
 
   node.append("title").text((d) => d.id);
   node.call(
