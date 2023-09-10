@@ -1,7 +1,7 @@
 <template>
   <div
     @click="emit('close')"
-    class="flex justify-center items-center absolute inset-0 z-10 w-full h-full bg-black bg-opacity-70 transition"
+    class="flex justify-center items-center absolute inset-0 z-10 w-full h-full bg-black bg-opacity-70"
   >
     <div
       @click.stop
@@ -14,7 +14,7 @@
 <script setup>
 import { onMounted } from "vue";
 import * as d3 from "d3";
-const props = defineProps(["serviceGraph"]);
+const props = defineProps(["serviceGraph", "compromisedServiceIds"]);
 const emit = defineEmits(["close"]);
 
 const plotNetwork = (graphData) => {
