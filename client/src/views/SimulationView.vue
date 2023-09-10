@@ -172,7 +172,10 @@ const plotNetwork = (graphData) => {
     .attr("class", "node")
     .attr("r", 8)
     .style("cursor", "pointer")
-    .attr("fill", (d) => color(d.layer));
+    .attr("fill", (d) => color(d.layer))
+    .on("dblclick", (e, d) => {
+      console.log("double clicked!");
+    });
 
   node.append("title").text((d) => d.id);
   node.call(
