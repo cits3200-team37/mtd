@@ -326,7 +326,7 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
+    <div class="w-6 h-[calc(100vh-36px)] float-left">
       <div class="h-[calc(100vh-36px)] flex items-center justify-center">
         <div v-if="isOpen">
           <button @click="isOpen = !isOpen" class="text-white">
@@ -342,6 +342,19 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
+  <transition
+    enter-from-class="opacity-0"
+    leave-to-class="opacity-0"
+    enter-active-class="transition duration-400"
+    leave-active-class="transition duration-400"
+  >
+    <Modal
+      v-if="showModal"
+      :serviceGraph="modalServiceGraph"
+      @close="showModal = false"
+    />
+  </transition>
+
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
     id="node-tooltip"
