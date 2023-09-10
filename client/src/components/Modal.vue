@@ -96,8 +96,7 @@ const plotNetwork = (graphData) => {
     .attr("r", 8)
     .style("cursor", "pointer")
     .attr("fill", (d) => {
-      if (d.service && d.service.exploitValue > 0) {
-        // if there is a service and has been exploited
+      if (d.id in props.compromisedServiceIds) {
         return "#FF0000";
       }
       return "#1f77b4";
