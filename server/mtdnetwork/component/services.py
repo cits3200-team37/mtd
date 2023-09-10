@@ -195,7 +195,6 @@ class Service:
         self.id = str(uuid.uuid4())
 
     def to_json(self):
-        print(self.vulnerabilities)
         return {
             "name": self.name,
             "version": self.version,
