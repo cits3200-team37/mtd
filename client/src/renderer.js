@@ -50,4 +50,12 @@ const handleClose = () => {
   }
 };
 
-export { handleClose, handleMinimise };
+const handleMaximise = () => {
+  try {
+    window.electronAPI.windowMaximise();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { handleClose, handleMinimise, handleMaximise };

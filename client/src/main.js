@@ -42,6 +42,11 @@ const handleWindowClose = async () => {
     BrowserWindow.getFocusedWindow().close();
   }
 };
+const handleWindowMaximise = async () => {
+  if (BrowserWindow.getFocusedWindow().maximizable) {
+    BrowserWindow.getFocusedWindow().maximize();
+  }
+};
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -68,6 +73,7 @@ app.on("activate", async () => {
 // code. You can also put them in separate files and import them here.
 ipcMain.on("window-minimise", handleWindowMinimise);
 ipcMain.on("window-close", handleWindowClose);
+ipcMain.on("window-maximise", handleWindowMaximise);
 ipcMain.handle("operating-system", (event, args) => {
   return process.platform;
 });

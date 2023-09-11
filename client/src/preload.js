@@ -5,5 +5,6 @@ import { contextBridge, ipcRenderer } from "electron";
 contextBridge.exposeInMainWorld("electronAPI", {
   windowMinimise: () => ipcRenderer.send("window-minimise"),
   windowClose: () => ipcRenderer.send("window-close"),
+  windowMaximise: () => ipcRenderer.send("window-maximise"),
   operatingSystem: () => ipcRenderer.invoke("operating-system"),
 });
