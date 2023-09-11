@@ -19,7 +19,6 @@
         <p>{{ router.currentRoute.value.name }}</p>
       </div>
       <div v-if="os == `win32` || os == `linux`" class="absolute right-4 pt-1">
-        <!-- todo change to win32 || linux -->
         <button
           class="no-drag hover:cursor-pointer pr-2"
           @click="handleMinimise"
