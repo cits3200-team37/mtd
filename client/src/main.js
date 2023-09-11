@@ -45,6 +45,8 @@ const handleWindowClose = async () => {
 const handleWindowMaximise = async () => {
   if (BrowserWindow.getFocusedWindow().maximizable) {
     BrowserWindow.getFocusedWindow().maximize();
+  } else {
+    BrowserWindow.getFocusedWindow().unmaximize();
   }
 };
 // This method will be called when Electron has finished
