@@ -1,8 +1,9 @@
 <template>
-  <div class="flex flex-col items-center h-[calc(100vh-36px)]">
-    <div v-if="data != null">
-      <AttackbyHost :attackRecord="data" />
-      <AttackOperation :attackRecord="data" />
+  <div class="flex flex-col items-center h-[calc(100vh-36px)] overflow-y-auto">
+    <div v-if="attackRecord != null && mtdRecord != null">
+      <AttackbyHost :attackRecord="attackRecord" />
+      <AttackOperation :attackRecord="attackRecord" />
+      <MTDOperation :mtdRecord="mtdRecord" />
     </div>
     <div v-else>
       <p>No data available.</p>
@@ -16,13 +17,16 @@ import { onMounted, ref } from "vue";
 import { useSimulationStore } from "../stores/simulation";
 import AttackbyHost from "../components/charts/AttackbyHost.vue";
 import AttackOperation from "../components/charts/AttackOperation.vue";
+import MTDOperation from "../components/charts/MTDOperation.vue";
 
 const store = useSimulationStore();
-const data = ref();
+const attackRecord = ref();
+const mtdRecord = ref();
 
 onMounted(async () => {
   try {
-    data.value = store.attackRecord;
+    attackRecord.value = store.attackRecord;
+    mtdRecord.value = store.mtdRecord;
   } catch (error) {
     console.log(error);
   }

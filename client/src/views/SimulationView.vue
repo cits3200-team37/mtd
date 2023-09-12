@@ -204,7 +204,7 @@ const plotNetwork = (graphData) => {
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
             :class="{ 'bg-teal-500': isInputView }"
             @click="
               () => {
@@ -215,7 +215,7 @@ const plotNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
             :class="{ 'bg-teal-500': !isInputView }"
             @click="
               () => {
