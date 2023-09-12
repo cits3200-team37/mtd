@@ -2,7 +2,7 @@
     <div>
         <button @click="toggleMenu" class="bg-white text-black">{{ heading }}</button>
         <ul v-if="menuOpen" class="bg-white text-black">
-            <li v-for="option in props.menuOptions" :key="option.id">
+            <li @click="selectOption(option)" v-for="option in props.menuOptions" :key="option.id">
                 {{ option }}
             </li>
         </ul>
@@ -18,10 +18,16 @@ const props = defineProps({
 });
 
 const menuOpen = ref(false);
+const optionSelected = ref("");
 
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
-    console.log(toggleMenu)
+    console.log(menuOpen.value);
+};
+
+const selectOption = (option) => {
+    optionSelected.value = option;
+    console.log(optionSelected.value);
 };
 </script>
   
