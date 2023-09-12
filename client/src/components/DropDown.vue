@@ -10,18 +10,20 @@
 </template>
   
 <script setup>
-import { defineProps, ref } from "vue";
+import { defineProps, defineEmits, ref } from "vue";
 
 const props = defineProps({
     heading: { type: String, default: "" },
     menuOptions: { type: Array, default: [] },
 });
 
-let header = props.heading; // Use "let" to allow reassignment
+const emits = defineEmits(["optionselected"]);
+
+let header = props.heading;
 
 const menuOpen = ref(false);
 const optionSelected = ref("");
-
+k
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
     console.log(menuOpen.value);
@@ -30,8 +32,9 @@ const toggleMenu = () => {
 const selectOption = (option) => {
     optionSelected.value = option;
     console.log(optionSelected.value);
-    header = optionSelected.value; // Update the header when an option is selected
-    menuOpen.value = false; // Close the menu when an option is selected
+    header = optionSelected.value;
+    menuOpen.value = false;
+    emits.optionselected(optionSelected.value);
 };
 </script>
   
