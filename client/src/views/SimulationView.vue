@@ -43,7 +43,7 @@ const currentHost = ref({
 onMounted(() => {
   // load past state of network and form
   if (simulationStore.network && simulationStore.parameters) {
-    plotNetwork(simulationStore.network, ".network-graph");
+    plotNetwork(simulationStore.network);
     // NOTE: could use pinia's storeToRefs, but i think using this
     // and copying objects will be easier for everyone to understand
     form.value = { ...simulationStore.parameters };
