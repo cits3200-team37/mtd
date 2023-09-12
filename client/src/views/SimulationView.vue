@@ -31,6 +31,15 @@ const form = ref({
   totalNodes: "",
 });
 
+// for tooltip
+const currentHost = ref({
+  ip: "",
+  osType: "",
+  osVersion: "",
+  totalUsers: 0,
+  totalServices: 0,
+});
+
 onMounted(() => {
   // load past state of network and form
   if (simulationStore.network && simulationStore.parameters) {
@@ -188,6 +197,8 @@ const plotNetwork = (graphData) => {
       // set manually with d3 and raw css
       toolTipOffsetX.value = e.clientX + 40;
       tooltipOffsetY.value = e.clientY - 50;
+      const { host } = d;
+      currentHost.value = { ...host };
       showTooltip.value = true;
     })
     .on("mouseout", () => {
@@ -340,9 +351,29 @@ const plotNetwork = (graphData) => {
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
   <Modal :showModal="showModal" @close="showModal = false"></Modal>
+  <!--tooltip for the main network graph-->
   <ToolTip
     :showTooltip="showTooltip"
     :offsetX="toolTipOffsetX"
     :offsetY="tooltipOffsetY"
-  ></ToolTip>
+  >
+    <ul>
+      <li>IP: {{ currentHost.ip }}</li>
+      <li>OS: {{ `${currentHost.osType} ${currentHost.osVersion}` }}</li>
+      <li>
+        {{
+          `${currentHost.totalUsers} ${
+            currentHost.totalUsers == 1 ? "User" : "Users"
+          }`
+        }}
+      </li>
+      <li>
+        {{
+          `${currentHost.totalServices} ${
+            currentHost.totalServices == 1 ? "Service" : "Services"
+          }`
+        }}
+      </li>
+    </ul>
+  </ToolTip>
 </template>
