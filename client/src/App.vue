@@ -1,6 +1,7 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
+import DropDown  from "./components/DropDown.vue";
 // import router from "./router";
 // import { onMounted } from "vue";
 // ! needs to be uncommented out for prod
@@ -14,5 +15,6 @@ import { RouterView } from "vue-router";
 
 <template>
   <NavBar />
-  <RouterView />
+  <RouterView  />
+  <DropDown />
 </template>

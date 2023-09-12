@@ -1,4 +1,4 @@
-l<template>
+<template>
   <label>{{ label }}</label>
   <input
     :type="type"
