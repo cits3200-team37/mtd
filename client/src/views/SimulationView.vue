@@ -25,7 +25,6 @@ const currentHost = ref({
 });
 
 const form = ref({
-  networkSizeList: "",
   startTime: "",
   finishTime: "",
   mtdInterval: "",
@@ -45,7 +44,6 @@ onMounted(() => {
 
 const isValid = ref(true);
 const errors = ref({
-  networkSizeList: "",
   startTime: "",
   finishTime: "",
   mtdInterval: "",
@@ -58,22 +56,6 @@ const handleSubmit = async () => {
   Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
   });
-
-  const networkSizes = form.value.networkSizeList.split(",");
-  for (let size of networkSizes) {
-    let parsedSize = parseInt(size.trim());
-    if (isNaN(parsedSize)) {
-      errors.value.networkSizeList =
-        "Network Size List must be a list of numbers separated by commas";
-      isValid.value = false;
-      break;
-    } else if (parsedSize < 20) {
-      errors.value.networkSizeList =
-        "Each number in Network Size List must be 20 or greater";
-      isValid.value = false;
-      break;
-    }
-  }
 
   if (
     !form.value.startTime ||
@@ -127,8 +109,6 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
-
-  console.log(form.value);
 
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
@@ -320,18 +300,6 @@ const plotNetwork = (graphData) => {
               class="flex flex-col space-y-2"
               @submit.prevent="handleSubmit"
             >
-              <div>
-                <FormField
-                  v-model="form.networkSizeList"
-                  label="Network Size List"
-                  placeholder="Network Size"
-                  type="text"
-                  :error="
-                    errors.networkSizeList ? 'border-red-500 border-4' : ''
-                  "
-                />
-              </div>
-              <p class="text-red-500">{{ errors.networkSizeList }}</p>
               <div>
                 <FormField
                   v-model="form.startTime"
