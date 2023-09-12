@@ -16,15 +16,8 @@ const showTooltip = ref(false);
 const showModal = ref(false);
 
 const isInputView = ref(true);
-
-const currentHost = ref({
-  ip: "",
-  osType: "",
-  osVersion: "",
-  totalUsers: 0,
-  totalServices: 0,
-  compromised: false,
-});
+const toolTipOffsetX = ref(0);
+const tooltipOffsetY = ref(0);
 
 const modalServiceGraph = ref(null);
 const compromisedServiceIds = ref(null);
@@ -193,11 +186,8 @@ const plotNetwork = (graphData) => {
     .on("mouseover", (e, d) => {
       // NOTE: arbitrary px values cannot be used in runtime.
       // set manually with d3 and raw css
-      const left = e.clientX + 40 + "px";
-      const top = e.clientY - 50 + "px";
-      const { host } = d;
-      currentHost.value = { ...host };
-      d3.select("#node-tooltip").style("left", left).style("top", top);
+      toolTipOffsetX.value = e.clientX + 40;
+      tooltipOffsetY.value = e.clientY - 50;
       showTooltip.value = true;
     })
     .on("mouseout", () => {
@@ -349,29 +339,10 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
-  <transition
-    enter-from-class="opacity-0"
-    leave-to-class="opacity-0"
-    enter-active-class="transition duration-200"
-    leave-active-class="transition duration-200"
-  >
-    <Modal
-      v-if="showModal"
-      :serviceGraph="modalServiceGraph"
-      :compromisedServiceIds="compromisedServiceIds"
-      @close="showModal = false"
-    />
-  </transition>
-
-  <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
+  <Modal :showModal="showModal" @close="showModal = false"></Modal>
   <ToolTip
-    id="node-tooltip"
     :showTooltip="showTooltip"
-    :ip="currentHost.ip"
-    :osType="currentHost.osType"
-    :osVersion="currentHost.osVersion"
-    :totalUsers="currentHost.totalUsers"
-    :totalServices="currentHost.totalServices"
-    :compromised="currentHost.compromised"
-  />
+    :offsetX="toolTipOffsetX"
+    :offsetY="tooltipOffsetY"
+  ></ToolTip>
 </template>
