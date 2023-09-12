@@ -309,7 +309,7 @@ const plotNetwork = (graphData) => {
                   :error="errors.startTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.startTime }}</p>
+              <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
@@ -319,7 +319,7 @@ const plotNetwork = (graphData) => {
                   :error="errors.finishTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.finishTime }}</p>
+              <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
@@ -329,7 +329,7 @@ const plotNetwork = (graphData) => {
                   :error="errors.mtdInterval ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.mtdInterval }}</p>
+              <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
                 <FormField
                   v-model="form.scheme"
@@ -339,7 +339,7 @@ const plotNetwork = (graphData) => {
                   :error="errors.scheme ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.scheme }}</p>
+              <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
               <div>
                 <FormField
                   v-model="form.totalNodes"
@@ -349,7 +349,7 @@ const plotNetwork = (graphData) => {
                   :error="errors.totalNodes ? 'border-red-500 border-4' : ''"
                 />
               </div>
-              <p class="text-red-500">{{ errors.totalNodes }}</p>
+              <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
               <div class="text-center">
                 <button
                   class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
