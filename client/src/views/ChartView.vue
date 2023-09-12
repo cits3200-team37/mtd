@@ -26,7 +26,7 @@ const mtdRecord = ref();
 onMounted(async () => {
   try {
     attackRecord.value = store.attackRecord;
-    mtdRecord.value = store.mtdRecord
+    mtdRecord.value = store.mtdRecord;
   } catch (error) {
     console.log(error);
   }

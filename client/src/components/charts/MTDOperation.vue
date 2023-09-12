@@ -21,29 +21,28 @@ const mtdRecord = props.mtdRecord;
 const uniqueNames = Array.from(new Set(Object.values(mtdRecord.name)));
 
 // Derive uniqueExecutionLoc
-const uniqueExecutionLoc = Array.from(new Set(Object.values(mtdRecord.executed_at)));
+const uniqueExecutionLoc = Array.from(
+  new Set(Object.values(mtdRecord.executed_at)),
+);
 
 let mtdActionLegend = null;
-if (colors.length >= uniqueExecutionLoc.length){
-  mtdActionLegend = uniqueExecutionLoc.map((loc,i) => ({
+if (colors.length >= uniqueExecutionLoc.length) {
+  mtdActionLegend = uniqueExecutionLoc.map((loc, i) => ({
     loc,
     color: colors[i],
   }));
 }
 
-const mtdRecordArray = Object.values(mtdRecord.name).map(
-  (name, i) => ({
-    name,
-    mtd_name: mtdRecord.name[i],
-    start_time: mtdRecord.start_time[i],
-    finish_time: mtdRecord.finish_time[i],
-    duration: mtdRecord.duration[i],
-    executed_at: mtdRecord.executed_at[i],
-    color: mtdActionLegend.find(
-      (entry) => entry.loc === mtdRecord.executed_at[i],
-    ).color,
-  }),
-);
+const mtdRecordArray = Object.values(mtdRecord.name).map((name, i) => ({
+  name,
+  mtd_name: mtdRecord.name[i],
+  start_time: mtdRecord.start_time[i],
+  finish_time: mtdRecord.finish_time[i],
+  duration: mtdRecord.duration[i],
+  executed_at: mtdRecord.executed_at[i],
+  color: mtdActionLegend.find((entry) => entry.loc === mtdRecord.executed_at[i])
+    .color,
+}));
 
 const createChart = () => {
   const margin = { top: 50, right: 50, bottom: 50, left: 130 };
@@ -137,10 +136,7 @@ const createChart = () => {
   const legend = svgContainer
     .append("g")
     .attr("class", "legend")
-    .attr(
-      "transform",
-      `translate(${width - 160}, -25)`,
-    );
+    .attr("transform", `translate(${width - 160}, -25)`);
 
   // Legend border
   legend
