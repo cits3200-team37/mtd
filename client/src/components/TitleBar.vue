@@ -18,15 +18,63 @@
       >
         <p>{{ router.currentRoute.value.name }}</p>
       </div>
+      <div v-if="os == `win32` || os == `linux`" class="absolute right-4 pt-1">
+        <button
+          class="no-drag hover:cursor-pointer pr-2"
+          @click="handleMinimise"
+        >
+          <svg-icon
+            type="mdi"
+            :path="mdiWindowMinimize"
+            size="24"
+            class="text-white"
+          ></svg-icon>
+        </button>
+        <button
+          class="no-drag hover:cursor-pointer pr-2"
+          @click="handleMaximise"
+        >
+          <svg-icon
+            type="mdi"
+            :path="mdiWindowMaximize"
+            size="24"
+            class="text-white"
+          ></svg-icon>
+        </button>
+        <button class="no-drag hover:cursor-pointer" @click="handleClose">
+          <svg-icon
+            type="mdi"
+            :path="mdiWindowClose"
+            size="24"
+            class="text-white"
+          ></svg-icon>
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import svgIcon from "@jamescoyle/vue-icon";
-import { mdiArrowLeft } from "@mdi/js";
-import { mdiArrowRight } from "@mdi/js";
+import {
+  mdiArrowLeft,
+  mdiArrowRight,
+  mdiWindowClose,
+  mdiWindowMinimize,
+  mdiWindowMaximize,
+} from "@mdi/js";
 import router from "../router";
+import { ref, onMounted } from "vue";
+import { handleMinimise, handleClose, handleMaximise } from "../renderer";
+const os = ref("");
+
+onMounted(async () => {
+  try {
+    os.value = await window.electronAPI.operatingSystem();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const handleBack = async () => {
   router.back();
