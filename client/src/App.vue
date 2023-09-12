@@ -1,7 +1,7 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
-import DropDown  from "./components/DropDown.vue";
+import DropDown from "./components/DropDown.vue";
 // import router from "./router";
 // import { onMounted } from "vue";
 // ! needs to be uncommented out for prod
@@ -15,6 +15,11 @@ import DropDown  from "./components/DropDown.vue";
 
 <template>
   <NavBar />
-  <RouterView  />
-  <DropDown heading="Menu" menuOptions=[Option1,Option2] />
+  <RouterView />
+  <DropDown heading="Menu" :menuOptions="[
+    { value: 'Option1' },
+    { value: 'Option2' }
+  ]" />
 </template>
+
+
