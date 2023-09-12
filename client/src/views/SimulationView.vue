@@ -326,7 +326,7 @@ const plotNetwork = (graphData) => {
                   label="Network Size List"
                   placeholder="Network Size"
                   type="text"
-                  :color="
+                  :error="
                     errors.networkSizeList ? 'border-red-500 border-4' : ''
                   "
                 />
@@ -338,7 +338,7 @@ const plotNetwork = (graphData) => {
                   label="Start Time"
                   placeholder="Start Time"
                   type="text"
-                  :color="errors.startTime ? 'border-red-500 border-4' : ''"
+                  :error="errors.startTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
               <p class="text-red-500">{{ errors.startTime }}</p>
@@ -348,7 +348,7 @@ const plotNetwork = (graphData) => {
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
-                  :color="errors.finishTime ? 'border-red-500 border-4' : ''"
+                  :error="errors.finishTime ? 'border-red-500 border-4' : ''"
                 />
               </div>
               <p class="text-red-500">{{ errors.finishTime }}</p>
@@ -358,7 +358,7 @@ const plotNetwork = (graphData) => {
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
-                  :color="errors.mtdInterval ? 'border-red-500 border-4' : ''"
+                  :error="errors.mtdInterval ? 'border-red-500 border-4' : ''"
                 />
               </div>
               <p class="text-red-500">{{ errors.mtdInterval }}</p>
@@ -368,7 +368,7 @@ const plotNetwork = (graphData) => {
                   label="Scheme"
                   placeholder="Scheme"
                   type="text"
-                  :color="errors.scheme ? 'border-red-500 border-4' : ''"
+                  :error="errors.scheme ? 'border-red-500 border-4' : ''"
                 />
               </div>
               <p class="text-red-500">{{ errors.scheme }}</p>
@@ -378,7 +378,7 @@ const plotNetwork = (graphData) => {
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
-                  :color="errors.totalNodes ? 'border-red-500 border-4' : ''"
+                  :error="errors.totalNodes ? 'border-red-500 border-4' : ''"
                 />
               </div>
               <p class="text-red-500">{{ errors.totalNodes }}</p>
