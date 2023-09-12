@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center h-[calc(100vh-36px)]">
+  <div class="flex flex-col items-center h-[calc(100vh-36px)] overflow-y-auto">
     <div v-if="attackRecord != null && mtdRecord != null">
       <AttackbyHost :attackRecord="attackRecord" />
       <AttackOperation :attackRecord="attackRecord" />
