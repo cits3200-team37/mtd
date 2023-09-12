@@ -23,7 +23,7 @@ let header = props.heading;
 
 const menuOpen = ref(false);
 const optionSelected = ref("");
-k
+
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
     console.log(menuOpen.value);
@@ -34,7 +34,7 @@ const selectOption = (option) => {
     console.log(optionSelected.value);
     header = optionSelected.value;
     menuOpen.value = false;
-    emits.optionselected(optionSelected.value);
+    emits(optionSelected.value);
 };
 </script>
   
