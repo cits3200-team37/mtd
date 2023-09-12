@@ -200,12 +200,12 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-navbar-primary h-[calc(100vh-36px)] border border-black border-100 float-left px-5 pt-5 overflow-y-auto"
+        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-neutral-800 text-white rounded-l-md cursor-pointer"
-            :class="{ 'bg-teal-700': isInputView }"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
+            :class="{ 'bg-teal-500': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -215,8 +215,8 @@ const plotNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-neutral-800 text-white rounded-r-md cursor-pointer"
-            :class="{ 'bg-teal-700': !isInputView }"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
+            :class="{ 'bg-teal-500': !isInputView }"
             @click="
               () => {
                 isInputView = false;
@@ -284,7 +284,7 @@ const plotNetwork = (graphData) => {
               </div>
               <div class="text-center">
                 <button
-                  class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                  class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
                 >
                   Submit
                 </button>
@@ -297,25 +297,25 @@ const plotNetwork = (graphData) => {
             <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
             <button
               @click="colorByLayer"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color By Layer
             </button>
             <button
               @click="colorBySubnet"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color By Subnet
             </button>
             <button
               @click="colorByCompromised"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color by Compromised
             </button>
             <button
               @click="resetZoom"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Reset Zoom
             </button>
@@ -326,12 +326,12 @@ const plotNetwork = (graphData) => {
     <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
       <div class="h-[calc(100vh-36px)] flex items-center justify-center">
         <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-white">
+          <button @click="isOpen = !isOpen" class="text-text-color">
             <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
           </button>
         </div>
         <div v-else>
-          <button @click="isOpen = !isOpen" class="text-white">
+          <button @click="isOpen = !isOpen" class="text-text-color">
             <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
           </button>
         </div>

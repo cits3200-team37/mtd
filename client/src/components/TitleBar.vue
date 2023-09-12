@@ -14,7 +14,7 @@
         <svg-icon type="mdi" color="white" size="22" :path="mdiArrowRight" />
       </button>
       <div
-        class="no-drag rounded-md bg-dark-background w-1/3 text-center text-white"
+        class="no-drag rounded-md bg-background-secondary w-1/3 text-center text-text-color"
       >
         <p>{{ router.currentRoute.value.name }}</p>
       </div>
