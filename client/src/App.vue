@@ -16,10 +16,7 @@ import DropDown from "./components/DropDown.vue";
 <template>
   <NavBar />
   <RouterView />
-  <DropDown heading="Menu" :menuOptions="[
-    { value: 'Option1' },
-    { value: 'Option2' }
-  ]" />
+  <DropDown heading="Menu" :menuOptions="['Options1','Options']" />
 </template>
 
 

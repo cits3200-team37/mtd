@@ -3,7 +3,7 @@
         <button @click="toggleMenu" class="bg-white text-black">{{ heading }}</button>
         <ul v-if="menuOpen" class="bg-white text-black">
             <li v-for="option in props.menuOptions" :key="option.id">
-                {{ option.value }}
+                {{ option }}
             </li>
         </ul>
     </div>
@@ -21,7 +21,7 @@ const menuOpen = ref(false);
 
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
-    console.log(menuOpen.value);
+    console.log(toggleMenu)
 };
 </script>
   
