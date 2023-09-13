@@ -306,7 +306,7 @@ const plotNetwork = (graphData) => {
                   label="Start Time"
                   placeholder="Start Time"
                   type="text"
-                  :error="errors.startTime ? 'border-red-500 border-4' : ''"
+                  :error="errors.startTime"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
@@ -316,7 +316,7 @@ const plotNetwork = (graphData) => {
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
-                  :error="errors.finishTime ? 'border-red-500 border-4' : ''"
+                  :error="errors.finishTime"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
@@ -326,7 +326,7 @@ const plotNetwork = (graphData) => {
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
-                  :error="errors.mtdInterval ? 'border-red-500 border-4' : ''"
+                  :error="errors.mtdInterval"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
@@ -336,7 +336,7 @@ const plotNetwork = (graphData) => {
                   label="Scheme"
                   placeholder="Scheme"
                   type="text"
-                  :error="errors.scheme ? 'border-red-500 border-4' : ''"
+                  :error="errors.scheme"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
@@ -346,7 +346,7 @@ const plotNetwork = (graphData) => {
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
-                  :error="errors.totalNodes ? 'border-red-500 border-4' : ''"
+                  :error="errors.totalNodes"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
