@@ -38,7 +38,6 @@ def simulate():
     total_layers = request.json.get("totalLayers")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
-    total_layers = request.json.get("totalLayers")
     target_layer = request.json.get("targetLayer")
     total_database = request.json.get("totalDatabase")
     terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
