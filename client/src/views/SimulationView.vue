@@ -205,6 +205,105 @@ const plotNetwork = (graphData) => {
       showTooltip.value = false;
     });
 };
+
+const plotServiceNetwork = (graphData) => {
+  const { width, height } = d3
+    .select("#service-network-graph")
+    .node()
+    .getBoundingClientRect();
+
+  // Set the position attributes of links and nodes each time the simulation ticks.
+  const ticked = () => {
+    link
+      .attr("x1", (d) => d.source.x)
+      .attr("y1", (d) => d.source.y)
+      .attr("x2", (d) => d.target.x)
+      .attr("y2", (d) => d.target.y);
+
+    node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+  };
+  // Reheat the simulation when drag starts, and fix the subject position.
+  const dragstarted = (event) => {
+    if (!event.active) simulation.alphaTarget(0.3).restart();
+    event.subject.fx = event.subject.x;
+    event.subject.fy = event.subject.y;
+  };
+
+  // Update the subject (dragged node) position during drag.
+  const dragged = (event) => {
+    event.subject.fx = event.x;
+    event.subject.fy = event.y;
+  };
+
+  // Restore the target alpha so the simulation cools after dragging ends.
+  // Unfix the subject position now that it’s no longer being dragged.
+  const dragended = (event) => {
+    if (!event.active) simulation.alphaTarget(0);
+    event.subject.fx = null;
+    event.subject.fy = null;
+  };
+
+  // setup graph
+  const links = graphData.links.map((d) => ({ ...d }));
+  const nodes = graphData.nodes.map((d) => ({ ...d }));
+
+  const simulation = d3
+    .forceSimulation(nodes)
+    .force(
+      "link",
+      d3.forceLink(links).id((d) => d.id),
+    )
+    .force("charge", d3.forceManyBody().strength(-10))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .on("tick", ticked);
+
+  const svg = d3
+    .select("#service-network-graph")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("viewBox", [0, 0, width, height]);
+
+  const link = svg
+    .append("g")
+    .attr("stroke", "#999")
+    .attr("stroke-opacity", 0.6)
+    .selectAll()
+    .data(links)
+    .join("line")
+    .attr("stroke-width", (d) => Math.sqrt(d.value));
+
+  const node = svg
+    .append("g")
+    .attr("stroke", "#fff")
+    .attr("stroke-width", 1.5)
+    .selectAll()
+    .data(nodes)
+    .join("circle")
+    .attr("class", "node")
+    .attr("r", 8)
+    .style("cursor", "pointer")
+    .attr("fill", (d) => color(d.layer));
+
+  node.append("title").text((d) => d.id);
+  node.call(
+    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
+  );
+
+  // d3.selectAll(".node")
+  //   .on("mouseover", (e, d) => {
+  //     // NOTE: arbitrary px values cannot be used in runtime.
+  //     // set manually with d3 and raw css
+  //     toolTipOffsetX.value = e.clientX + 40;
+  //     tooltipOffsetY.value = e.clientY - 50;
+  //     const { host } = d;
+  //     currentHost.value = { ...host };
+  //     showTooltip.value = true;
+  //   })
+  //   .on("mouseout", () => {
+  //     showTooltip.value = false;
+  //   });
+};
 </script>
 
 <template>
@@ -350,8 +449,15 @@ const plotNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
-  <Modal :showModal="showModal" @close="showModal = false"></Modal>
-  <!--tooltip for the main network graph-->
+  <Modal
+    v-if="showModal"
+    @mounted="plotServiceNetwork(modalServiceGraph)"
+    @close="showModal = false"
+  >
+    <div class="h-[40vh]">
+      <div id="service-network-graph" class="h-full w-full"></div>
+    </div>
+  </Modal>
   <ToolTip
     :showTooltip="showTooltip"
     :offsetX="toolTipOffsetX"
