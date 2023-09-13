@@ -1,8 +1,9 @@
 <template>
-    <div>
-        <button @click="toggleMenu" class="bg-white text-black rounded-sm">{{ header }}</button>
-        <ul v-if="menuOpen" class="bg-white text-black rounded-sm h-1/4">
-            <li class="w-full" @click="selectOption(option)" v-for="option in props.menuOptions" :key="option">
+    <div class="relative" @click="toggleMenu">
+        <button class="bg-white text-black rounded-sm">{{ header }}</button>
+        <ul v-if="menuOpen" class="bg-white text-black rounded-sm absolute mt-2 w-36 shadow-lg">
+            <li class="w-full py-2 px-4 cursor-pointer hover:bg-gray-200" @click="selectOption(option)"
+                v-for="option in props.menuOptions" :key="option">
                 {{ option }}
             </li>
         </ul>
@@ -34,12 +35,14 @@ const selectOption = (option) => {
     header.value = optionSelected.value;
     menuOpen.value = false;
     emitmenuoption();
+    toggleMenu()
 };
 
 const emitmenuoption = () => {
-    emits("emitOption", optionSelected.value); 
+    emits("emitOption", optionSelected.value);
 };
 </script>
   
-<style scoped></style>
+<style scoped>
+</style>
   
