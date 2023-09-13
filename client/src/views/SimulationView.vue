@@ -25,7 +25,6 @@ const currentHost = ref({
 });
 
 const form = ref({
-  networkSizeList: "",
   startTime: "",
   finishTime: "",
   mtdInterval: "",
@@ -43,7 +42,74 @@ onMounted(() => {
   }
 });
 
+const isValid = ref(true);
+const errors = ref({
+  startTime: "",
+  finishTime: "",
+  mtdInterval: "",
+  scheme: "",
+  totalNodes: "",
+});
+
 const handleSubmit = async () => {
+  // Reset errors
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = "";
+  });
+
+  if (
+    !form.value.startTime ||
+    isNaN(form.value.startTime) ||
+    form.value.startTime < 0
+  ) {
+    errors.value.startTime = "Start Time must be a non-negative number";
+    isValid.value = false;
+  }
+
+  if (
+    !form.value.finishTime ||
+    isNaN(form.value.finishTime) ||
+    form.value.finishTime <= form.value.startTime
+  ) {
+    errors.value.finishTime =
+      "Finish Time must be a number greater than Start Time";
+    isValid.value = false;
+  }
+
+  if (
+    !form.value.mtdInterval ||
+    isNaN(form.value.mtdInterval) ||
+    form.value.startTime < 0
+  ) {
+    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+    isValid.value = false;
+  }
+
+  const validSchemes = [
+    "random",
+    "simultaneous",
+    "alternative",
+    "single",
+    "None",
+  ];
+  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
+    errors.value.scheme =
+      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+    isValid.value = false;
+  }
+
+  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
+    errors.value.totalNodes = "Total Nodes must be a number";
+    isValid.value = false;
+  } else if (parseInt(form.value.totalNodes) < 20) {
+    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+    isValid.value = false;
+  }
+
+  if (!isValid.value) {
+    return;
+  }
+
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -236,52 +302,54 @@ const plotNetwork = (graphData) => {
             >
               <div>
                 <FormField
-                  v-model="form.networkSizeList"
-                  label="Network Size List"
-                  placeholder="Network Size"
-                  type="text"
-                />
-              </div>
-              <div>
-                <FormField
                   v-model="form.startTime"
                   label="Start Time"
                   placeholder="Start Time"
                   type="text"
+                  :error="errors.startTime"
                 />
               </div>
+              <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
+                  :error="errors.finishTime"
                 />
               </div>
+              <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
+                  :error="errors.mtdInterval"
                 />
               </div>
+              <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
                 <FormField
                   v-model="form.scheme"
                   label="Scheme"
                   placeholder="Scheme"
                   type="text"
+                  :error="errors.scheme"
                 />
               </div>
+              <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
               <div>
                 <FormField
                   v-model="form.totalNodes"
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
+                  :error="errors.totalNodes"
                 />
               </div>
+              <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
               <div class="text-center">
                 <button
                   class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
