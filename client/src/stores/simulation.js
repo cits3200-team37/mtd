@@ -16,7 +16,7 @@ export const useSimulationStore = defineStore("simulation", {
         startTime: Number(this.parameters.startTime),
         finishTime: Number(this.parameters.finishTime),
         mtdInterval: Number(this.parameters.mtdInterval),
-        scheme: this.parameters.scheme,
+        scheme: this.parameters.scheme.toLowerCase(),
         totalNodes: Number(this.parameters.totalNodes),
       };
       const { data } = await axios.post(
