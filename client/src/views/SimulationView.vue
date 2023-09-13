@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import FormField from "../components/FormField.vue";
+import DropDown from "../components/DropDown.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -62,12 +63,14 @@ const handleSubmit = async () => {
               />
             </div>
             <div>
-              <FormField
+              <!-- <FormField
                 v-model="form.scheme"
                 label="Scheme"
                 placeholder="Scheme"
                 type="text"
-              />
+              /> -->
+              <DropDown 
+              v-model="form.scheme" heading="Scheme" :menuOptions="['hello', 'world', 'new']"  />
             </div>
             <div>
               <FormField
