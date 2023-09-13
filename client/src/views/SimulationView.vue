@@ -332,12 +332,17 @@ const plotNetwork = (graphData) => {
               </div>
               <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
-                <FormField
+                <!-- <FormField v-model="form.scheme" label="Scheme" placeholder="Scheme" type="text" :error="errors.scheme" /> -->
+                <DropDown
                   v-model="form.scheme"
-                  label="Scheme"
-                  placeholder="Scheme"
-                  type="text"
-                  :error="errors.scheme"
+                  heading="Scheme"
+                  :menuOptions="[
+                    'random',
+                    'simultaneous',
+                    'alternative',
+                    'single',
+                    'None',
+                  ]"
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
