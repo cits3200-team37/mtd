@@ -26,15 +26,36 @@
  * ```
  */
 
-import { createApp, onMounted } from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import { createPinia } from "pinia";
 import router from "./router";
 import "./style.css";
 
 const pinia = createPinia();
-
-console.log(
-  '👋 This message is being logged by "renderer.js", included via Vite',
-);
 createApp(App).use(router).use(pinia).mount("#app");
+
+const handleMinimise = () => {
+  try {
+    window.electronAPI.windowMinimise();
+  } catch (error) {
+    console.log(error);
+  }
+};
+const handleClose = () => {
+  try {
+    window.electronAPI.windowClose();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const handleMaximise = () => {
+  try {
+    window.electronAPI.windowMaximise();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { handleClose, handleMinimise, handleMaximise };

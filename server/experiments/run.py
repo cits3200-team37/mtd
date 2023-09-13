@@ -20,6 +20,7 @@ from mtdnetwork.mtd.osdiversityassignment import OSDiversityAssignment
 import random
 import threading
 import queue
+from mtdnetwork.mtd import MTD
 
 # logging.basicConfig(format='%(message)s', level=logging.INFO)
 
@@ -390,8 +391,7 @@ def simulate_without_saving(
     finish_time=None,
     scheme="random",
     mtd_interval=None,
-    custom_strategies=None,
-    checkpoints=None,
+    custom_strategies: MTD | list[MTD] = None,
     total_nodes=50,
     total_endpoints=5,
     total_subnets=8,
@@ -399,7 +399,6 @@ def simulate_without_saving(
     target_layer=4,
     total_database=2,
     terminate_compromise_ratio=0.8,
-    new_network=False,
     seed=None,
 ):
     """
@@ -420,6 +419,19 @@ def simulate_without_saving(
     :param terminate_compromise_ratio: terminate the simulation if reached compromise ratio
     :param new_network: True: create new snapshots based on network size, False: load snapshots based on network size
     """
+    if total_endpoints is None:
+        total_endpoints = 5
+    if total_subnets is None:
+        total_subnets = 8
+    if total_layers is None:
+        total_layers = 4
+    if target_layer is None:
+        target_layer = 4
+    if total_database is None:
+        total_database = 2
+    if terminate_compromise_ratio is None:
+        terminate_compromise_ratio = 0.8
+
     # initialise the simulation
     env = simpy.Environment()
     end_event = env.event()
@@ -476,10 +488,11 @@ def simulate_without_saving(
             attack_operation=attack_operation,
             proceed_time=0,
             mtd_trigger_interval=mtd_interval,
-            custom_strategies=custom_strategies,
+            custom_strategies=custom_strategies
+            if scheme != "single"
+            else custom_strategies[0],
         )
         mtd_operation.proceed_mtd()
-
     # save snapshot by time
     # if checkpoints is not None:
     #     snapshot_checkpoint.proceed_save(time_network, adversary)
@@ -492,5 +505,4 @@ def simulate_without_saving(
         env.run(until=end_event)
 
     evaluation = Evaluation(network=time_network, adversary=adversary)
-
     return evaluation

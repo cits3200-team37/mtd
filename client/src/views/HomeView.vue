@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex items-center justify-center h-screen bg-dark-background text-white"
+    class="flex items-center justify-center h-[calc(100vh-36px)] bg-background-color text-text-color"
   >
     <div class="text-center">
       <h1 class="text-3xl font-semibold mb-2 px-20">
         Welcome to the Moving Target Defence Simulator
       </h1>
-      <p class="font-light text-navbar-icon">
+      <p class="font-light text-text-color">
         Integrate time domain in the evaluation of Moving Target Defence
       </p>
 
@@ -16,13 +16,10 @@
         <a
           href="https://github.com/cits3200-team37"
           target="_blank"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiGithub"></path>
             </svg>
           </div>
@@ -32,13 +29,10 @@
         <a
           href="https://research-repository.uwa.edu.au/en/persons/jin-hong"
           target="_blank"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiFileDocument"></path>
             </svg>
           </div>
@@ -47,13 +41,10 @@
 
         <a
           @click="toSimulateView()"
-          class="flex flex-col items-center mt-10 text-navbar-icon"
+          class="flex flex-col items-center mt-10 fill-current text-text-color hover:cursor-pointer"
         >
           <div class="h-12 w-12">
-            <svg
-              viewBox="0 0 24 24"
-              class="fill-current text-navbar-icon hover:text-white"
-            >
+            <svg viewBox="0 0 24 24">
               <path :d="mdiGraphOutline"></path>
             </svg>
           </div>
@@ -69,9 +60,7 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
-
 const router = useRouter();
-
 const toSimulateView = async () => {
   await router.push("/simulation");
 };
