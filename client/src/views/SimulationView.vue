@@ -449,6 +449,12 @@ const plotServiceNetwork = (graphData) => {
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
+  <transition
+    enter-from-class="opacity-0"
+    leave-to-class="opacity-0"
+    enter-active-class="transition duration-200"
+    leave-active-class="transition duration-200"
+  >
   <Modal
     v-if="showModal"
     @mounted="plotServiceNetwork(modalServiceGraph)"
@@ -458,6 +464,7 @@ const plotServiceNetwork = (graphData) => {
       <div id="service-network-graph" class="h-full w-full"></div>
     </div>
   </Modal>
+  </transition>
   <ToolTip
     :showTooltip="showTooltip"
     :offsetX="toolTipOffsetX"
