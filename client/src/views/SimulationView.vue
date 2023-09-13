@@ -455,15 +455,15 @@ const plotServiceNetwork = (graphData) => {
     enter-active-class="transition duration-200"
     leave-active-class="transition duration-200"
   >
-  <Modal
-    v-if="showModal"
-    @mounted="plotServiceNetwork(modalServiceGraph)"
-    @close="showModal = false"
-  >
-    <div class="h-[40vh]">
-      <div id="service-network-graph" class="h-full w-full"></div>
-    </div>
-  </Modal>
+    <Modal
+      v-if="showModal"
+      @mounted="plotServiceNetwork(modalServiceGraph)"
+      @close="showModal = false"
+    >
+      <div class="h-[40vh]">
+        <div id="service-network-graph" class="h-full w-full"></div>
+      </div>
+    </Modal>
   </transition>
   <ToolTip
     :showTooltip="showTooltip"
