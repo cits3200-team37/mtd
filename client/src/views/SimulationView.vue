@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
+import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
@@ -92,7 +93,10 @@ const handleSubmit = async () => {
     "single",
     "None",
   ];
-  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
+  if (
+    !form.value.scheme ||
+    !validSchemes.includes(form.value.scheme.toLowerCase())
+  ) {
     errors.value.scheme =
       "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
     isValid.value = false;
@@ -109,7 +113,6 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
-
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -331,11 +334,9 @@ const plotNetwork = (graphData) => {
               </div>
               <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
-                <FormField
+                <DropDown
                   v-model="form.scheme"
                   label="Scheme"
-                  placeholder="Scheme"
-                  type="text"
                   :error="errors.scheme"
                 />
               </div>
