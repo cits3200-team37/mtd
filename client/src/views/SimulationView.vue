@@ -93,7 +93,10 @@ const handleSubmit = async () => {
     "single",
     "None",
   ];
-  if (!form.value.scheme || !validSchemes.includes(form.value.scheme.toLowerCase())) {
+  if (
+    !form.value.scheme ||
+    !validSchemes.includes(form.value.scheme.toLowerCase())
+  ) {
     errors.value.scheme =
       "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
     isValid.value = false;
