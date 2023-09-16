@@ -15,7 +15,7 @@ const props = defineProps({
     type: String,
     default: "Click to have a predefined scenario",
   },
-  scenarioValues: { type: Object, default: () => ({}) },
+  scenarioValues: { type: String, default: "" },
 });
 
 const emit = defineEmits(["apply-scenario"]);
