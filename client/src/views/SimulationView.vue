@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
+import Scenario from "../components/Scenario.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -117,6 +118,12 @@ const handleSubmit = async () => {
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const applyPredefinedScenario = (values) => {
+  for (let key in values) {
+    form.value[key] = values[key];
+  }
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -407,6 +414,16 @@ const plotNetwork = (graphData) => {
       </div>
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
+    <Scenario
+      :scenarioMessage="'Predefined Scenario 1'"
+      :scenarioValues="{
+        startTime: 0,
+        finishTime: 1000,
+        mtdInterval: 200,
+        totalNodes: 20,
+      }"
+      @apply-scenario="applyPredefinedScenario"
+    />
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
