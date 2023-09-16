@@ -88,18 +88,18 @@ const handleSubmit = async () => {
   }
 
   const validSchemes = [
-    "random",
-    "simultaneous",
-    "alternative",
-    "single",
+    "Random",
+    "Simultaneous",
+    "Alternative",
+    "Single",
     "None",
   ];
   if (
     !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme.toLowerCase())
+    !validSchemes.includes(form.value.scheme)
   ) {
     errors.value.scheme =
-      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+      "Invalid scheme. Choose between 'Random', 'Simultaneous', 'Alternative', 'Single', or 'None'.";
     isValid.value = false;
   }
 
@@ -417,11 +417,11 @@ const plotNetwork = (graphData) => {
     <Scenario
       :scenarioMessage="'Predefined Scenario 1'"
       :scenarioValues="{
-        startTime: 0,
-        finishTime: 1000,
-        mtdInterval: 200,
-        scheme: 'None',
-        totalNodes: 20,
+        startTime: '0',
+        finishTime: '1000',
+        mtdInterval: '200',
+        scheme: 'Random',
+        totalNodes: '20',
       }"
       @apply-scenario="applyPredefinedScenario"
     />
