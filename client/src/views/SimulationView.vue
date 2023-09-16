@@ -53,6 +53,8 @@ const errors = ref({
   totalNodes: "",
 });
 
+const showScenario = ref(true);
+
 const handleSubmit = async () => {
   // Reset errors
   Object.keys(errors.value).forEach((key) => {
@@ -114,6 +116,9 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
+  
+  showScenario.value = false; 
+
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -414,17 +419,20 @@ const plotNetwork = (graphData) => {
       </div>
     </div>
     <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
-    <Scenario
-      :scenarioMessage="'Predefined Scenario 1'"
-      :scenarioValues="{
-        startTime: '0',
-        finishTime: '1000',
-        mtdInterval: '200',
-        scheme: 'Random',
-        totalNodes: '20',
-      }"
-      @apply-scenario="applyPredefinedScenario"
-    />
+
+    <div v-if="showScenario">
+      <Scenario
+        :scenarioMessage="'Predefined Scenario 1'"
+        :scenarioValues="{
+          startTime: '0',
+          finishTime: '1000',
+          mtdInterval: '200',
+          scheme: 'Random',
+          totalNodes: '20',
+        }"
+        @apply-scenario="applyPredefinedScenario"
+      />
+    </div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
