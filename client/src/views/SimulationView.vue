@@ -420,6 +420,7 @@ const plotNetwork = (graphData) => {
         startTime: 0,
         finishTime: 1000,
         mtdInterval: 200,
+        scheme: 'None',
         totalNodes: 20,
       }"
       @apply-scenario="applyPredefinedScenario"
