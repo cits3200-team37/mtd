@@ -430,7 +430,8 @@ const plotNetwork = (graphData) => {
         class="w-full p-4 grid grid-cols-2 gap-3 max-h-52"
       >
         <Scenario
-          :scenarioMessage="'Predefined Scenario 1'"
+          :scenarioTitle="'Scenario 1'"
+          :scenarioDescription="'Random Scheme'"
           :scenarioValues="{
             startTime: '0',
             finishTime: '1000',
@@ -441,35 +442,37 @@ const plotNetwork = (graphData) => {
           @apply-scenario="applyPredefinedScenario"
         />
         <Scenario
-          :scenarioMessage="'Predefined Scenario 2'"
+          :scenarioTitle="'Scenario 2'"
+          :scenarioDescription="'Simultaneous Scheme'"
           :scenarioValues="{
             startTime: '0',
             finishTime: '500',
             mtdInterval: '100',
-            scheme: 'None',
+            scheme: 'Simultaneous',
             totalNodes: '50',
           }"
           @apply-scenario="applyPredefinedScenario"
         />
         <Scenario
-          :scenarioMessage="'Predefined Scenario 3'"
+          :scenarioTitle="'Scenario 3'"
+          :scenarioDescription="'Alternative Scheme'"
           :scenarioValues="{
             startTime: '0',
-            finishTime: '500',
-            mtdInterval: '100',
-            scheme: 'None',
-            totalNodes: '50',
+            finishTime: '300',
+            mtdInterval: '50',
+            scheme: 'Alternative',
+            totalNodes: '100',
           }"
           @apply-scenario="applyPredefinedScenario"
         />
         <Scenario
-          :scenarioMessage="'Predefined Scenario 4'"
+          :scenarioTitle="'Scenario 4'"
           :scenarioValues="{
             startTime: '0',
-            finishTime: '500',
-            mtdInterval: '100',
+            finishTime: '400',
+            mtdInterval: '150',
             scheme: 'None',
-            totalNodes: '50',
+            totalNodes: '70',
           }"
           @apply-scenario="applyPredefinedScenario"
         />
