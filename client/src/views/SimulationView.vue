@@ -57,6 +57,12 @@ const errors = ref({
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  terminateCompromiseRatio: "",
 });
 
 const handleSubmit = async () => {
@@ -65,56 +71,132 @@ const handleSubmit = async () => {
     errors.value[key] = "";
   });
 
-  if (
-    !form.value.startTime ||
-    isNaN(form.value.startTime) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.startTime = "Start Time must be a non-negative number";
+  const startTime = Number(form.value.startTime);
+  const finishTime = Number(form.value.finishTime);
+  const mtdInterval = Number(form.value.mtdInterval);
+  const totalNodes = Number(form.value.totalNodes);
+  const totalLayers = Number(form.value.totalLayers);
+  const totalEndpoints = Number(form.value.totalEndpoints);
+  const totalSubnets = Number(form.value.totalSubnets);
+  const totalDatabase = Number(form.value.totalDatabase);
+  const targetLayer = Number(form.value.targetLayer);
+  const terminateCompromiseRatio = Number(form.value.terminateCompromiseRatio);
+
+  if (isNaN(startTime)) {
+    errors.value.startTime = "Start Time must be a number";
+    isValid.value = false;
+  } else if (startTime < 0) {
+    errors.value.startTime = "Stable test limit: startTime >= 0";
     isValid.value = false;
   }
 
-  if (
-    !form.value.finishTime ||
-    isNaN(form.value.finishTime) ||
-    form.value.finishTime <= form.value.startTime
-  ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
+  if (isNaN(finishTime)) {
+    errors.value.finishTime = "Finish Time must be a number";
+    isValid.value = false;
+  } else if (finishTime < 10 || finishTime > 5000) {
+    errors.value.finishTime = "Stable test limit: None or 10 <= finishTime <= 5000";
+    isValid.value = false;
+  } else if (finishTime <= startTime) {
+    errors.value.finishTime = "Logical limit: startTime < finishTime";
     isValid.value = false;
   }
 
-  if (
-    !form.value.mtdInterval ||
-    isNaN(form.value.mtdInterval) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+  if (isNaN(mtdInterval)) {
+    errors.value.mtdInterval = "MTD Interval must be a number";
+    isValid.value = false;
+  } else if (mtdInterval <= 0) {
+    errors.value.mtdInterval = "Stable test limit: mtdInterval > 0";
+    isValid.value = false;
+  } else if (mtdInterval > finishTime - startTime) {
+    errors.value.mtdInterval =
+      "Logical limit: mtdInterval <= finishTime - startTime";
     isValid.value = false;
   }
 
   const validSchemes = [
-    "random",
-    "simultaneous",
-    "alternative",
-    "single",
+    "Random",
+    "Simultaneous",
+    "Alternative",
+    "Single",
     "None",
   ];
-  if (
-    !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme.toLowerCase())
-  ) {
+  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
     errors.value.scheme =
-      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+      "Invalid scheme. Choose between Random, Simultaneous, Alternative, Single, or None";
     isValid.value = false;
   }
 
-  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
+  if (isNaN(totalNodes)) {
     errors.value.totalNodes = "Total Nodes must be a number";
     isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+  } else if (totalNodes < 20 || totalNodes > 1000) {
+    errors.value.totalNodes = "Stable test limit: 20 <= totalNodes <= 1000";
     isValid.value = false;
+  }
+
+  if (form.value.totalLayers) {
+    if (isNaN(totalLayers)) {
+      errors.value.totalLayers = "Total Layers must be a number";
+      isValid.value = false;
+    } else if (totalLayers <= 0 || totalLayers > 12) {
+      errors.value.totalLayers = "Stable test limit: 0 < totalLayers <= 12";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalEndpoints) {
+    if (isNaN(totalEndpoints)) {
+      errors.value.totalEndpoints = "Total Endpoints must be a number";
+      isValid.value = false;
+    } else if (totalEndpoints <= 0) {
+      errors.value.totalEndpoints =
+        "Stable test limit: totalEndpoints > 0";
+      isValid.value = false;
+    } else if (totalEndpoints >= totalNodes) {
+      errors.value.totalEndpoints =
+        "Stable test limit: totalEndpoints < totalNodes";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalSubnets) {
+    if (isNaN(totalSubnets)) {
+      errors.value.totalSubnets = "Total Subnets must be a number";
+      isValid.value = false;
+    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2) {
+      errors.value.totalSubnets =
+        "Logical limit: (totalNodes - totalEndpoints) / (totalSubnets - 1) > 2";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalDatabase) {
+    if (isNaN(totalDatabase)) {
+      errors.value.totalDatabase = "Total Database must be a number";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.targetLayer) {
+    if (isNaN(targetLayer)) {
+      errors.value.targetLayer = "Target Layer must be a number";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.terminateCompromiseRatio) {
+    if (isNaN(terminateCompromiseRatio)) {
+      errors.value.terminateCompromiseRatio =
+        "Terminate Compromise Ratio must be a number";
+      isValid.value = false;
+    } else if (
+      terminateCompromiseRatio <= 0.0 ||
+      terminateCompromiseRatio > 1.0
+    ) {
+      errors.value.terminateCompromiseRatio =
+        "Logical limit: 0.0 < terminateCompromiseRatio <= 1.0";
+      isValid.value = false;
+    }
   }
 
   if (!isValid.value) {
@@ -364,6 +446,7 @@ const plotNetwork = (graphData) => {
                   label="Total Layers"
                   placeholder="Total Layers"
                   type="text"
+                  :error="errors.totalLayers"
                 />
               </div>
               <div>
@@ -372,6 +455,7 @@ const plotNetwork = (graphData) => {
                   label="Total Endpoints"
                   placeholder="Total Endpoints"
                   type="text"
+                  :error="errors.totalEndpoints"
                 />
               </div>
               <div>
@@ -380,6 +464,7 @@ const plotNetwork = (graphData) => {
                   label="Total Subnets"
                   placeholder="Total Subnets"
                   type="text"
+                  :error="errors.totalSubnets"
                 />
               </div>
               <div>
@@ -388,6 +473,7 @@ const plotNetwork = (graphData) => {
                   label="Total Databases"
                   placeholder="Total Databases"
                   type="text"
+                  :error="errors.totalDatabase"
                 />
               </div>
               <div>
@@ -396,6 +482,7 @@ const plotNetwork = (graphData) => {
                   label="Target Layer"
                   placeholder="Target Layer"
                   type="text"
+                  :error="errors.targetLayer"
                 />
               </div>
               <div>
@@ -404,6 +491,7 @@ const plotNetwork = (graphData) => {
                   label="Compromise Ratio"
                   placeholder="Compromise Ratio"
                   type="text"
+                  :error="errors.terminateCompromiseRatio"
                 />
               </div>
               <div>
