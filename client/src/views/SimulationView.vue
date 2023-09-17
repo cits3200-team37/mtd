@@ -94,7 +94,8 @@ const handleSubmit = async () => {
     errors.value.finishTime = "Finish Time must be a number";
     isValid.value = false;
   } else if (finishTime < 10 || finishTime > 5000) {
-    errors.value.finishTime = "Stable test limit: None or 10 <= finishTime <= 5000";
+    errors.value.finishTime =
+      "Stable test limit: None or 10 <= finishTime <= 5000";
     isValid.value = false;
   } else if (finishTime <= startTime) {
     errors.value.finishTime = "Logical limit: startTime < finishTime";
@@ -149,8 +150,7 @@ const handleSubmit = async () => {
       errors.value.totalEndpoints = "Total Endpoints must be a number";
       isValid.value = false;
     } else if (totalEndpoints <= 0) {
-      errors.value.totalEndpoints =
-        "Stable test limit: totalEndpoints > 0";
+      errors.value.totalEndpoints = "Stable test limit: totalEndpoints > 0";
       isValid.value = false;
     } else if (totalEndpoints >= totalNodes) {
       errors.value.totalEndpoints =
