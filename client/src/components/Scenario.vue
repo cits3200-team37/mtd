@@ -1,5 +1,8 @@
 <template>
-  <div class="h-20 p-4 border border-solid rounded-lg hover:bg-gray-400 hover:cursor-pointer" @click="useScenario">
+  <div
+    class="h-20 p-4 border border-solid rounded-lg hover:bg-gray-400 hover:cursor-pointer"
+    @click="useScenario"
+  >
     <h3 class="text-base font-semibold mb-2">{{ scenarioTitle }}</h3>
     <p class="text-sm">{{ scenarioDescription }}</p>
     {{ scenarioMessage }}
@@ -10,7 +13,7 @@
 import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
-    scenarioTitle: {
+  scenarioTitle: {
     type: String,
     default: "Scenario",
   },

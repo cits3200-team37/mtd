@@ -96,10 +96,7 @@ const handleSubmit = async () => {
     "Single",
     "None",
   ];
-  if (
-    !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme)
-  ) {
+  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
     errors.value.scheme =
       "Invalid scheme. Choose between 'Random', 'Simultaneous', 'Alternative', 'Single', or 'None'.";
     isValid.value = false;
@@ -217,7 +214,7 @@ const plotNetwork = (graphData) => {
     .forceSimulation(nodes)
     .force(
       "link",
-      d3.forceLink(links).id((d) => d.id),
+      d3.forceLink(links).id((d) => d.id)
     )
     .force("charge", d3.forceManyBody().strength(-10))
     .force("center", d3.forceCenter(width / 2, height / 2))
@@ -257,7 +254,7 @@ const plotNetwork = (graphData) => {
 
   node.append("title").text((d) => d.id);
   node.call(
-    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
+    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
   );
 
   d3.selectAll(".node")
