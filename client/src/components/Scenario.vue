@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="fixed bottom-4 right-4 p-4 bg-black text-white cursor-pointer"
-    @click="useScenario"
-  >
+  <div class="h-20 p-4 bg-black text-white cursor-pointer" @click="useScenario">
     {{ scenarioMessage }}
   </div>
 </template>

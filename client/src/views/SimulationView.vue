@@ -116,8 +116,8 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
-  
-  showScenario.value = false; 
+
+  showScenario.value = false;
 
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
@@ -418,20 +418,62 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
 
-    <div v-if="showScenario">
-      <Scenario
-        :scenarioMessage="'Predefined Scenario 1'"
-        :scenarioValues="{
-          startTime: '0',
-          finishTime: '1000',
-          mtdInterval: '200',
-          scheme: 'Random',
-          totalNodes: '20',
-        }"
-        @apply-scenario="applyPredefinedScenario"
-      />
+    <div class="flex-1 flex flex-col mr-2 h-[calc(100vh-36px)]">
+      <div
+        id="network-graph"
+        class="flex-1 mr-2 h-[calc(100vh-36px - (showScenario ? 56px : 0px))]"
+      ></div>
+
+      <div
+        v-if="showScenario"
+        class="w-full p-4 grid grid-cols-2 gap-3 max-h-52"
+      >
+        <Scenario
+          :scenarioMessage="'Predefined Scenario 1'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '1000',
+            mtdInterval: '200',
+            scheme: 'Random',
+            totalNodes: '20',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioMessage="'Predefined Scenario 2'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'None',
+            totalNodes: '50',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioMessage="'Predefined Scenario 3'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'None',
+            totalNodes: '50',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioMessage="'Predefined Scenario 4'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'None',
+            totalNodes: '50',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+      </div>
     </div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
