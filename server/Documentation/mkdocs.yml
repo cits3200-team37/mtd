@@ -49,6 +49,7 @@ nav:
   - MTD Network Code Base:
       - MTD:
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
+          - Port Shuffle: mtdnetwork/mtd/portshuffle.md
       - Operation:
           - Attack Operation: mtdnetwork/operation/attack_operation.md
       - Component:
