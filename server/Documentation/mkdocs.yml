@@ -49,6 +49,8 @@ nav:
   - MTD Network Code Base:
       - MTD:
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
+          - IP Shuffle: mtdnetwork/mtd/ipshuffle.md
+          - OS Diversity: mtdnetwork/mtd/osdiversity.md
       - Operation:
           - Attack Operation: mtdnetwork/operation/attack_operation.md
       - Component:
