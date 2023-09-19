@@ -14,6 +14,7 @@ osdiversity. contains the `OSDiversity` class, a subclass of `MTD`.
 - Takes an optional `adversary` parameter, however the code does not seem to use it
 
 #### Dependencies
+- mtdnetwork/mtd
 - mtdnetwork/data/constants
 
 
