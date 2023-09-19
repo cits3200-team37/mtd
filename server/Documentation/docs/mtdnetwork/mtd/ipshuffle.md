@@ -13,6 +13,7 @@ ipshuffle.py contains the `IPShuffle` class, a subclass of `MTD`.
 - Takes an optional `adversary` parameter, however the code does not seem to use it
 
 #### Dependencies
+- mtdnetwork/mtd
 - mtdnetwork/component/host
 
 
