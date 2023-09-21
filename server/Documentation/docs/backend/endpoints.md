@@ -4,7 +4,7 @@
 
 #### Description
 
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
+This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting evaluation details of the simulation as a dictionary object. Some elements such as the MTD Record and Attack Record require restructuring / further processing on the frontend to extract relevant data and be compatible with the Javascript graphing library [d3](https://d3js.org/).
 
 #### Request body
 
@@ -33,148 +33,22 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
 
 ```json
 {
-  "network": {
-    "directed": false,
-    "links": [
-      { "source": 0, "target": 13 },
-      { "source": 2, "target": 10 },
-      ...
-    ],
-    "nodes": [
-      {
-        "host": {
-          "compromised": true,
-          "compromisedServices": [1, 3, 4, 6, 7, 9],
-          "hostId": 0,
-          "hostUuid": "4806a31a-3f71-4a8d-99d8-880f83547621",
-          "ip": "161.99.9.59",
-          "osType": "freebsd",
-          "osVersion": "12",
-          "pUCompromise": false,
-          "totalNodes": 10,
-          "totalServices": 9,
-          "totalUsers": 5
-        },
-        "id": 0,
-        "layer": 0,
-        "subnet": 0
-      },
-      {
-        "host": {
-          "compromised": false,
-          "compromisedServices": [],
-          "hostId": 1,
-          "hostUuid": "321663a6-13f5-4b2e-bb94-109b4a7b3899",
-          "ip": "169.179.214.27",
-          "osType": "centos",
-          "osVersion": "8",
-          "pUCompromise": false,
-          "totalNodes": 8,
-          "totalServices": 7,
-          "totalUsers": 5
-        },
-        "id": 1,
-        "layer": 0,
-        "subnet": 0
-      },
-      ...
-    ]
-  }
+  "network": {},
+  "mtd_record": {},
+  "attack_record": {},
+  "comp_hosts": [],
+  "exposed_hosts": [],
+  "comp_checkpoint": [],
 }
 ```
+All elements are derived from the Evaluation Class using the final network and adversary state once the simulation has terminated.
 
-#### Request Parameters
-
-- `finishTime` is an optional parameter, if `finishTime` is not provided, the simulation runs till the network reaches compromised threshold (compromise ration > 0.9)
-- `mtdInterval` is the time imterval ot trigger MTD(s)
-- `scheme` is the mtd scheme to be used, please get available schemes from schemes endpoint TODO
-- `totalNodes` is the number of nodes in the network (network size)
-- `seed` can be provided to replicate simulations.
-
-# API Endpoints
-
-## `[POST] /simulate`
-
-#### Description
-
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
-
-#### Request body
-
-```
-{
-  "finishTime":int (optional),
-  "mtdInterval":int,
-  "scheme":string,
-  "totalNodes":int,
-  "seed": int (optional)
-}
-```
-
-#### Sample request
-
-```json
-{
-  "finishTime": 3000,
-  "mtdInterval": 200,
-  "scheme": "random",
-  "totalNodes": 100
-}
-```
-
-#### Sample response
-
-```json
-{
-  "network": {
-    "directed": false,
-    "links": [
-      { "source": 0, "target": 13 },
-      { "source": 2, "target": 10 },
-      ...
-    ],
-    "nodes": [
-      {
-        "host": {
-          "compromised": true,
-          "compromisedServices": [1, 3, 4, 6, 7, 9],
-          "hostId": 0,
-          "hostUuid": "4806a31a-3f71-4a8d-99d8-880f83547621",
-          "ip": "161.99.9.59",
-          "osType": "freebsd",
-          "osVersion": "12",
-          "pUCompromise": false,
-          "totalNodes": 10,
-          "totalServices": 9,
-          "totalUsers": 5
-        },
-        "id": 0,
-        "layer": 0,
-        "subnet": 0
-      },
-      {
-        "host": {
-          "compromised": false,
-          "compromisedServices": [],
-          "hostId": 1,
-          "hostUuid": "321663a6-13f5-4b2e-bb94-109b4a7b3899",
-          "ip": "169.179.214.27",
-          "osType": "centos",
-          "osVersion": "8",
-          "pUCompromise": false,
-          "totalNodes": 8,
-          "totalServices": 7,
-          "totalUsers": 5
-        },
-        "id": 1,
-        "layer": 0,
-        "subnet": 0
-      },
-      ...
-    ]
-  }
-}
-```
+##### Response Elements
+- `network` contains the graph of the network from the _network object. The `host` element of the nodes in the graph have been converted to json for compatibility with the [d3 library](https://d3js.org/).
+- `mtd_record`and `attack_record` comprise the records of the total operation of the simulation, what attack and defense methods were utilised, as well as when and where.
+- `comp_hosts` is a list of the hosts compromised by the adversary during the simulation.
+- `exposed_hosts` is a list of hosts "visible" to potential attackers. It is derived from the network objects nodes and is the set of exposed endpoints, all reachable nodes and their direct neighbours.
+- `comp_checkpoint` contains some of the ket metrics of the simulation at particular percentages of compromise.
 
 #### Request Parameters
 
