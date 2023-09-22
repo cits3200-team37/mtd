@@ -42,7 +42,19 @@ markdown_extensions:
   - attr_list
 
 nav:
- - Home: index.md
- - Code Review: codereview.md
- - Back End:
+  - Home: index.md
+  - Code Review: codereview.md
+  - Back End:
       - End points: backend/endpoints.md
+  - MTD Network Code Base:
+      - MTD:
+          - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
+          - IP Shuffle: mtdnetwork/mtd/ipshuffle.md
+          - OS Diversity: mtdnetwork/mtd/osdiversity.md
+          - User Shuffle: mtdnetwork/mtd/usershuffle.md
+      - Operation:
+          - Attack Operation: mtdnetwork/operation/attack_operation.md
+      - Component:
+          - Host: mtdnetwork/component/host.md
+      - Statistic:
+          - Evaluation: mtdnetwork/statistic/evaluation.md
