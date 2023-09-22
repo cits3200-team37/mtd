@@ -319,7 +319,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.startTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
@@ -329,7 +328,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.finishTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
@@ -339,7 +337,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.mtdInterval"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
                 <DropDown
                   v-model="form.scheme"
@@ -347,7 +344,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.scheme"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
               <div>
                 <FormField
                   v-model="form.totalNodes"
