@@ -31,6 +31,13 @@ const form = ref({
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  terminateCompromiseRatio: "",
+  seed: "",
 });
 
 onMounted(() => {
@@ -351,6 +358,62 @@ const plotNetwork = (graphData) => {
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
+              <div>
+                <FormField
+                  v-model="form.totalLayers"
+                  label="Total Layers"
+                  placeholder="Total Layers"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalEndpoints"
+                  label="Total Endpoints"
+                  placeholder="Total Endpoints"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalSubnets"
+                  label="Total Subnets"
+                  placeholder="Total Subnets"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalDatabase"
+                  label="Total Databases"
+                  placeholder="Total Databases"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.targetLayer"
+                  label="Target Layer"
+                  placeholder="Target Layer"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.terminateCompromiseRatio"
+                  label="Compromise Ratio"
+                  placeholder="Compromise Ratio"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.seed"
+                  label="Set Seed"
+                  placeholder="Set Seed"
+                  type="text"
+                />
+              </div>
               <div class="text-center">
                 <button
                   class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
