@@ -6,7 +6,7 @@ osdiversityassignment.py contains 2 classes:
 1. The `OSDiversityAssignment` class which is a subclass of `MTD`
 2. The `DiversityAssignment` supporting class, which is used in a `OSDiversityAssignment` method 
 
-<br>
+---
 `DiversityAssignment` class
 
 - The class takes 6 parameters: `graph`, `sources`, `dests`, `os_types`, `pos`, `colour_map`; `pos` and `colour_map` are purely used for visualisations
@@ -21,7 +21,7 @@ osdiversityassignment.py contains 2 classes:
 - `objective` method:
     - This is the main method of the class; it effectively solves the OS diversity assignment by finding the optimal assignment of operating systems for a network graph
 
-<br>
+---
 `OSDiversityAssignment` class
 
 - The class relies on the `DiversityAssignment` class
