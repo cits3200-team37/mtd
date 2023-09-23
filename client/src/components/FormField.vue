@@ -8,6 +8,7 @@
     @input="updateInput"
     :value="modelValue"
   />
+  <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
 </template>
 
 <script setup>
