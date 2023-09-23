@@ -5,6 +5,9 @@
 
  - This class is used to initalize a new attack operation
 
+
+<br>
+
 ```proceed_attack``` method:
     
  -  Proceeds with the attack simulation based on the current attack process of the adversary.
@@ -102,6 +105,7 @@
 
   - This method returns the adversary 
 
+<br>
 
 #### Dependencies
 
