@@ -54,6 +54,7 @@ nav:
           - Host Topology Shuffle: mtdnetwork/mtd/hosttopologyshuffle.md
           - IP Shuffle: mtdnetwork/mtd/ipshuffle.md
           - OS Diversity: mtdnetwork/mtd/osdiversity.md
+          - OS Diversity Assignment: mtdnetwork/mtd/osdiversityassignment.md
           - User Shuffle: mtdnetwork/mtd/usershuffle.md
           - Service Diversity: mtdnetwork/mtd/servicediversity.md
       - Operation:
