@@ -54,6 +54,7 @@ nav:
           - IP Shuffle: mtdnetwork/mtd/ipshuffle.md
           - OS Diversity: mtdnetwork/mtd/osdiversity.md
           - User Shuffle: mtdnetwork/mtd/usershuffle.md
+          - Service Diversity: mtdnetwork/mtd/servicediversity.md
       - Operation:
           - Attack Operation: mtdnetwork/operation/attack_operation.md
       - Component:

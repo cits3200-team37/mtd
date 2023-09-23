@@ -8,7 +8,7 @@ servicediversity.py contains the `ServiceDiversity` class, a subclass of `MTD`.
     - Takes optional `network` parameter, which the MTD strategy can be applied to
     - Takes optional `shuffle` parameter defaulting to 50, which presumably determines the number of service shuffles, but does not appear to be used anywhere in the class
 
-<br>
+
 `mtd_operation` method
 
 - This method changes the services of each host, provided the host is not an endpoint
