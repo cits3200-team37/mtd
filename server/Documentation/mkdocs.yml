@@ -48,6 +48,7 @@ nav:
       - End points: backend/endpoints.md
   - MTD Network Code Base:
       - MTD:
+          - MTD init: mtdnetwork/mtd/mtdinit.md
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
           - IP Shuffle: mtdnetwork/mtd/ipshuffle.md
           - OS Diversity: mtdnetwork/mtd/osdiversity.md
