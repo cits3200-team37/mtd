@@ -35,7 +35,7 @@ const form = ref({
   totalNodes: "",
 });
 
-const serviceNetworkHost = ref({});
+const serviceNetworkHost = ref(null);
 
 // for tooltip
 const currentHost = ref({
@@ -55,6 +55,11 @@ onMounted(() => {
     form.value = { ...simulationStore.parameters };
   }
 });
+
+const closeModal = () => {
+  showModal.value = false;
+  serviceNetworkHost.value = null;
+};
 
 const handleSubmit = async () => {
   // do not look in store for existing network graph as we run a new simulation
@@ -296,16 +301,9 @@ const plotServiceNetwork = (graphData) => {
     d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
   );
 
-  d3.selectAll("#service-network-graph .node")
-    .on("mouseover", (e, d) => {
-      serviceNetworkHost.value = { ...d };
-      hostToolTipOffsetX.value = e.clientX + 40;
-      hostToolTipOffsetY.value = e.clientY - 50;
-      showHostTooltip.value = true;
-    })
-    .on("mouseout", () => {
-      showHostTooltip.value = false;
-    });
+  d3.selectAll("#service-network-graph .node").on("click", (e, d) => {
+    serviceNetworkHost.value = { ...d };
+  });
 };
 </script>
 
@@ -461,35 +459,103 @@ const plotServiceNetwork = (graphData) => {
     <Modal
       v-if="showModal"
       @mounted="plotServiceNetwork(modalServiceGraph)"
-      @close="showModal = false"
+      @close="closeModal"
     >
-      <div class="h-[40vh]">
-        <div id="service-network-graph" class="h-full w-full"></div>
+      <div class="h-[40vh] divide-x-2 divide-zinc-600 flex">
+        <div id="service-network-graph" class="h-full w-1/2"></div>
+        <div class="h-full w-1/2">
+          <div class="flex justify-center">
+            <h3 class="font-semibold text-xl">Service Explorer</h3>
+          </div>
+          <hr class="h-[2px] my-2 mx-8 bg-zinc-600 border-0" />
+          <div class="w-full px-8">
+            <div v-if="serviceNetworkHost">
+              <div v-if="serviceNetworkHost.service" class="flex-col">
+                <div class="overflow-auto shadow-md rounded-lg">
+                  <table
+                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
+                  >
+                    <tbody>
+                      <tr class="border-b border-gray-500">
+                        <th
+                          scope="row"
+                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
+                        >
+                          Name
+                        </th>
+                        <td class="px-6 py-4">
+                          {{ serviceNetworkHost.service.name }}
+                        </td>
+                      </tr>
+                      <tr class="border-b border-gray-500">
+                        <th
+                          scope="row"
+                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
+                        >
+                          Version
+                        </th>
+                        <td class="px-6 py-4">
+                          {{ serviceNetworkHost.service.version }}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th
+                          scope="row"
+                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
+                        >
+                          Port
+                        </th>
+                        <td class="px-6 py-4">{{ serviceNetworkHost.port }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <br />
+                <div class="overflow-auto h-auto shadow-md rounded-lg">
+                  <table
+                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
+                  >
+                    <thead class="text-xs uppercase bg-gray-600 text-gray-200">
+                      <tr>
+                        <th scope="col" class="px-6 py-3">ID</th>
+                        <th scope="col" class="px-6 py-3">CVSS</th>
+                        <th scope="col" class="px-6 py-3">Exploited</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="border-b border-gray-500"
+                        v-for="vul in serviceNetworkHost.service
+                          .vulnerabilities"
+                      >
+                        <td class="px-6 py-4">
+                          {{ vul.id }}
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ Math.round(vul.cvss) }}
+                        </td>
+                        <td class="px-6 py-4">
+                          {{ vul.exploited }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div v-else class="">
+                <p class="text-navbar-icon">
+                  No information to show for node selected
+                </p>
+              </div>
+            </div>
+            <div v-else>
+              <p class="font-light text-navbar-icon">
+                Select a node to explore
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-      <ToolTip
-        :showTooltip="showHostTooltip"
-        :offsetX="hostToolTipOffsetX"
-        :offsetY="hostToolTipOffsetY"
-      >
-        <div v-if="serviceNetworkHost.service">
-          <ul>
-            <li>Port: {{ serviceNetworkHost.port }}</li>
-            <li>Name: {{ serviceNetworkHost.service.name }}</li>
-            <li>Version: {{ serviceNetworkHost.service.version }}</li>
-            <li>
-              Exploit Value:
-              {{ Math.round(serviceNetworkHost.service.exploitValue) }}
-            </li>
-            <li>
-              Vulnerabilities:
-              {{ serviceNetworkHost.service.vulnerabilities.length }}
-            </li>
-          </ul>
-        </div>
-        <div v-else>
-          <p>No service running</p>
-        </div>
-      </ToolTip>
     </Modal>
   </transition>
   <ToolTip
