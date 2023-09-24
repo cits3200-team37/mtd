@@ -1,10 +1,10 @@
 # MTD Operation Class
 
-`MTDOperation` is the main class for the execution and management of Moving Target Defense (MTD) strategies during network simulations.
+`mtd_operation` is the main class for the execution and management of Moving Target Defense (MTD) strategies during network simulations.
 
 #### Description
 
-The `MTDOperation` class encapsulates the functionality required to execute, suspend, trigger, and manage MTD strategies within a network. It interacts with the network environment and use the simpy library for manage these events. The class determines when to deploy a strategy, how to handle resource conflicts, and manages MTD registration and suspension.
+The `mtd_operation` class encapsulates the functionality required to execute, suspend, trigger, and manage MTD strategies within a network. It interacts with the network environment and use the simpy library for manage these events. The class determines when to deploy a strategy, how to handle resource conflicts, and manages MTD registration and suspension.
 
 #### Initialization
 
