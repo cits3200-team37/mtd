@@ -1,4 +1,4 @@
-# mtdnetwork/component/service.md
+# Service Class
 
 ## Vulnerability Class
 
