@@ -16,9 +16,6 @@ const isOpen = ref(true);
 const showTooltip = ref(false);
 
 const showModal = ref(false);
-const showHostTooltip = ref(false);
-const hostToolTipOffsetX = ref(0);
-const hostToolTipOffsetY = ref(0);
 
 const isInputView = ref(true);
 const toolTipOffsetX = ref(0);
