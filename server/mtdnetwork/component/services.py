@@ -58,6 +58,7 @@ class Vulnerability:
 
     def to_json(self):
         return {
+            "id": self.id,
             "complexity": self.complexity,
             "impact": self.impact,
             "cvss": self.cvss,
