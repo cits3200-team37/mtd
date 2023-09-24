@@ -78,7 +78,7 @@ const createChart = () => {
   const margin = { top: 50, right: 50, bottom: 50, left: 100 };
   const width = 800 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
-  const legendWidth = 150;
+  const legendWidth = 160;
 
   const svgContainer = d3
     .select(svg.value)
@@ -188,7 +188,7 @@ const createChart = () => {
   const legend = svgContainer
     .append("g")
     .attr("class", "legend")
-    .attr("transform", `translate(${width - legendWidth}, 0)`);
+    .attr("transform", `translate(${width - legendWidth}, -25)`);
 
   // Legend border
   legend

@@ -20,6 +20,7 @@ from mtdnetwork.mtd.osdiversityassignment import OSDiversityAssignment
 import random
 import threading
 import queue
+from mtdnetwork.mtd import MTD
 
 # logging.basicConfig(format='%(message)s', level=logging.INFO)
 
@@ -390,7 +391,7 @@ def simulate_without_saving(
     finish_time=None,
     scheme="random",
     mtd_interval=None,
-    custom_strategies=None,
+    custom_strategies: MTD | list[MTD] = None,
     total_nodes=50,
     total_endpoints=5,
     total_subnets=8,
@@ -487,7 +488,9 @@ def simulate_without_saving(
             attack_operation=attack_operation,
             proceed_time=0,
             mtd_trigger_interval=mtd_interval,
-            custom_strategies=custom_strategies,
+            custom_strategies=custom_strategies
+            if scheme != "single"
+            else custom_strategies[0],
         )
         mtd_operation.proceed_mtd()
     # save snapshot by time

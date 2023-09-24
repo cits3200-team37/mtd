@@ -13,19 +13,17 @@
   .theme-dark {
     --text-color: 255 255 255;
     --background-color: 49 51 56;
-    /* --navbar-color: 31 31 31;
-        --navbar-icon-color: 164 164 164; */
+    --background-secondary: 64 61 57;
+    --simulation-color: 43 43 43;
+    --navbar-icon-color: 164 164 164;
   }
 
   .theme-light {
     --text-color: 0 0 0;
     --background-color: 255 255 255;
-    /* --navbar-color: #f3f3f3;
-        --navbar-icon-color: 164 164 164; */
-  }
-
-  .theme-blue {
-    --background-color: 135, 206, 235;
-    --text-color: #f7f7f7;
+    --background-secondary: 255 251 254;
+    --navbar-color: 183 209 218;
+    --simulation-color: 245 245 245;
+    --navbar-icon-color: 49 47 47;
   }
 }

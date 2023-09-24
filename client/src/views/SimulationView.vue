@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
+import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
@@ -27,12 +28,18 @@ const modalServiceGraph = ref(null);
 const compromisedServiceIds = ref(null);
 
 const form = ref({
-  networkSizeList: "",
   startTime: "",
   finishTime: "",
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  terminateCompromiseRatio: "",
+  seed: "",
 });
 
 const serviceNetworkHost = ref(null);
@@ -60,8 +67,76 @@ const closeModal = () => {
   showModal.value = false;
   serviceNetworkHost.value = null;
 };
+const isValid = ref(true);
+const errors = ref({
+  startTime: "",
+  finishTime: "",
+  mtdInterval: "",
+  scheme: "",
+  totalNodes: "",
+});
 
 const handleSubmit = async () => {
+  // Reset errors
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = "";
+  });
+
+  if (
+    !form.value.startTime ||
+    isNaN(form.value.startTime) ||
+    form.value.startTime < 0
+  ) {
+    errors.value.startTime = "Start Time must be a non-negative number";
+    isValid.value = false;
+  }
+
+  if (
+    !form.value.finishTime ||
+    isNaN(form.value.finishTime) ||
+    form.value.finishTime <= form.value.startTime
+  ) {
+    errors.value.finishTime =
+      "Finish Time must be a number greater than Start Time";
+    isValid.value = false;
+  }
+
+  if (
+    !form.value.mtdInterval ||
+    isNaN(form.value.mtdInterval) ||
+    form.value.startTime < 0
+  ) {
+    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+    isValid.value = false;
+  }
+
+  const validSchemes = [
+    "random",
+    "simultaneous",
+    "alternative",
+    "single",
+    "None",
+  ];
+  if (
+    !form.value.scheme ||
+    !validSchemes.includes(form.value.scheme.toLowerCase())
+  ) {
+    errors.value.scheme =
+      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+    isValid.value = false;
+  }
+
+  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
+    errors.value.totalNodes = "Total Nodes must be a number";
+    isValid.value = false;
+  } else if (parseInt(form.value.totalNodes) < 20) {
+    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+    isValid.value = false;
+  }
+
+  if (!isValid.value) {
+    return;
+  }
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -311,12 +386,12 @@ const plotServiceNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-navbar-primary h-[calc(100vh-36px)] border border-black border-100 float-left px-5 pt-5 overflow-y-auto"
+        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-neutral-800 text-white rounded-l-md"
-            :class="{ 'bg-teal-700': isInputView }"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
+            :class="{ 'bg-teal-500': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -326,8 +401,8 @@ const plotServiceNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-neutral-800 text-white rounded-r-md"
-            :class="{ 'bg-teal-700': !isInputView }"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
+            :class="{ 'bg-teal-500': !isInputView }"
             @click="
               () => {
                 isInputView = false;
@@ -347,18 +422,11 @@ const plotServiceNetwork = (graphData) => {
             >
               <div>
                 <FormField
-                  v-model="form.networkSizeList"
-                  label="Network Size List"
-                  placeholder="Network Size"
-                  type="text"
-                />
-              </div>
-              <div>
-                <FormField
                   v-model="form.startTime"
                   label="Start Time"
                   placeholder="Start Time"
                   type="text"
+                  :error="errors.startTime"
                 />
               </div>
               <div>
@@ -367,6 +435,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
+                  :error="errors.finishTime"
                 />
               </div>
               <div>
@@ -375,14 +444,14 @@ const plotServiceNetwork = (graphData) => {
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
+                  :error="errors.mtdInterval"
                 />
               </div>
               <div>
-                <FormField
+                <DropDown
                   v-model="form.scheme"
                   label="Scheme"
-                  placeholder="Scheme"
-                  type="text"
+                  :error="errors.scheme"
                 />
               </div>
               <div>
@@ -391,11 +460,69 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
+                  :error="errors.totalNodes"
+                />
+              </div>
+              <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
+              <div>
+                <FormField
+                  v-model="form.totalLayers"
+                  label="Total Layers"
+                  placeholder="Total Layers"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalEndpoints"
+                  label="Total Endpoints"
+                  placeholder="Total Endpoints"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalSubnets"
+                  label="Total Subnets"
+                  placeholder="Total Subnets"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalDatabase"
+                  label="Total Databases"
+                  placeholder="Total Databases"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.targetLayer"
+                  label="Target Layer"
+                  placeholder="Target Layer"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.terminateCompromiseRatio"
+                  label="Compromise Ratio"
+                  placeholder="Compromise Ratio"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.seed"
+                  label="Set Seed"
+                  placeholder="Set Seed"
+                  type="text"
                 />
               </div>
               <div class="text-center">
                 <button
-                  class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                  class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
                 >
                   Submit
                 </button>
@@ -408,25 +535,25 @@ const plotServiceNetwork = (graphData) => {
             <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
             <button
               @click="colorByLayer"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color By Layer
             </button>
             <button
               @click="colorBySubnet"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color By Subnet
             </button>
             <button
               @click="colorByCompromised"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Color by Compromised
             </button>
             <button
               @click="resetZoom"
-              class="bg-gray-700 py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
             >
               Reset Zoom
             </button>
@@ -437,12 +564,12 @@ const plotServiceNetwork = (graphData) => {
     <div class="w-6 h-[calc(100vh-36px)] float-left">
       <div class="h-[calc(100vh-36px)] flex items-center justify-center">
         <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-white">
+          <button @click="isOpen = !isOpen" class="text-text-color">
             <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
           </button>
         </div>
         <div v-else>
-          <button @click="isOpen = !isOpen" class="text-white">
+          <button @click="isOpen = !isOpen" class="text-text-color">
             <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
           </button>
         </div>
