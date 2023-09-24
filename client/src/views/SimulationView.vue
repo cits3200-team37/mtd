@@ -13,7 +13,11 @@ const simulationStore = useSimulationStore();
 
 const isOpen = ref(true);
 const showTooltip = ref(false);
+
 const showModal = ref(false);
+const showHostTooltip = ref(false);
+const hostToolTipOffsetX = ref(0);
+const hostToolTipOffsetY = ref(0);
 
 const isInputView = ref(true);
 const toolTipOffsetX = ref(0);
@@ -30,6 +34,8 @@ const form = ref({
   scheme: "",
   totalNodes: "",
 });
+
+const serviceNetworkHost = ref({});
 
 // for tooltip
 const currentHost = ref({
@@ -290,19 +296,16 @@ const plotServiceNetwork = (graphData) => {
     d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
   );
 
-  // d3.selectAll(".node")
-  //   .on("mouseover", (e, d) => {
-  //     // NOTE: arbitrary px values cannot be used in runtime.
-  //     // set manually with d3 and raw css
-  //     toolTipOffsetX.value = e.clientX + 40;
-  //     tooltipOffsetY.value = e.clientY - 50;
-  //     const { host } = d;
-  //     currentHost.value = { ...host };
-  //     showTooltip.value = true;
-  //   })
-  //   .on("mouseout", () => {
-  //     showTooltip.value = false;
-  //   });
+  d3.selectAll("#service-network-graph .node")
+    .on("mouseover", (e, d) => {
+      serviceNetworkHost.value = { ...d };
+      hostToolTipOffsetX.value = e.clientX + 40;
+      hostToolTipOffsetY.value = e.clientY - 50;
+      showHostTooltip.value = true;
+    })
+    .on("mouseout", () => {
+      showHostTooltip.value = false;
+    });
 };
 </script>
 
@@ -463,6 +466,30 @@ const plotServiceNetwork = (graphData) => {
       <div class="h-[40vh]">
         <div id="service-network-graph" class="h-full w-full"></div>
       </div>
+      <ToolTip
+        :showTooltip="showHostTooltip"
+        :offsetX="hostToolTipOffsetX"
+        :offsetY="hostToolTipOffsetY"
+      >
+        <div v-if="serviceNetworkHost.service">
+          <ul>
+            <li>Port: {{ serviceNetworkHost.port }}</li>
+            <li>Name: {{ serviceNetworkHost.service.name }}</li>
+            <li>Version: {{ serviceNetworkHost.service.version }}</li>
+            <li>
+              Exploit Value:
+              {{ Math.round(serviceNetworkHost.service.exploitValue) }}
+            </li>
+            <li>
+              Vulnerabilities:
+              {{ serviceNetworkHost.service.vulnerabilities.length }}
+            </li>
+          </ul>
+        </div>
+        <div v-else>
+          <p>No service running</p>
+        </div>
+      </ToolTip>
     </Modal>
   </transition>
   <ToolTip
