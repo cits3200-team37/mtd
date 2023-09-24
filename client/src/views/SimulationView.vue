@@ -468,15 +468,15 @@ const plotServiceNetwork = (graphData) => {
             <h3 class="font-semibold text-xl">Service Explorer</h3>
           </div>
           <hr class="h-[2px] my-2 mx-8 bg-zinc-600 border-0" />
-          <div class="w-full px-8">
+          <div class="w-full px-8 h-full flex-col">
             <div v-if="serviceNetworkHost">
               <div v-if="serviceNetworkHost.service" class="flex-col">
                 <div class="overflow-auto shadow-md rounded-lg">
                   <table
                     class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
                   >
-                    <tbody>
-                      <tr class="border-b border-gray-500">
+                    <tbody class="divide-y divide-gray-500">
+                      <tr>
                         <th
                           scope="row"
                           class="px-6 py-4 font-medium whitespace-nowrap text-white"
@@ -487,7 +487,7 @@ const plotServiceNetwork = (graphData) => {
                           {{ serviceNetworkHost.service.name }}
                         </td>
                       </tr>
-                      <tr class="border-b border-gray-500">
+                      <tr>
                         <th
                           scope="row"
                           class="px-6 py-4 font-medium whitespace-nowrap text-white"
@@ -511,7 +511,7 @@ const plotServiceNetwork = (graphData) => {
                   </table>
                 </div>
                 <br />
-                <div class="overflow-auto h-auto shadow-md rounded-lg">
+                <div class="overflow-auto max-h-64 shadow-md rounded-lg">
                   <table
                     class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
                   >
@@ -522,9 +522,8 @@ const plotServiceNetwork = (graphData) => {
                         <th scope="col" class="px-6 py-3">Exploited</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="divide-y divide-gray-500">
                       <tr
-                        class="border-b border-gray-500"
                         v-for="vul in serviceNetworkHost.service
                           .vulnerabilities"
                       >
