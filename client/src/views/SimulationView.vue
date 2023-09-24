@@ -469,8 +469,17 @@ const plotServiceNetwork = (graphData) => {
           </div>
           <hr class="h-[2px] my-2 mx-8 bg-zinc-600 border-0" />
           <div class="w-full px-8 h-full flex-col">
-            <div v-if="serviceNetworkHost">
-              <div v-if="serviceNetworkHost.service" class="flex-col">
+            <transition
+              enter-from-class="opacity-0"
+              leave-to-class="opacity-0"
+              enter-active-class="transition"
+              leave-active-class="transition"
+              mode="out-in"
+            >
+              <div
+                v-if="serviceNetworkHost && serviceNetworkHost.service"
+                class="flex-col"
+              >
                 <div class="overflow-auto shadow-md rounded-lg">
                   <table
                     class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
@@ -541,17 +550,17 @@ const plotServiceNetwork = (graphData) => {
                   </table>
                 </div>
               </div>
-              <div v-else class="">
+              <div v-else-if="serviceNetworkHost">
                 <p class="text-navbar-icon">
                   No information to show for node selected
                 </p>
               </div>
-            </div>
-            <div v-else>
-              <p class="font-light text-navbar-icon">
-                Select a node to explore
-              </p>
-            </div>
+              <div v-else>
+                <p class="font-light text-navbar-icon">
+                  Select a node to explore
+                </p>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
