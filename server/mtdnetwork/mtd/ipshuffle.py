@@ -1,8 +1,10 @@
+'''Module contains MTD strategy that dynamically switches IP addresses of hosts'''
 from mtdnetwork.mtd import MTD
 from mtdnetwork.component import host
 
 
 class IPShuffle(MTD):
+    '''Subclass of MTD for IP shuffle MTD strategy'''
     def __init__(self, network=None):
         super().__init__(
             name="IPShuffle",
@@ -12,6 +14,7 @@ class IPShuffle(MTD):
         )
 
     def mtd_operation(self, adversary=None):
+        '''Method shuffles hosts of network'''
         hosts = self.network.get_hosts()
 
         ip_addresses = []
