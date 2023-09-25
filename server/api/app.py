@@ -85,18 +85,10 @@ def simulate():
     data["network"] = net_graph
     data["mtd_record"] = result._mtd_record.to_dict()
     data["attack_record"] = result._attack_record.to_dict()
-    data["comp_hosts"] = result._adversary.get_compromised_hosts()
 
-    visible_hosts = set()
-    for c_host in result._network.reachable:
-        visible_hosts.update(set(result._network.graph.neighbors(c_host)))
 
-    visible_hosts.update(result._network.reachable)
-    visible_hosts.update(result._network.exposed_endpoints)
 
-    data["exposed_hosts"] = list(visible_hosts)
-
-    data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
+    data["compromise_checkpoint_metrics"] = result.evaluation_result_by_compromise_checkpoint()
 
     return data, 200
 

@@ -36,19 +36,15 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
   "network": {},
   "mtd_record": {},
   "attack_record": {},
-  "comp_hosts": [],
-  "exposed_hosts": [],
-  "comp_checkpoint": [],
+  "compromise_checkpoint_metrics": [],
 }
 ```
-All elements are derived from the Evaluation Class using the final network and adversary state once the simulation has terminated.
+All elements are derived from the Evaluation Class using the final network and adversary state once the simulation has terminated. See relevant documentation for specific examples.
 
 ##### Response Elements
 - `network` contains the graph of the network from the _network object. The `host` element of the nodes in the graph have been converted to json for compatibility with the [d3 library](https://d3js.org/).
 - `mtd_record`and `attack_record` comprise the records of the total operation of the simulation, what attack and defense methods were utilised, as well as when and where.
-- `comp_hosts` is a list of the hosts compromised by the adversary during the simulation.
-- `exposed_hosts` is a list of hosts "visible" to potential attackers. It is derived from the network objects nodes and is the set of exposed endpoints, all reachable nodes and their direct neighbours.
-- `comp_checkpoint` contains some of the key metrics of the simulation at particular percentages of compromise.
+- `compromise_checkpoint_metrics` contains some of the key metrics of the simulation at particular percentages of compromise.
 
 #### Request Parameters
 
