@@ -237,7 +237,6 @@ class Scorer:
         """
         Collects statistics on the initial state of the network
         """
-        # pylint: disable=too-many-locals
 
         self.stats = {}
 
@@ -250,11 +249,11 @@ class Scorer:
         os_types_in_network = {}
         hosts_without_vulns = 0
 
-        for host_instance in hosts.items():
+        for host_id, host_instance in hosts.items():
             host_os = host_instance.os_type
             host_version = host_instance.os_version
 
-            os_type = f"{host_os} {host_version}"
+            os_type = "{} {}".format(host_os, host_version)
             os_types_in_network[os_type] = os_types_in_network.get(os_type, 0) + 1
             host_vulns = host_instance.get_all_vulns()
 
@@ -263,12 +262,12 @@ class Scorer:
             if len(host_vulns) == 0:
                 hosts_without_vulns += 1
 
-            for vul in host_vulns:
-                roa = vul.initial_roa()
+            for v in host_vulns:
+                roa = v.initial_roa()
                 if not host_os in host_os_type_and_version_vuln_roa:
                     host_os_type_and_version_vuln_roa[host_os] = {}
 
-                if not vul in host_os_type_and_version_vuln_roa[host_os].get(
+                if not v in host_os_type_and_version_vuln_roa[host_os].get(
                     host_version, []
                 ):
                     host_os_type_and_version_vuln_roa[host_os][
@@ -281,7 +280,7 @@ class Scorer:
 
         vulns_per_os = {}
         avg_roa_per_os = {}
-        # pylint: disable=consider-using-dict-items
+
         for host_os in host_os_type_and_version_vuln_roa:
             if not host_os in vulns_per_os:
                 vulns_per_os[host_os] = {}
@@ -302,7 +301,6 @@ class Scorer:
         self.stats["Initial Hosts Without Vulnerabilities"] = hosts_without_vulns
 
     def get_statistics(self):
-        '''Method returns all statitistics'''
         stats = self.stats
 
         stats["Host Compromises"] = self.host_compromises.get_dict()
@@ -319,12 +317,16 @@ class Scorer:
             mtd_statistic.get_dict() for mtd_statistic in self.mtd_statistics
         ]
         stats["Total MTD Events"] = sum(
+            [
                 mtd_statistic.get_dict()["total events"]
                 for mtd_statistic in self.mtd_statistics
+            ]
         )
         stats["Total MTD Blocking Hacker Events"] = sum(
+            [
                 mtd_statistic.get_dict()["total blocks"]
                 for mtd_statistic in self.mtd_statistics
+            ]
         )
         stats["Attack Path Exposure Scores"] = self.attack_path_exposure
 
