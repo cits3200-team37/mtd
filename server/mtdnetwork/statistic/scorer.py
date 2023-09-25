@@ -237,7 +237,7 @@ class Scorer:
         """
         Collects statistics on the initial state of the network
         """
-
+        # pylint: disable=too-many-locals
         self.stats = {}
 
         hosts = network.get_hosts()
@@ -262,12 +262,12 @@ class Scorer:
             if len(host_vulns) == 0:
                 hosts_without_vulns += 1
 
-            for v in host_vulns:
-                roa = v.initial_roa()
+            for vul in host_vulns:
+                roa = vul.initial_roa()
                 if not host_os in host_os_type_and_version_vuln_roa:
                     host_os_type_and_version_vuln_roa[host_os] = {}
 
-                if not v in host_os_type_and_version_vuln_roa[host_os].get(
+                if not vul in host_os_type_and_version_vuln_roa[host_os].get(
                     host_version, []
                 ):
                     host_os_type_and_version_vuln_roa[host_os][
