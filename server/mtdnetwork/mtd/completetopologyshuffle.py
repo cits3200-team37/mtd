@@ -1,10 +1,10 @@
+'''Module containing class providing mtd function to shuffle network'''
 from mtdnetwork.mtd import MTD
 
 
 class CompleteTopologyShuffle(MTD):
-    """
-    Completely regenerates the network, preserving the hosts from previously.
-    """
+    '''Completely regenerates the network, preserving the hosts from previously.'''
+
 
     def __init__(self, network=None):
         super().__init__(
@@ -15,6 +15,7 @@ class CompleteTopologyShuffle(MTD):
         )
 
     def mtd_operation(self, adversary=None):
+        '''Applies topology shuffle deference to network'''
         hosts = self.network.get_hosts()
 
         # Regenerate the network graph
