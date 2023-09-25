@@ -4,7 +4,7 @@
 
 #### Description
 
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting evaluation details of the simulation as a dictionary object. Some elements such as the MTD Record and Attack Record require restructuring / further processing on the frontend to extract relevant data and be compatible with the Javascript graphing library [d3](https://d3js.org/).
+This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting evaluation details of the simulation. Some elements such as the MTD Record and Attack Record require restructuring / further processing on the frontend to extract relevant data and be compatible with the Javascript graphing library [d3](https://d3js.org/).
 
 #### Request body
 
