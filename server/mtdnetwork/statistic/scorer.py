@@ -280,7 +280,7 @@ class Scorer:
 
         vulns_per_os = {}
         avg_roa_per_os = {}
-
+        # pylint: disable=consider-using-dict-items
         for host_os in host_os_type_and_version_vuln_roa:
             if not host_os in vulns_per_os:
                 vulns_per_os[host_os] = {}
