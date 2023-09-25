@@ -253,7 +253,7 @@ class Scorer:
             host_os = host_instance.os_type
             host_version = host_instance.os_version
 
-            os_type = "{} {}".format(host_os, host_version)
+            os_type = f"{host_os} {host_version}"
             os_types_in_network[os_type] = os_types_in_network.get(os_type, 0) + 1
             host_vulns = host_instance.get_all_vulns()
 
