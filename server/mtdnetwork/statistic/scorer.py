@@ -318,16 +318,12 @@ class Scorer:
             mtd_statistic.get_dict() for mtd_statistic in self.mtd_statistics
         ]
         stats["Total MTD Events"] = sum(
-            [
                 mtd_statistic.get_dict()["total events"]
                 for mtd_statistic in self.mtd_statistics
-            ]
         )
         stats["Total MTD Blocking Hacker Events"] = sum(
-            [
                 mtd_statistic.get_dict()["total blocks"]
                 for mtd_statistic in self.mtd_statistics
-            ]
         )
         stats["Attack Path Exposure Scores"] = self.attack_path_exposure
 
