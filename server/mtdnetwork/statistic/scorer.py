@@ -301,6 +301,7 @@ class Scorer:
         self.stats["Initial Hosts Without Vulnerabilities"] = hosts_without_vulns
 
     def get_statistics(self):
+        '''Method returns all statistics'''
         stats = self.stats
 
         stats["Host Compromises"] = self.host_compromises.get_dict()
