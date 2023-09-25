@@ -249,7 +249,7 @@ class Scorer:
         os_types_in_network = {}
         hosts_without_vulns = 0
 
-        for host_id, host_instance in hosts.items():
+        for host_instance in hosts.items():
             host_os = host_instance.os_type
             host_version = host_instance.os_version
 
