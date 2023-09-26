@@ -50,8 +50,12 @@ const currentHost = ref({
   totalServices: 0,
 });
 
-onMounted(() => {
+onMounted(async () => {
   // load past state of network and form
+  if (!simulationStore.strategies) {
+    await simulationStore.getStrategies();
+    console.log(simulationStore.strategies);
+  }
   if (simulationStore.network && simulationStore.parameters) {
     plotNetwork(simulationStore.network);
     // NOTE: could use pinia's storeToRefs, but i think using this
