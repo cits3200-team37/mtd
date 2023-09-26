@@ -61,5 +61,6 @@ nav:
           - Attack Operation: mtdnetwork/operation/attack_operation.md
       - Component:
           - Host: mtdnetwork/component/host.md
+          - Service: mtdnetwork/component/service.md
       - Statistic:
           - Evaluation: mtdnetwork/statistic/evaluation.md
