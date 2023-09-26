@@ -62,5 +62,6 @@ nav:
       - Component:
           - Host: mtdnetwork/component/host.md
           - MTD Scheme: mtdnetwork/component/mtd_scheme.md
+          - Service: mtdnetwork/component/service.md
       - Statistic:
           - Evaluation: mtdnetwork/statistic/evaluation.md
