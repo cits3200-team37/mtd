@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 16
       - name: Install dmg-license 
+        if: startsWith(matrix.os, 'macos')
         run: yarn add dmg-license
       - name: Build/release Electron app
         uses: coparse-inc/action-electron-builder@v1.0.0
