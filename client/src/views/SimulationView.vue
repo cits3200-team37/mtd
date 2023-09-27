@@ -83,61 +83,61 @@ const handleSubmit = async () => {
     errors.value[key] = "";
   });
 
-  if (
-    !form.value.startTime ||
-    isNaN(form.value.startTime) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.startTime = "Start Time must be a non-negative number";
-    isValid.value = false;
-  }
-
-  if (
-    !form.value.finishTime ||
-    isNaN(form.value.finishTime) ||
-    form.value.finishTime <= form.value.startTime
-  ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
-    isValid.value = false;
-  }
-
-  if (
-    !form.value.mtdInterval ||
-    isNaN(form.value.mtdInterval) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
-    isValid.value = false;
-  }
-
-  const validSchemes = [
-    "random",
-    "simultaneous",
-    "alternative",
-    "single",
-    "None",
-  ];
-  if (
-    !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme.toLowerCase())
-  ) {
-    errors.value.scheme =
-      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
-    isValid.value = false;
-  }
-
-  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
-    errors.value.totalNodes = "Total Nodes must be a number";
-    isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
-    isValid.value = false;
-  }
-
-  if (!isValid.value) {
-    return;
-  }
+  // if (
+  //   !form.value.startTime ||
+  //   isNaN(form.value.startTime) ||
+  //   form.value.startTime < 0
+  // ) {
+  //   errors.value.startTime = "Start Time must be a non-negative number";
+  //   isValid.value = false;
+  // }
+  //
+  // if (
+  //   !form.value.finishTime ||
+  //   isNaN(form.value.finishTime) ||
+  //   form.value.finishTime <= form.value.startTime
+  // ) {
+  //   errors.value.finishTime =
+  //     "Finish Time must be a number greater than Start Time";
+  //   isValid.value = false;
+  // }
+  //
+  // if (
+  //   !form.value.mtdInterval ||
+  //   isNaN(form.value.mtdInterval) ||
+  //   form.value.startTime < 0
+  // ) {
+  //   errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+  //   isValid.value = false;
+  // }
+  //
+  // const validSchemes = [
+  //   "random",
+  //   "simultaneous",
+  //   "alternative",
+  //   "single",
+  //   "None",
+  // ];
+  // if (
+  //   !form.value.scheme ||
+  //   !validSchemes.includes(form.value.scheme.toLowerCase())
+  // ) {
+  //   errors.value.scheme =
+  //     "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+  //   isValid.value = false;
+  // }
+  //
+  // if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
+  //   errors.value.totalNodes = "Total Nodes must be a number";
+  //   isValid.value = false;
+  // } else if (parseInt(form.value.totalNodes) < 20) {
+  //   errors.value.totalNodes = "Total Nodes must be 20 or greater";
+  //   isValid.value = false;
+  // }
+  //
+  // if (!isValid.value) {
+  //   return;
+  // }
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
