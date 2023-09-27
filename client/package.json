@@ -3,7 +3,7 @@
   "productName": "MTDSimTime",
   "version": "0.0.5",
   "description": "My Electron application description",
-  "main": ".vite/build/main.js",
+  "main": "./src/main.js",
   "repository": "https://github.com/cits3200-team37/mtd.git",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
