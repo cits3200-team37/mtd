@@ -20,6 +20,7 @@ jobs:
           node-version: 16
 
       - name: Build/release Electron app
+        working-directory: client
         uses: samuelmeuli/action-electron-builder@v1
         with:
           # GitHub token, automatically provided to the action
