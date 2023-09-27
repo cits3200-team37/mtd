@@ -12,13 +12,19 @@ export const useSimulationStore = defineStore("simulation", {
   actions: {
     async simulate(simulateFormValues) {
       this.parameters = { ...simulateFormValues };
+      // const reqBody = {
+      //   networkSizeList: Number(this.parameters.networkSizeList),
+      //   startTime: Number(this.parameters.startTime),
+      //   finishTime: Number(this.parameters.finishTime),
+      //   mtdInterval: Number(this.parameters.mtdInterval),
+      //   scheme: this.parameters.scheme.toLowerCase(),
+      //   totalNodes: Number(this.parameters.totalNodes),
+      // };
       const reqBody = {
-        networkSizeList: Number(this.parameters.networkSizeList),
-        startTime: Number(this.parameters.startTime),
-        finishTime: Number(this.parameters.finishTime),
-        mtdInterval: Number(this.parameters.mtdInterval),
-        scheme: this.parameters.scheme.toLowerCase(),
-        totalNodes: Number(this.parameters.totalNodes),
+        finishTime: 3000,
+        mtdInterval: 200,
+        scheme: "None",
+        totalNodes: 100,
       };
       const { data } = await axios.post(
         "http://localhost:8001/simulate",
