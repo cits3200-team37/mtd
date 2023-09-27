@@ -6,8 +6,8 @@
   "main": ".vite/build/main.js",
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
-    "build": "electron-builder --mac --windows --linux",
-    "release": "electron-builder --mac --windows --linux --publish always",
+    "build": "electron-builder",
+    "release": "electron-builder",
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
