@@ -761,7 +761,7 @@ class Network:
         Gets all the vulnerabilities for every hosts and puts them in vuln_dict
 
         Returns:
-            the freuqency of every vuln
+            the frequency of every vuln
         """
         for host_id in self.nodes:
             host = self.get_host(host_id)
