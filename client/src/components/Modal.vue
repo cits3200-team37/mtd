@@ -5,7 +5,7 @@
   >
     <div
       @click.stop
-      class="p-2 container bg-dark-background border border-none rounded-md"
+      class="p-2 container flex flex-col h-4/6 bg-dark-background border border-none rounded-md"
     >
       <div class="h-6 flex flex-row-reverse">
         <svg-icon
