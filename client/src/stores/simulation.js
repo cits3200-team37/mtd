@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
@@ -20,7 +21,7 @@ export const useSimulationStore = defineStore("simulation", {
         totalNodes: Number(this.parameters.totalNodes),
       };
       const { data } = await axios.post(
-        "http://localhost:8001/simulate",
+        `${BACKEND_URL}/simulate`,
         reqBody,
       );
       const { network, attack_record, mtd_record } = data;
