@@ -591,7 +591,7 @@ const plotServiceNetwork = (graphData) => {
     >
       <div class="h-full divide-x-2 divide-zinc-600 flex">
         <div id="service-network-graph" class="h-full w-1/2"></div>
-        <div class="w-1/2">
+        <div class="w-1/2 flex-col">
           <div class="flex justify-center">
             <h3 class="font-semibold text-xl">Service Explorer</h3>
           </div>
@@ -604,10 +604,7 @@ const plotServiceNetwork = (graphData) => {
               leave-active-class="transition"
               mode="out-in"
             >
-              <div
-                v-if="serviceNetworkHost && serviceNetworkHost.service"
-                class="flex-col"
-              >
+              <div v-if="serviceNetworkHost && serviceNetworkHost.service">
                 <div class="overflow-auto shadow-md rounded-lg">
                   <table
                     class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
@@ -650,9 +647,11 @@ const plotServiceNetwork = (graphData) => {
                 <br />
                 <div class="overflow-auto max-h-64 shadow-md rounded-lg">
                   <table
-                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
+                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80 relative"
                   >
-                    <thead class="text-xs uppercase bg-gray-600 text-gray-200">
+                    <thead
+                      class="text-xs uppercase bg-gray-600 text-gray-200 sticky top-0"
+                    >
                       <tr>
                         <th scope="col" class="px-6 py-3">ID</th>
                         <th scope="col" class="px-6 py-3">CVSS</th>
