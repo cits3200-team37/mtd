@@ -16,10 +16,11 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: yarn install
+      run: npm run install
     - name: publish
       working-directory: client
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: yarn publish
+        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
 
