@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm run install
+      run: npm install
     - name: publish
       working-directory: client
       env:
