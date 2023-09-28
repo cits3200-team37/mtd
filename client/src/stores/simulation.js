@@ -20,10 +20,7 @@ export const useSimulationStore = defineStore("simulation", {
         scheme: this.parameters.scheme.toLowerCase(),
         totalNodes: Number(this.parameters.totalNodes),
       };
-      const { data } = await axios.post(
-        `${BACKEND_URL}/simulate`,
-        reqBody,
-      );
+      const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
       this.network = network;
       this.attackRecord = attack_record;
