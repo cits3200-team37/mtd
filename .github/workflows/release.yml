@@ -16,7 +16,9 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: npm i && npm i electron
+      run: npm i
+    - name: install electron forge
+      run: npm i -g @electron-forge/cli
     - name: publish
       working-directory: client
       env:
