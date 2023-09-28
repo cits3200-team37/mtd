@@ -16,9 +16,7 @@
             }"
           >
             <div v-if="route.active">
-              <div
-                class="top left-0 absolute h-9 bg-white w-1 rounded-md"
-              ></div>
+              <div class="top absolute h-10 bg-white w-0.5 rounded-md"></div>
             </div>
             <div class="flex flex-col items-center justify-center">
               <svg-icon
