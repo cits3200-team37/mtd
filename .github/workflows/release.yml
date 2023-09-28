@@ -3,53 +3,25 @@ name: Build/release
 on: push
 
 jobs:
+  release:
+    runs-on: ${{ matrix.os }}
 
-  publish_on_linux:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
     steps:
     - uses: actions/checkout@v2       
     - uses: actions/setup-node@master
       with:
-        node-version: 14
+        node-version: 16
     - name: install dependencies
-      run: npm install
+      working-directory: client
+      run: npm i
     - name: publish
+      working-directory: client
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
 
-        run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
-
-
-  publish_on_mac:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@master
-      with:
-        node-version: 14
-    - name: install dependencies
-      run: npm install
-    - name: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-
-        run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
-
-
-  publish_on_win:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2       
-    - uses: actions/setup-node@master
-      with:
-        node-version: 14
-    - name: install dependencies
-      run: npm install
-    - name: publish
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-
-      run: set GITHUB_TOKEN=$PUBLISH_TOKEN && npm run publis
