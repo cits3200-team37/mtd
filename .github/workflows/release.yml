@@ -9,6 +9,13 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
+        include:
+          - os: macos-latest
+            script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
+          - os: ubuntu-latest
+            script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
+          - os: windows-latest
+            script_define: set GITHUB_TOKEN=$PUBLISH_TOKEN &&
 
     steps:
     - uses: actions/checkout@v2       
@@ -18,13 +25,10 @@ jobs:
     - name: install dependencies
       working-directory: client
       run: npm i
-    - name: publish
+    - name: publish 
       working-directory: client
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-    - if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
-      run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
-    - if: startsWith(matrix.os, 'windows')
-      run: set GITHUB_TOKEN=$PUBLISH_TOKEN && npm run publish
+      run: ${{ matrix.script_define }} npm run publish
 
