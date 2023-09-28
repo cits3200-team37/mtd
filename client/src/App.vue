@@ -4,12 +4,12 @@ import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
 import { onMounted } from "vue";
 import TitleBar from "./components/TitleBar.vue";
-import router from " ./router";
+// import router from " ./router";
 const theme = ref(null);
-// ! needs to be uncommented out for prod
+// console.log(router);
 onMounted(async () => {
   try {
-    await router.push("/");
+    // await router.push("/");
     theme.value = localStorage.getItem("user-theme");
   } catch (error) {
     console.log(error);
