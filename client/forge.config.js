@@ -1,6 +1,7 @@
 module.exports = {
   packagerConfig: {
     osxSign: {},
+    executableName: "test",
   },
   rebuildConfig: {},
   makers: [
@@ -14,7 +15,12 @@ module.exports = {
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
+      config: {
+        options: {
+          name: "test",
+          productName: "test"
+        }
+      },
     },
     {
       name: "@electron-forge/maker-rpm",
