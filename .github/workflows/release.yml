@@ -23,8 +23,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-      if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
+    - if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macos')
       run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
-      if: startsWith(matrix.os, 'windows')
+    - if: startsWith(matrix.os, 'windows')
       run: set GITHUB_TOKEN=$PUBLISH_TOKEN && npm run publish
 
