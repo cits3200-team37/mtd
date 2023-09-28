@@ -23,7 +23,9 @@ export const useSimulationStore = defineStore("simulation", {
         totalSubnets: Number(this.parameters.totalSubnets),
         totalDatabase: Number(this.parameters.totalDatabase),
         targetLayer: Number(this.parameters.targetLayer),
-        terminateCompromiseRatio: parseFloat(this.parameters.terminateCompromiseRatio),
+        terminateCompromiseRatio: parseFloat(
+          this.parameters.terminateCompromiseRatio,
+        ),
         seed: Number(this.parameters.seed),
       };
       const { data } = await axios.post(
