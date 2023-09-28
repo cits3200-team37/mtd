@@ -16,11 +16,11 @@ jobs:
       with:
         node-version: 14
     - name: install dependencies
-      run: yarn
+      run: npm i && npm i electron
     - name: publish
       working-directory: client
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
-      run: GITHUB_TOKEN=$PUBLISH_TOKEN yarn run publish
+      run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
 
