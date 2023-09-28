@@ -24,4 +24,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
       run: GITHUB_TOKEN=$PUBLISH_TOKEN npm run publish
+      if: startsWith(matrix.os, 'ubuntu')
+      run: set GITHUB_TOKEN=$PUBLISH_TOKEN && npm run publish
 
