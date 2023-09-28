@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar.vue";
 import { RouterView } from "vue-router";
 import { onMounted } from "vue";
 import TitleBar from "./components/TitleBar.vue";
-import router from " ./router";
+import router from "./router";
 const theme = ref(null);
 // console.log(router);
 onMounted(async () => {
@@ -22,11 +22,14 @@ window.addEventListener("theme-changed", (e) => {
 });
 </script>
 <template>
-  <div class="bg-background-color text-text-color" :class="{
-    'theme-dark': theme == 'dark',
-    'theme-light': theme == 'light',
-    'theme-blue': theme == 'blue',
-  }">
+  <div
+    class="bg-background-color text-text-color"
+    :class="{
+      'theme-dark': theme == 'dark',
+      'theme-light': theme == 'light',
+      'theme-blue': theme == 'blue',
+    }"
+  >
     <TitleBar />
     <NavBar />
     <RouterView />
