@@ -18,7 +18,7 @@ jobs:
     - name: install dependencies
       run: npm i
     - name: install electron forge
-      run: npm i -g electron-forge
+      run: npm i -g electron-forge && npm install --save-dev @electron-forge/cli
     - name: publish
       working-directory: client
       env:
