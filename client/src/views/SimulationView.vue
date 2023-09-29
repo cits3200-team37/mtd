@@ -63,6 +63,7 @@ const errors = ref({
   totalDatabase: "",
   targetLayer: "",
   terminateCompromiseRatio: "",
+  seed: "",
 });
 
 const handleSubmit = async () => {
@@ -81,75 +82,66 @@ const handleSubmit = async () => {
   const totalDatabase = Number(form.value.totalDatabase);
   const targetLayer = Number(form.value.targetLayer);
   const terminateCompromiseRatio = Number(form.value.terminateCompromiseRatio);
+  const seed = Number(form.value.seed);
 
-  if (isNaN(startTime)) {
-    errors.value.startTime = "Start Time must be a number";
-    isValid.value = false;
-  } else if (startTime < 0) {
-    errors.value.startTime = "Stable test limit: startTime >= 0";
-    isValid.value = false;
+  if (form.value.startTime) {
+    if (isNaN(startTime) || startTime < 0) {
+      errors.value.startTime = "Stable test limit: startTime >= 0";
+      isValid.value = false;
+    } else if (finishTime < startTime) {
+      errors.value.startTime = "Logical limit: startTime <= finishTime";
+      isValid.value = false;
+    }
   }
 
-  if (isNaN(finishTime)) {
-    errors.value.finishTime = "Finish Time must be a number";
-    isValid.value = false;
-  } else if (finishTime < 10 || finishTime > 5000) {
-    errors.value.finishTime =
-      "Stable test limit: None or 10 <= finishTime <= 5000";
-    isValid.value = false;
-  } else if (finishTime <= startTime) {
-    errors.value.finishTime = "Logical limit: startTime < finishTime";
-    isValid.value = false;
+  if (form.value.finishTime) {
+    if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
+      errors.value.finishTime = "Stable test limit: 10 <= finishTime <= 5000";
+      isValid.value = false;
+    }
   }
 
-  if (isNaN(mtdInterval)) {
-    errors.value.mtdInterval = "MTD Interval must be a number";
-    isValid.value = false;
-  } else if (mtdInterval <= 0) {
-    errors.value.mtdInterval = "Stable test limit: mtdInterval > 0";
-    isValid.value = false;
-  } else if (mtdInterval > finishTime - startTime) {
-    errors.value.mtdInterval =
-      "Logical limit: mtdInterval <= finishTime - startTime";
-    isValid.value = false;
+  if (form.value.mtdInterval) {
+    if (isNaN(mtdInterval) || mtdInterval <= 0) {
+      errors.value.mtdInterval = "Stable test limit: mtdInterval > 0";
+      isValid.value = false;
+    } else if (mtdInterval > finishTime - startTime) {
+      errors.value.mtdInterval =
+        "Logical limit: mtdInterval <= finishTime - startTime";
+      isValid.value = false;
+    }
   }
 
   const validSchemes = [
-    "Random",
-    "Simultaneous",
-    "Alternative",
-    "Single",
-    "None",
+    "random",
+    "simultaneous",
+    "alternative",
+    "single",
+    "none",
   ];
-  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
+  if (
+    !form.value.scheme ||
+    !validSchemes.includes(form.value.scheme.toLowerCase())
+  ) {
     errors.value.scheme =
       "Invalid scheme. Choose between Random, Simultaneous, Alternative, Single, or None";
     isValid.value = false;
   }
 
-  if (isNaN(totalNodes)) {
-    errors.value.totalNodes = "Total Nodes must be a number";
-    isValid.value = false;
-  } else if (totalNodes < 20 || totalNodes > 1000) {
+  if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
     errors.value.totalNodes = "Stable test limit: 20 <= totalNodes <= 1000";
     isValid.value = false;
   }
 
   if (form.value.totalLayers) {
-    if (isNaN(totalLayers)) {
-      errors.value.totalLayers = "Total Layers must be a number";
-      isValid.value = false;
-    } else if (totalLayers <= 0 || totalLayers > 12) {
+    if (isNaN(totalLayers) || totalLayers <= 0 || totalLayers > 12) {
       errors.value.totalLayers = "Stable test limit: 0 < totalLayers <= 12";
       isValid.value = false;
     }
   }
 
   if (form.value.totalEndpoints) {
-    if (isNaN(totalEndpoints)) {
-      errors.value.totalEndpoints = "Total Endpoints must be a number";
-      isValid.value = false;
-    } else if (totalEndpoints <= 0) {
+    if (isNaN(totalEndpoints) || totalEndpoints <= 0) {
       errors.value.totalEndpoints = "Stable test limit: totalEndpoints > 0";
       isValid.value = false;
     } else if (totalEndpoints >= totalNodes) {
@@ -160,10 +152,10 @@ const handleSubmit = async () => {
   }
 
   if (form.value.totalSubnets) {
-    if (isNaN(totalSubnets)) {
-      errors.value.totalSubnets = "Total Subnets must be a number";
-      isValid.value = false;
-    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2) {
+    if (
+      isNaN(totalSubnets) ||
+      (totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2
+    ) {
       errors.value.totalSubnets =
         "Logical limit: (totalNodes - totalEndpoints) / (totalSubnets - 1) > 2";
       isValid.value = false;
@@ -185,16 +177,20 @@ const handleSubmit = async () => {
   }
 
   if (form.value.terminateCompromiseRatio) {
-    if (isNaN(terminateCompromiseRatio)) {
-      errors.value.terminateCompromiseRatio =
-        "Terminate Compromise Ratio must be a number";
-      isValid.value = false;
-    } else if (
+    if (
+      isNaN(terminateCompromiseRatio) ||
       terminateCompromiseRatio <= 0.0 ||
       terminateCompromiseRatio > 1.0
     ) {
       errors.value.terminateCompromiseRatio =
         "Logical limit: 0.0 < terminateCompromiseRatio <= 1.0";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.seed) {
+    if (isNaN(seed)) {
+      errors.value.seed = "Seed must be a number";
       isValid.value = false;
     }
   }
@@ -294,7 +290,7 @@ const plotNetwork = (graphData) => {
     .forceSimulation(nodes)
     .force(
       "link",
-      d3.forceLink(links).id((d) => d.id),
+      d3.forceLink(links).id((d) => d.id)
     )
     .force("charge", d3.forceManyBody().strength(-10))
     .force("center", d3.forceCenter(width / 2, height / 2))
@@ -334,7 +330,7 @@ const plotNetwork = (graphData) => {
 
   node.append("title").text((d) => d.id);
   node.call(
-    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended),
+    d3.drag().on("start", dragstarted).on("drag", dragged).on("end", dragended)
   );
 
   d3.selectAll(".node")
@@ -500,6 +496,7 @@ const plotNetwork = (graphData) => {
                   label="Set Seed"
                   placeholder="Set Seed"
                   type="text"
+                  :error="errors.seed"
                 />
               </div>
               <div class="text-center">
