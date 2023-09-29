@@ -11,7 +11,6 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const isOpen = ref(true);
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
@@ -79,8 +78,7 @@ const handleSubmit = async () => {
     isNaN(form.value.finishTime) ||
     form.value.finishTime <= form.value.startTime
   ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
+    errors.value.finishTime = "Finish Time must be greater than start time";
     isValid.value = false;
   }
 
@@ -89,7 +87,7 @@ const handleSubmit = async () => {
     isNaN(form.value.mtdInterval) ||
     form.value.startTime < 0
   ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+    errors.value.mtdInterval = "MTD Interval must be a positive number";
     isValid.value = false;
   }
 
@@ -112,8 +110,11 @@ const handleSubmit = async () => {
   if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
     errors.value.totalNodes = "Total Nodes must be a number";
     isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+  } else if (
+    parseInt(form.value.totalNodes) < 20 ||
+    parseInt(form.value.totalNodes) > 1000
+  ) {
+    errors.value.totalNodes = "Total Nodes must between 20 and 1000";
     isValid.value = false;
   }
 
@@ -274,7 +275,7 @@ const plotNetwork = (graphData) => {
 
 <template>
   <div class="flex flex-row">
-    <div v-if="isOpen">
+    <div>
       <div
         class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
@@ -448,20 +449,6 @@ const plotNetwork = (graphData) => {
               Reset Zoom
             </button>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
-      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
-        <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
-          </button>
-        </div>
-        <div v-else>
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
-          </button>
         </div>
       </div>
     </div>
