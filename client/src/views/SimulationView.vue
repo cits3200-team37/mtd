@@ -11,7 +11,6 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const isOpen = ref(true);
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
@@ -110,7 +109,6 @@ const handleSubmit = async () => {
         "Logical limit: mtdInterval <= finishTime - startTime";
       isValid.value = false;
     }
-  }
 
   const validSchemes = [
     "random",
@@ -352,7 +350,7 @@ const plotNetwork = (graphData) => {
 
 <template>
   <div class="flex flex-row">
-    <div v-if="isOpen">
+    <div>
       <div
         class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
@@ -397,7 +395,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.startTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
@@ -407,7 +404,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.finishTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
@@ -417,7 +413,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.mtdInterval"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
                 <DropDown
                   v-model="form.scheme"
@@ -425,7 +420,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.scheme"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
               <div>
                 <FormField
                   v-model="form.totalNodes"
@@ -537,20 +531,6 @@ const plotNetwork = (graphData) => {
               Reset Zoom
             </button>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
-      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
-        <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
-          </button>
-        </div>
-        <div v-else>
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
-          </button>
         </div>
       </div>
     </div>

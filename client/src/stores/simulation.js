@@ -15,6 +15,15 @@ export const useSimulationStore = defineStore("simulation", {
         networkSizeList: Number(this.parameters.networkSizeList),
         scheme: this.parameters.scheme.toLowerCase(),
         totalNodes: Number(this.parameters.totalNodes),
+        totalLayers: Number(this.parameters.totalLayers),
+        totalEndpoints: Number(this.parameters.totalEndpoints),
+        totalSubnets: Number(this.parameters.totalSubnets),
+        totalDatabase: Number(this.parameters.totalDatabase),
+        targetLayer: Number(this.parameters.targetLayer),
+        terminateCompromiseRatio: parseFloat(
+          this.parameters.terminateCompromiseRatio,
+        ),
+        seed: Number(this.parameters.seed),
       };
       if (this.parameters.startTime) {
         reqBody.startTime = Number(this.parameters.startTime);
