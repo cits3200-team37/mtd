@@ -596,7 +596,7 @@ const plotServiceNetwork = (graphData) => {
             <h3 class="font-semibold text-xl">Service Explorer</h3>
           </div>
           <hr class="h-[2px] my-2 mx-8 bg-zinc-600 border-0" />
-          <div class="w-full px-8 h-full flex-col">
+          <div class="w-full px-8 flex-1">
             <transition
               enter-from-class="opacity-0"
               leave-to-class="opacity-0"
@@ -650,7 +650,7 @@ const plotServiceNetwork = (graphData) => {
                     class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80 relative"
                   >
                     <thead
-                      class="text-xs uppercase bg-gray-600 text-gray-200 sticky top-0"
+                      class="text-xs uppercase bg-gray-600 drop-shadow-md text-gray-200 sticky top-0"
                     >
                       <tr>
                         <th scope="col" class="px-6 py-3">ID</th>
