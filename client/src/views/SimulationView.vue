@@ -78,8 +78,7 @@ const handleSubmit = async () => {
     isNaN(form.value.finishTime) ||
     form.value.finishTime <= form.value.startTime
   ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
+    errors.value.finishTime = "Finish Time must be greater than start time";
     isValid.value = false;
   }
 
@@ -88,7 +87,7 @@ const handleSubmit = async () => {
     isNaN(form.value.mtdInterval) ||
     form.value.startTime < 0
   ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+    errors.value.mtdInterval = "MTD Interval must be a positive number";
     isValid.value = false;
   }
 
@@ -111,8 +110,11 @@ const handleSubmit = async () => {
   if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
     errors.value.totalNodes = "Total Nodes must be a number";
     isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+  } else if (
+    parseInt(form.value.totalNodes) < 20 ||
+    parseInt(form.value.totalNodes) > 1000
+  ) {
+    errors.value.totalNodes = "Total Nodes must between 20 and 1000";
     isValid.value = false;
   }
 
