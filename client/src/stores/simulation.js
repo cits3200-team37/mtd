@@ -28,7 +28,7 @@ export const useSimulationStore = defineStore("simulation", {
 
       const { data } = await axios.post(
         "http://localhost:8001/simulate",
-        reqBody,
+        reqBody
       );
       const { network, attack_record, mtd_record } = data;
       this.network = network;
