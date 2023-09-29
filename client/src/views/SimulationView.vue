@@ -109,6 +109,7 @@ const handleSubmit = async () => {
         "Logical limit: mtdInterval <= finishTime - startTime";
       isValid.value = false;
     }
+  }
 
   const validSchemes = [
     "random",
