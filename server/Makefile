@@ -10,4 +10,11 @@ setup-mac: requirements.txt
 clean:
 	rm -rf venv
 
+lint:
+	flake8  --ignore=E501,E203,W503,W504 --per-file-ignores=__init__.py:F401 $(DIRECTORY)
+
+test:
+	pytest
+
+
 .PHONY: docs run

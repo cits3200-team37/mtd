@@ -12,7 +12,6 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const isOpen = ref(true);
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
@@ -32,6 +31,13 @@ const form = ref({
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  terminateCompromiseRatio: "",
+  seed: "",
 });
 
 onMounted(() => {
@@ -75,8 +81,7 @@ const handleSubmit = async () => {
     isNaN(form.value.finishTime) ||
     form.value.finishTime <= form.value.startTime
   ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
+    errors.value.finishTime = "Finish Time must be greater than start time";
     isValid.value = false;
   }
 
@@ -85,28 +90,34 @@ const handleSubmit = async () => {
     isNaN(form.value.mtdInterval) ||
     form.value.startTime < 0
   ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+    errors.value.mtdInterval = "MTD Interval must be a positive number";
     isValid.value = false;
   }
 
   const validSchemes = [
-    "Random",
-    "Simultaneous",
-    "Alternative",
-    "Single",
-    "None",
+    "random",
+    "simultaneous",
+    "alternative",
+    "single",
+    "none",
   ];
-  if (!form.value.scheme || !validSchemes.includes(form.value.scheme)) {
+  if (
+    !form.value.scheme ||
+    !validSchemes.includes(form.value.scheme.toLowerCase())
+  ) {
     errors.value.scheme =
-      "Invalid scheme. Choose between 'Random', 'Simultaneous', 'Alternative', 'Single', or 'None'.";
+      "Invalid scheme. Choose between Random, Simultaneous, Alternative, Single, or None";
     isValid.value = false;
   }
 
   if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
     errors.value.totalNodes = "Total Nodes must be a number";
     isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
+  } else if (
+    parseInt(form.value.totalNodes) < 20 ||
+    parseInt(form.value.totalNodes) > 1000
+  ) {
+    errors.value.totalNodes = "Total Nodes must between 20 and 1000";
     isValid.value = false;
   }
 
@@ -276,7 +287,7 @@ const plotNetwork = (graphData) => {
 
 <template>
   <div class="flex flex-row">
-    <div v-if="isOpen">
+    <div>
       <div
         class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
@@ -321,7 +332,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.startTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.startTime }}</p>
               <div>
                 <FormField
                   v-model="form.finishTime"
@@ -331,7 +341,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.finishTime"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.finishTime }}</p>
               <div>
                 <FormField
                   v-model="form.mtdInterval"
@@ -341,7 +350,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.mtdInterval"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.mtdInterval }}</p>
               <div>
                 <DropDown
                   v-model="form.scheme"
@@ -349,7 +357,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.scheme"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.scheme }}</p>
               <div>
                 <FormField
                   v-model="form.totalNodes"
@@ -360,6 +367,62 @@ const plotNetwork = (graphData) => {
                 />
               </div>
               <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
+              <div>
+                <FormField
+                  v-model="form.totalLayers"
+                  label="Total Layers"
+                  placeholder="Total Layers"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalEndpoints"
+                  label="Total Endpoints"
+                  placeholder="Total Endpoints"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalSubnets"
+                  label="Total Subnets"
+                  placeholder="Total Subnets"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalDatabase"
+                  label="Total Databases"
+                  placeholder="Total Databases"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.targetLayer"
+                  label="Target Layer"
+                  placeholder="Target Layer"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.terminateCompromiseRatio"
+                  label="Compromise Ratio"
+                  placeholder="Compromise Ratio"
+                  type="text"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.seed"
+                  label="Set Seed"
+                  placeholder="Set Seed"
+                  type="text"
+                />
+              </div>
               <div class="text-center">
                 <button
                   class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
@@ -401,20 +464,6 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
-      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
-        <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
-          </button>
-        </div>
-        <div v-else>
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
-          </button>
-        </div>
-      </div>
-    </div>
 
     <div class="flex-1 flex flex-col mr-2 h-[calc(100vh-36px)]">
       <div
@@ -433,7 +482,7 @@ const plotNetwork = (graphData) => {
             startTime: '0',
             finishTime: '1000',
             mtdInterval: '200',
-            scheme: 'Random',
+            scheme: 'random',
             totalNodes: '20',
           }"
           @apply-scenario="applyPredefinedScenario"
@@ -445,7 +494,7 @@ const plotNetwork = (graphData) => {
             startTime: '0',
             finishTime: '500',
             mtdInterval: '100',
-            scheme: 'Simultaneous',
+            scheme: 'simultaneous',
             totalNodes: '50',
           }"
           @apply-scenario="applyPredefinedScenario"
@@ -457,7 +506,7 @@ const plotNetwork = (graphData) => {
             startTime: '0',
             finishTime: '300',
             mtdInterval: '50',
-            scheme: 'Alternative',
+            scheme: 'alternative',
             totalNodes: '100',
           }"
           @apply-scenario="applyPredefinedScenario"
@@ -468,7 +517,7 @@ const plotNetwork = (graphData) => {
             startTime: '0',
             finishTime: '400',
             mtdInterval: '150',
-            scheme: 'None',
+            scheme: 'none',
             totalNodes: '70',
           }"
           @apply-scenario="applyPredefinedScenario"
