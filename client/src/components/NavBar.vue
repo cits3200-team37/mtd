@@ -50,7 +50,7 @@ import findVersion from "../helpers/findVersion";
 
 onMounted(async () => {
   try {
-    handleVersion(findVersion(window));
+    handleVersion(findVersion(navigator.userAgent));
   } catch (error) {
     console.log(error);
   }
@@ -116,7 +116,7 @@ router.afterEach(async (to, _) => {
 });
 
 const handleVersion = async (version) => {
-  if (!version) {
+  if (version) {
     routes.value.forEach((route) => {
       if (route.path == "/download") {
         routes.value.splice(routes.value.indexOf(route), 1);
