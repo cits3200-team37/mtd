@@ -5,7 +5,6 @@
  */
 
 export default function findVersion(userAgent) {
-  if (userAgent.indexOf("Electron") > -1)
-    return true;
+  if (userAgent.indexOf("Electron") > -1) return true;
   else return false;
 }
