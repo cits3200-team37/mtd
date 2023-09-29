@@ -27,25 +27,24 @@
 </template>
 
 <script setup>
-// todo replace these os logos with real ones that wont expire
-import { mdiApple, mdiPenguin, mdiMicrosoftWindows } from "@mdi/js";
+import { siApple, siWindows11, siLinux } from "simple-icons";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { ref } from "vue";
 const version = ref("2.0.0");
 const osVersions = ref([
   {
     name: "Windows",
-    icon: mdiMicrosoftWindows,
+    icon: siWindows11.path,
     link: "http://www.google.com",
   },
   {
     name: "Mac",
-    icon: mdiApple,
+    icon: siApple.path,
     link: "http://www.google.com",
   },
   {
     name: "Linux",
-    icon: mdiPenguin,
+    icon: siLinux.path,
     link: "http://www.google.com",
   },
 ]);

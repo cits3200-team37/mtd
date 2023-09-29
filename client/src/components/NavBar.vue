@@ -116,8 +116,6 @@ router.afterEach(async (to, _) => {
 });
 
 const handleVersion = async (version) => {
-  // todo change this to only website when we deploy later
-  // remove ! mark
   if (!version) {
     routes.value.forEach((route) => {
       if (route.path == "/download") {
