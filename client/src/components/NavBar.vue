@@ -116,7 +116,6 @@ router.afterEach(async (to, _) => {
 });
 
 const handleVersion = async (version) => {
-  console.log(version);
   if (version) {
     routes.value.forEach((route) => {
       if (route.path == "/download") {
