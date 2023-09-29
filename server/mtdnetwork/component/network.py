@@ -212,7 +212,8 @@ class Network:
                                 v[0] + i * 2.25,
                                 v[1]
                                 + j * 3
-                                + 1.5 * (max_subnet_in_layer - len(subnet_node_list)),
+                                + 1.5 * (max_subnet_in_layer -
+                                         len(subnet_node_list)),
                             ]
                         )
                         for k, v in subgraph_pos.items()
@@ -222,7 +223,8 @@ class Network:
                         y = (
                             v[1]
                             + j * 3
-                            + 1.5 * (max_subnet_in_layer - len(subnet_node_list))
+                            + 1.5 * (max_subnet_in_layer -
+                                     len(subnet_node_list))
                         )
                         subgraph_pos[k] = np.array([v[0] + i * 2.25, y])
                         if y < min_y_pos:
@@ -303,7 +305,8 @@ class Network:
         layer1_weights = [self.graph.degree(n) for n in layer1_nodes]
         while len(blank_endpoints):
             endpoint = blank_endpoints.pop(0)
-            other_node = random.choices(layer1_nodes, weights=layer1_weights, k=1)[0]
+            other_node = random.choices(
+                layer1_nodes, weights=layer1_weights, k=1)[0]
             self.graph.add_edge(endpoint, other_node)
 
         # Updates Colour of target node to red
@@ -379,7 +382,7 @@ class Network:
         for host_id, subnet_id in subnets.items():
             layer_id = layers[host_id]
 
-            if not layer_id in layer_subnets:
+            if layer_id not in layer_subnets:
                 layer_subnets[layer_id] = {}
 
             layer_subnets[layer_id][subnet_id] = layer_subnets[layer_id].get(
@@ -424,7 +427,8 @@ class Network:
         Returns:
             ave_score: Score of each host added up, divided by the number of hosts
         """
-        shortest_path = self.get_path_from_exposed(self.target_node, self.graph)[0]
+        shortest_path = self.get_path_from_exposed(
+            self.target_node, self.graph)[0]
         vuln_list = []
         total_score = 0
         for host_id in shortest_path:
@@ -532,7 +536,7 @@ class Network:
         compromised_neighbour_nodes = []
 
         # Checks if neighbouring hosts of compromised node are also compromised, if so add them to the list
-        while all_reachable_hosts_added == False:
+        while not all_reachable_hosts_added:
             visible_hosts = list(self.graph.neighbors(appended_host))
             for host in visible_hosts:
                 for c_host in compromised_hosts:
@@ -632,7 +636,7 @@ class Network:
                 if path_len < shortest_distance:
                     shortest_distance = path_len
                     shortest_path = path
-            except:
+            except Exception:
                 pass
 
         # This function is used when the attacker can't find a path to host
@@ -657,7 +661,7 @@ class Network:
 
                 if path_len < shortest_distance:
                     shortest_distance = path_len
-            except:
+            except Exception:
                 pass
 
         return shortest_distance
@@ -681,7 +685,7 @@ class Network:
         visible_network = self.get_hacker_visible_graph()
 
         non_exposed_endpoints = [
-            host_id for host_id in host_stack if not host_id in self.exposed_endpoints
+            host_id for host_id in host_stack if host_id not in self.exposed_endpoints
         ]
 
         return sorted(
@@ -820,6 +824,7 @@ class Network:
 
     def draw(self):
         plt.figure(1, figsize=(15, 12))
-        nx.draw(self.graph, pos=self.pos, node_color=self.colour_map, with_labels=True)
+        nx.draw(self.graph, pos=self.pos,
+                node_color=self.colour_map, with_labels=True)
         directory = os.getcwd()
         plt.savefig(directory + "/experimental_data/plots/network.png")

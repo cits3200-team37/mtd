@@ -68,7 +68,8 @@ class Host:
         self.total_nodes: int = self.total_services + 1
         self.compromised: bool = False
         self.compromised_services: list[int] = []
-        self.gen_internal_network(k_nearest_neighbors_percent, prob_strogatz_rewire)
+        self.gen_internal_network(
+            k_nearest_neighbors_percent, prob_strogatz_rewire)
         self.setup_network(service_generator)
         self.set_host_users(users_list)
 
@@ -103,7 +104,7 @@ class Host:
             total_vulns += len(service_vulns)
 
             for v in service_vulns:
-                if not v in all_vulns:
+                if v not in all_vulns:
                     all_vulns.append(v)
         # print("Services on this host has average of this many vulns: ", total_vulns/len(all_services))
 
@@ -115,7 +116,7 @@ class Host:
             service_vulns = service.get_all_vulns()
 
             for v in service_vulns:
-                if not v in vulns:
+                if v not in vulns:
                     vulns.append(v)
 
         return vulns
@@ -240,7 +241,8 @@ class Host:
                     if n in self.exposed_endpoints:
                         self.exposed_endpoints.remove(n)
 
-        print("Blank endpoints: ", blank_endpoints, "target node: ", self.target_node)
+        print("Blank endpoints: ", blank_endpoints,
+              "target node: ", self.target_node)
         self.total_nodes = self.total_nodes - len(blank_endpoints)
 
     def get_services(self, just_exploited=False):
@@ -274,7 +276,7 @@ class Host:
             for n_id in self.graph.neighbors(ec_service_id):
                 if n_id == self.target_node:
                     continue
-                if not n_id in exposed_services and not n_id in adjacent_services:
+                if n_id not in exposed_services and n_id not in adjacent_services:
                     adjacent_services.append(n_id)
 
         return {
@@ -291,7 +293,6 @@ class Host:
                 list of shortest path to target node (including target node)
 
         """
-        target = list.pop(len(list) - 1)
         service_list = []
         for service_id in list:
             service = self.graph.nodes.get(service_id, {}).get("service", None)
@@ -351,7 +352,7 @@ class Host:
             service_id = service_q.pop(0)
             service = services[service_id]
 
-            if not service_id in self.exposed_endpoints:
+            if service_id not in self.exposed_endpoints:
                 port_numbers.append(port_numbers_dict[service_id])
 
             if service.is_exploited():
@@ -387,7 +388,8 @@ class Host:
         for service_dict in services_dict:
             service = service_dict["service"]
             vulns = vulns + service.get_vulns(roa_threshold=roa_threshold)
-            discovery_time += service.discover_vuln_time(roa_threshold=roa_threshold)
+            discovery_time += service.discover_vuln_time(
+                roa_threshold=roa_threshold)
 
         new_vulns = []
         for vuln in vulns:
@@ -464,7 +466,8 @@ class Host:
             users_list:
                 the tuple users list specifying the username and if the user reuses their password
         """
-        self.users = {user_tuple[0]: user_tuple[1] for user_tuple in users_list}
+        self.users = {user_tuple[0]: user_tuple[1]
+                      for user_tuple in users_list}
         for user_reuse in self.users.values():
             self.total_users += 1
             if user_reuse:
@@ -530,7 +533,7 @@ class Host:
         other_nodes = [
             node_id
             for node_id in range(self.total_nodes)
-            if node_id != self.target_node and not node_id in self.exposed_endpoints
+            if node_id != self.target_node and node_id not in self.exposed_endpoints
         ]
 
         for o1_node in other_nodes:
@@ -538,7 +541,8 @@ class Host:
                 n for n in self.graph.neighbors(o1_node) if n in self.exposed_endpoints
             ]
             if len(exposed_neighbors) == 0:
-                self.graph.add_edge(o1_node, random.choice(self.exposed_endpoints))
+                self.graph.add_edge(
+                    o1_node, random.choice(self.exposed_endpoints))
 
             for o2_node in other_nodes:
                 if o1_node == o2_node:
@@ -603,7 +607,8 @@ class Host:
         total_versions = len(versions)
         return random.choices(
             versions,
-            weights=[total_versions - index for index in range(total_versions)],
+            weights=[total_versions -
+                     index for index in range(total_versions)],
             k=1,
         )[0]
 
@@ -629,7 +634,8 @@ class Host:
         """
         if existing_addresses is None:
             existing_addresses = []
-        new_ip = "{}.{}.{}.{}".format(*[random.randint(1, 256) for _i in range(4)])
+        new_ip = "{}.{}.{}.{}".format(
+            *[random.randint(1, 256) for _i in range(4)])
         if new_ip in existing_addresses:
             return Host.get_random_address(existing_addresses=existing_addresses)
         return new_ip
@@ -675,7 +681,7 @@ class Host:
                 if path_len < shortest_distance:
                     shortest_distance = path_len
                     shortest_path = path
-            except:
+            except Exception:
                 pass
 
         # This function is used for sorting so shouldn't raise an exception

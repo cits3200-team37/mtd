@@ -1,4 +1,5 @@
-import random, logging
+import random
+import logging
 import mtdnetwork.data.constants as constants
 import pkg_resources
 import uuid
