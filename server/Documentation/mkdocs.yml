@@ -59,7 +59,11 @@ nav:
           - Service Diversity: mtdnetwork/mtd/servicediversity.md
       - Operation:
           - Attack Operation: mtdnetwork/operation/attack_operation.md
+          - MTD Operation: mtdnetwork/operation/mtd_operation.md
       - Component:
           - Host: mtdnetwork/component/host.md
+          - MTD Scheme: mtdnetwork/component/mtd_scheme.md
+          - Network: mtdnetwork/component/network.md
+          - Service: mtdnetwork/component/service.md
       - Statistic:
           - Evaluation: mtdnetwork/statistic/evaluation.md

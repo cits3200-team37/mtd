@@ -14,12 +14,16 @@ export const useSimulationStore = defineStore("simulation", {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
         networkSizeList: Number(this.parameters.networkSizeList),
-        startTime: Number(this.parameters.startTime),
-        finishTime: Number(this.parameters.finishTime),
-        mtdInterval: Number(this.parameters.mtdInterval),
         scheme: this.parameters.scheme.toLowerCase(),
         totalNodes: Number(this.parameters.totalNodes),
+        totalLayers: Number(this.parameters.totalLayers),
+        totalEndpoints: Number(this.parameters.totalEndpoints),
+        totalSubnets: Number(this.parameters.totalSubnets),
+        totalDatabase: Number(this.parameters.totalDatabase),
+        targetLayer: Number(this.parameters.targetLayer),
+        seed: Number(this.parameters.seed),
       };
+
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
       this.network = network;

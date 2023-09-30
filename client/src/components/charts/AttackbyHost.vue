@@ -1,6 +1,9 @@
 <template>
   <div>
-    <svg ref="svg" class="border"></svg>
+    <svg
+      ref="svg"
+      class="m-10 border border-navbar-icon rounded bg-navbar-primary"
+    ></svg>
   </div>
 </template>
 
@@ -12,7 +15,14 @@ const svg = ref(null);
 const props = defineProps(["attackRecord"]);
 
 // Define your colors array
-const colors = ["purple", "blue", "green", "yellow", "orange", "red"];
+const colors = [
+  "#ED33B9",
+  "#FDCA40",
+  "#DF2935",
+  "#0075F2",
+  "#00F2F2",
+  "#87FF65",
+];
 
 // Convert the main dictionary and its sub-dictionaries into arrays
 const attackRecord = props.attackRecord;
@@ -51,13 +61,41 @@ const attackRecordArray = Object.values(attackRecord.current_host_uuid)
 
 // Function to create the Gantt chart with legend
 const createChart = () => {
-  const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+  const margin = { top: 75, right: 50, bottom: 50, left: 60 };
 
   // const { width, height } = d3.select(svg.value).node().getBoundingClientRect();
   const width = 800 - margin.left - margin.right;
-  const height = 300 - margin.top - margin.bottom;
+  const height = 350 - margin.top - margin.bottom;
 
-  const svgContainer = d3
+  const svgElement = window.getComputedStyle(svg.value);
+  const textColor = svgElement.getPropertyValue("color");
+  const bkgColor = svgElement.getPropertyValue("background-color");
+
+  // Title
+  const title = d3.select(svg.value).append("g").attr("class", "title");
+
+  title
+    .append("rect")
+    .attr("x", "35%")
+    .attr("y", 20)
+    .attr("width", "30%")
+    .attr("height", 30)
+    .attr("fill", "none")
+    .attr("stroke", textColor)
+    .attr("stroke-width", 1)
+    .attr("rx", 3)
+    .attr("ry", 3);
+
+  title
+    .append("text")
+    .attr("x", "50%")
+    .attr("y", 40)
+    .attr("text-anchor", "middle")
+    .attr("fill", textColor)
+    .text("Attack Operation by Host");
+
+  // Chart
+  const chart = d3
     .select(svg.value)
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -83,25 +121,25 @@ const createChart = () => {
   const yAxis = d3.axisLeft(yScale);
 
   // Append X and Y axes to the SVG
-  svgContainer
+  chart
     .append("g")
     .attr("class", "x-axis")
     .attr("transform", `translate(0, ${height})`)
     .call(xAxis);
-  svgContainer.append("g").attr("class", "y-axis").call(yAxis);
+  chart.append("g").attr("class", "y-axis").call(yAxis);
 
   // X-axis label
-  svgContainer
+  chart
     .append("text")
     .attr("class", "x-label")
     .attr("x", width / 2)
     .attr("y", height + 35)
     .style("text-anchor", "middle")
     .text("Time")
-    .attr("fill", "white");
+    .attr("fill", textColor);
 
   // Y-axis label
-  svgContainer
+  chart
     .append("text")
     .attr("class", "y-label")
     .attr("x", -height / 2)
@@ -110,10 +148,10 @@ const createChart = () => {
     .style("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
     .text("Host")
-    .attr("fill", "white");
+    .attr("fill", textColor);
 
   // Gridlines
-  svgContainer
+  chart
     .selectAll(".gridline")
     .data(yScale.domain())
     .enter()
@@ -123,11 +161,11 @@ const createChart = () => {
     .attr("x2", width)
     .attr("y1", (d) => yScale(d) + yScale.bandwidth() / 2)
     .attr("y2", (d) => yScale(d) + yScale.bandwidth() / 2)
-    .attr("stroke", "gray")
-    .attr("stroke-dasharray", "5,5");
+    .attr("stroke", textColor)
+    .attr("stroke-dasharray", "2,10");
 
   // Create Gantt bars
-  svgContainer
+  chart
     .selectAll(".bar")
     .data(attackRecordArray)
     .enter()
@@ -140,7 +178,7 @@ const createChart = () => {
     .attr("fill", (d) => d.color);
 
   // Create a legend
-  const legend = svgContainer
+  const legend = chart
     .append("g")
     .attr("class", "legend")
     .attr(
@@ -153,9 +191,12 @@ const createChart = () => {
     .append("rect")
     .attr("width", 150) // Adjust the width as needed
     .attr("height", attackActionLegend.length * 15 + 10) // Adjust the height as needed
-    .attr("fill", "none") // Set fill to none to make it transparent
-    .attr("stroke", "white") // Set border color
-    .attr("stroke-width", 2); // Set border width
+    .attr("fill", bkgColor) // Set fill to none to make it transparent
+    .attr("opacity", 0.8)
+    .attr("stroke", textColor) // Set border color
+    .attr("stroke-width", 1) // Set border width
+    .attr("rx", 3)
+    .attr("ry", 3);
 
   // Legend colors
   legend
@@ -180,7 +221,7 @@ const createChart = () => {
     .attr("x", 20)
     .attr("y", (d, i) => i * 15 + 15)
     .text((d) => d.name)
-    .attr("fill", "white");
+    .attr("fill", textColor);
 };
 
 // Create the chart when the component is mounted
