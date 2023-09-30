@@ -30,7 +30,7 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
 ```
 
 #### Sample response
-
+- Main
 ```json
 {
   "network": {},
@@ -39,7 +39,101 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
   "compromise_checkpoint_metrics": [],
 }
 ```
-All elements are derived from the Evaluation Class using the final network and adversary state once the simulation has terminated. See relevant documentation for specific examples.
+- network
+```json
+{
+  "network": {
+    "directed": false,
+    "links": [
+      { "source": 0, "target": 13 },
+      { "source": 2, "target": 10 },
+      ...
+    ],
+    "nodes": [
+      {
+        "host": {
+          "compromised": true,
+          "compromisedServices": [1, 3, 4, 6, 7, 9],
+          "hostId": 0,
+          "hostUuid": "4806a31a-3f71-4a8d-99d8-880f83547621",
+          "ip": "161.99.9.59",
+          "osType": "freebsd",
+          "osVersion": "12",
+          "pUCompromise": false,
+          "totalNodes": 10,
+          "totalServices": 9,
+          "totalUsers": 5
+        },
+        "id": 0,
+        "layer": 0,
+        "subnet": 0
+      },
+      {
+        "host": {
+          "compromised": false,
+          "compromisedServices": [],
+          "hostId": 1,
+          "hostUuid": "321663a6-13f5-4b2e-bb94-109b4a7b3899",
+          "ip": "169.179.214.27",
+          "osType": "centos",
+          "osVersion": "8",
+          "pUCompromise": false,
+          "totalNodes": 8,
+          "totalServices": 7,
+          "totalUsers": 5
+        },
+        "id": 1,
+        "layer": 0,
+        "subnet": 0
+      },
+      ...
+    ]
+  }
+}
+```
+- MTD Record
+```json
+{
+'name': {0: 'CompleteTopologyShuffle', 1: 'OSDiversity', 2: 'OSDiversity'},
+'start_time': {0: 0.0, 1: 200.3685748174762, 2: 400.9527232348661},
+'finish_time': {0: 121.81486938465021, 1: 280.6090999799783, 2: 481.0931564591807},
+'duration': {0: 121.81486938465021, 1: 80.24052516250208, 2: 80.14043322431462},
+'executed_at': {0: 'network', 1: 'application', 2: 'application'}
+}
+```
+- Attack Record
+```json
+{
+'name': {0: 'SCAN_HOST', 1: 'ENUM_HOST', 2: 'SCAN_PORT', 3: 'EXPLOIT_VULN', 4: 'EXPLOIT_VULN', 5: 'EXPLOIT_VULN'},
+'start_time': {0: 0.0, 1: 5.0, 2: 10.0, 3: 35.0, 4: 35.98756603597279, 5: 40.77544625903235}, 
+'finish_time': {0: 5.0, 1: 10.0, 2: 35.0, 3: 35.98756603597279, 4: 40.77544625903235, 5: 48.766037589889386}, 
+'duration': {0: 5.0, 1: 5.0, 2: 25.0, 3: 0.9875660359727902, 4: 4.78788022305956, 5: 7.990591330857036}, 'current_host': {0: -1, 1: -1, 2: 0, 3: 0, 4: 0, 5: 0}, 
+'current_host_uuid': {0: -1, 1: -1, 2: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 3: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 4: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 5: '1381b434-3f3b-4b8a-a0b8-3583742eea6c'}, 
+'compromise_host': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
+'compromise_host_uuid': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
+'current_host_attempt': {0: 0, 1: 0, 2: 1, 3: 1, 4: 1, 5: 1}, 
+'cumulative_attempts': {0: 0, 1: 0, 2: 0, 3: 0, 4: 1, 5: 2}, 
+'cumulative_compromised_hosts': {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0}, 
+'compromise_users': {0: [], 1: [], 2: [], 3: [], 4: [], 5: []}, 
+'interrupted_in': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
+'interrupted_by': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}
+} 
+```
+- Compromise checkpoint metrics
+```json
+[{
+'time_to_compromise': 2372.763291073691,
+'attack_success_rate': 0.38461538461538464,
+'host_compromise_ratio': 0.1,
+'mtd_execution_frequency': 0.005108120128305538
+}, 
+{
+'time_to_compromise': 4009.0138625032932,
+'attack_success_rate': 0.40816326530612246,
+'host_compromise_ratio': 0.2,
+'mtd_execution_frequency': 0.005108120128305538
+}]
+```
 
 ##### Response Elements
 - `network` contains the graph of the network from the _network object. The `host` element of the nodes in the graph have been converted to json for compatibility with the [d3 library](https://d3js.org/).
