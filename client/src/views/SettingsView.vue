@@ -19,10 +19,21 @@
 
 <script setup>
 import ThemeCard from "../components/ThemeCard.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import dark from "../public/screens/Dark.png";
 import light from "../public/screens/Light.png";
-const setTheme = (theme) => {
+const currentTheme = ref();
+onMounted(async () => {
+  try {
+    currentTheme.value = localStorage.getItem("user-theme");
+    console.log(currentTheme.value);
+    await setTheme(currentTheme.value);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+const setTheme = async (theme) => {
   localStorage.setItem("user-theme", theme.toLowerCase());
   window.dispatchEvent(
     new CustomEvent("theme-changed", {
@@ -30,7 +41,7 @@ const setTheme = (theme) => {
     }),
   );
   themes.value.forEach((presetTheme) => {
-    if (presetTheme.theme === theme) {
+    if (presetTheme.theme.toUpperCase() === theme.toUpperCase()) {
       presetTheme.active = true;
     } else {
       presetTheme.active = false;
@@ -38,7 +49,7 @@ const setTheme = (theme) => {
   });
 };
 const themes = ref([
-  { theme: "Dark", link: dark, active: true },
+  { theme: "Dark", link: dark, active: false },
   { theme: "Light", link: light, active: false },
 ]);
 </script>
