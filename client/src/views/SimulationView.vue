@@ -11,6 +11,7 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
+const graph = ref(true)
 const isOpen = ref(true);
 const showTooltip = ref(false);
 
@@ -47,6 +48,9 @@ onMounted(() => {
     // NOTE: could use pinia's storeToRefs, but i think using this
     // and copying objects will be easier for everyone to understand
     form.value = { ...simulationStore.parameters };
+  }
+  else{
+    graph.value = false
   }
 });
 
@@ -120,6 +124,7 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
+  graph.value = true
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -276,11 +281,11 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div v-if="isOpen">
       <div
-        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
+        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll hide-scrollbar"
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
             :class="{ 'bg-teal-500': isInputView }"
             @click="
               () => {
@@ -291,7 +296,7 @@ const plotNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
             :class="{ 'bg-teal-500': !isInputView }"
             @click="
               () => {
@@ -465,7 +470,20 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
+    <div class="flex justify-center items-center w-full">
+      <div v-if="graph" id="network-graph" class="relative w-full h-[calc(100vh-36px)]"></div>
+      <div v-else id="sim_explanation" class="relative border rounded p-4 translate-y-[-50px] bg-navbar-primary">
+        <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
+
+        <ul class="list-disc text-sm p-4">
+          <li class="mb-2">Total Nodes: the number of nodes in the simulated network<br>Default:</li>
+          <li class="mb-2">Scheme: the manor in which the simulation will employ MTD strategies<br>Default:</li>
+          <li class="mb-2">MTD Interval: the frequency of applying MTD strategies</li>
+        </ul>
+        WIP: fix after param finalisation. <br>
+        TODO: remove start time, fix or remove comp ratio, node highlight goes off screen
+      </div>
+    </div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
