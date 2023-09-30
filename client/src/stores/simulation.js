@@ -23,6 +23,15 @@ export const useSimulationStore = defineStore("simulation", {
         targetLayer: Number(this.parameters.targetLayer),
         seed: Number(this.parameters.seed),
       };
+      if (this.parameters.startTime) {
+        reqBody.startTime = Number(this.parameters.startTime);
+      }
+      if (this.parameters.finishTime) {
+        reqBody.finishTime = Number(this.parameters.finishTime);
+      }
+      if (this.parameters.mtdInterval) {
+        reqBody.mtdInterval = Number(this.parameters.mtdInterval);
+      }
 
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
