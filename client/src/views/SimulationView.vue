@@ -381,7 +381,7 @@ const plotNetwork = (graphData) => {
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
             <form
-              class="flex flex-col space-y-2"
+              class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
               <div>
