@@ -35,7 +35,6 @@ const form = ref({
   totalSubnets: "",
   totalDatabase: "",
   targetLayer: "",
-  terminateCompromiseRatio: "",
   seed: "",
 });
 
@@ -61,7 +60,6 @@ const errors = ref({
   totalSubnets: "",
   totalDatabase: "",
   targetLayer: "",
-  terminateCompromiseRatio: "",
   seed: "",
 });
 
@@ -80,7 +78,6 @@ const handleSubmit = async () => {
   const totalSubnets = Number(form.value.totalSubnets);
   const totalDatabase = Number(form.value.totalDatabase);
   const targetLayer = Number(form.value.targetLayer);
-  const terminateCompromiseRatio = Number(form.value.terminateCompromiseRatio);
   const seed = Number(form.value.seed);
 
   if (form.value.startTime) {
@@ -171,18 +168,6 @@ const handleSubmit = async () => {
   if (form.value.targetLayer) {
     if (isNaN(targetLayer)) {
       errors.value.targetLayer = "Target Layer must be a number";
-      isValid.value = false;
-    }
-  }
-
-  if (form.value.terminateCompromiseRatio) {
-    if (
-      isNaN(terminateCompromiseRatio) ||
-      terminateCompromiseRatio <= 0.0 ||
-      terminateCompromiseRatio > 1.0
-    ) {
-      errors.value.terminateCompromiseRatio =
-        "Logical limit: 0.0 < terminateCompromiseRatio <= 1.0";
       isValid.value = false;
     }
   }
@@ -474,15 +459,6 @@ const plotNetwork = (graphData) => {
                   placeholder="Target Layer"
                   type="text"
                   :error="errors.targetLayer"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.terminateCompromiseRatio"
-                  label="Compromise Ratio"
-                  placeholder="Compromise Ratio"
-                  type="text"
-                  :error="errors.terminateCompromiseRatio"
                 />
               </div>
               <div>
