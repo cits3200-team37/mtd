@@ -44,6 +44,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "pinia": "^2.1.6",
     "update-electron-app": "^2.0.1",
+    "simple-icons": "^9.16.0",
     "vue": "^3.3.4",
     "vue-router": "4"
   }
