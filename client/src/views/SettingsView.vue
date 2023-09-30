@@ -11,7 +11,7 @@
             @update:model-value="setTheme(theme.theme)" />
         </div>
       </div>
-      <div>
+      <div v-if="isElectron">
         <p class="text-2xl pb-2">Current Version</p>
         <p class="text-md pb-4">{{ currentVersion }}</p>
         <div v-if="LatestVersion.name.replace('v', '') != currentVersion">
@@ -29,14 +29,17 @@ import { ref, onMounted } from "vue";
 import dark from "../public/screens/Dark.png";
 import light from "../public/screens/Light.png";
 import getTag from "../helpers/getTag";
+import findVersion from "../helpers/findVersion";
 const LatestVersion = ref();
 const currentVersion = ref();
 const currentTheme = ref();
 const isLoading = ref(true);
+const isElectron = ref();
 onMounted(async () => {
   try {
     currentTheme.value = localStorage.getItem("user-theme");
     LatestVersion.value = await getTag();
+    isElectron.value = findVersion(navigator.userAgent);
     currentVersion.value = await window.electronAPI.processVersion();
     await setTheme(currentTheme.value);
   } catch (e) {
