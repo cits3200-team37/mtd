@@ -7,17 +7,22 @@
       </p>
       <div class="flex flex-row py-4 space-x-5">
         <div v-for="theme in themes" :key="theme">
-          <ThemeCard :theme="theme.theme" :active="theme.active" :link="theme.link"
-            @update:model-value="setTheme(theme.theme)" />
+          <ThemeCard
+            :theme="theme.theme"
+            :active="theme.active"
+            :link="theme.link"
+            @update:model-value="setTheme(theme.theme)"
+          />
         </div>
       </div>
       <div v-if="isElectron">
         <p class="text-2xl pb-2">Current Version</p>
         <p class="text-md pb-4">{{ currentVersion }}</p>
         <div v-if="LatestVersion.name.replace('v', '') != currentVersion">
-          <p class="text-md">There is a new update available, please close and reopen your app</p>
+          <p class="text-md">
+            There is a new update available, please close and reopen your app
+          </p>
         </div>
-
       </div>
     </div>
   </div>
