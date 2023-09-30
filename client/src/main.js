@@ -80,3 +80,6 @@ ipcMain.on("window-maximise", handleWindowMaximise);
 ipcMain.handle("operating-system", (event, args) => {
   return process.platform;
 });
+ipcMain.handle("process-version", (event, args) => {
+  return app.getVersion();
+});
