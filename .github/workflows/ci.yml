@@ -11,12 +11,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+        working-directory: server/Documentation
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV 
-      - run: ls
       - uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
