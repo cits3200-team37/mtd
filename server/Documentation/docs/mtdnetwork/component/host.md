@@ -2,7 +2,7 @@
 
 #### Description
 
-```host.py``` contains the ```Host``` class, a subclass of MTD.
+```host.py``` contains the ```Host``` class.
 
 - It is used to initialise the host with the specified Operating Sytems with a random network of internal services that the host runs.
 
@@ -28,6 +28,9 @@
 
 - ```is_exposed_endpoint``` method:
       - This method checks if the endpoint is exposed
+
+- ```__eq__``` method:
+-     - This method is used to compare two Host objects for equality based on their uuid attributes.
 - ```get_all_services``` method:
       - This method returns all the services
 - ```get_test_values``` method:
