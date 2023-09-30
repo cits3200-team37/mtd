@@ -11,7 +11,8 @@
     "publish": "electron-forge publish",
     "lint": "echo \"No linting configured\"",
     "format": "prettier ./src --write",
-    "dev": "vite dev"
+    "dev": "vite dev",
+    "build": "vite build"
   },
   "keywords": [],
   "author": {
