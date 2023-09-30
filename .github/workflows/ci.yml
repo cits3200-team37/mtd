@@ -11,7 +11,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-        working-directory: server/Documentation
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
@@ -24,4 +23,6 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material 
-      - run: mkdocs gh-deploy --force
+      - name: Serve docs
+        working-directory: server/Documentation
+        run: mkdocs gh-deploy --force
