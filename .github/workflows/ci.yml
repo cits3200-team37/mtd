@@ -2,9 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - master 
       - main
-      - MTDSIM-94
 permissions:
   contents: write
 jobs:
