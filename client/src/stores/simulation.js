@@ -34,6 +34,6 @@ export const useSimulationStore = defineStore("simulation", {
       this.network = null;
       this.attackRecord = null;
       this.mtdRecord = null;
-    }
+    },
   },
 });
