@@ -40,11 +40,10 @@
     "@vitejs/plugin-vue": "^4.3.1",
     "axios": "^1.5.0",
     "d3": "^7.8.5",
-    "electron-log": "^4.4.8",
     "electron-squirrel-startup": "^1.0.0",
     "pinia": "^2.1.6",
-    "update-electron-app": "^2.0.1",
     "simple-icons": "^9.16.0",
+    "update-electron-app": "^2.0.1",
     "vue": "^3.3.4",
     "vue-router": "4"
   }

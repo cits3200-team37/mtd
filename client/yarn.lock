@@ -1628,11 +1628,6 @@ electron-is-dev@^0.3.0:
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
   integrity sha512-jLttuuq8QK67n3mXmIe9pkrO7IH3LGIk12xJkhTmc852U2sCJaRAOpRGPSh+1Xnzck5v9escd9YXzuze9nGejg==
 
-electron-log@^4.4.8:
-  version "4.4.8"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-4.4.8.tgz#fcb9f714dbcaefb6ac7984c4683912c74730248a"
-  integrity sha512-QQ4GvrXO+HkgqqEOYbi+DHL7hj5JM+nHi/j+qrN9zeeXVKy8ZABgbu4CnG+BBqDZ2+tbeq9tUC4DZfIWFU5AZA==
-
 electron-packager@^17.1.2:
   version "17.1.2"
   resolved "https://registry.npmjs.org/electron-packager/-/electron-packager-17.1.2.tgz"
