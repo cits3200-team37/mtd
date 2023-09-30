@@ -131,6 +131,10 @@ const handleSubmit = async () => {
 const resetSimulation = () => {
   // Reset the form values
   form.value = { ...defaultForm.value };
+
+  resetGraph();
+
+  simulationStore.reset();
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
