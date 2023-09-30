@@ -25,7 +25,7 @@ const currentHost = ref({
   compromised: false,
 });
 
-const form = ref({
+const defaultForm = ref({
   startTime: "",
   finishTime: "",
   mtdInterval: "",
@@ -39,6 +39,8 @@ const form = ref({
   terminateCompromiseRatio: "",
   seed: "",
 });
+
+const form = ref({ ...defaultForm.value });
 
 onMounted(() => {
   // load past state of network and form
@@ -124,6 +126,11 @@ const handleSubmit = async () => {
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const resetSimulation = () => {
+  // Reset the form values
+  form.value = { ...defaultForm.value };
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -306,6 +313,7 @@ const plotNetwork = (graphData) => {
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <button @click="resetSimulation">Reset</button>
             <form
               class="flex flex-col space-y-2"
               @submit.prevent="handleSubmit"
