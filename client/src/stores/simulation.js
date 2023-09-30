@@ -11,8 +11,7 @@ export const useSimulationStore = defineStore("simulation", {
   actions: {
     async simulate(simulateFormValues) {
       this.parameters = { ...simulateFormValues };
-      const reqBody = {
-      };
+      const reqBody = {};
       if (this.parameters.startTime) {
         reqBody.startTime = Number(this.parameters.startTime);
       }
