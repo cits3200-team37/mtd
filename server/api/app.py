@@ -30,22 +30,20 @@ def strategies():
 
 @app.route("/simulate", methods=["POST"])
 def simulate():
-    finish_time = request.json.get("finishTime")
-    mtd_interval = request.json.get("mtdInterval")
     scheme = request.json.get("scheme")
+    mtd_interval = request.json.get("mtdInterval")
+    finish_time = request.json.get("finishTime")
     total_nodes = request.json.get("totalNodes")
-    seed = request.json.get("seed")
-    total_layers = request.json.get("totalLayers")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
-    target_layer = request.json.get("targetLayer")
     total_database = request.json.get("totalDatabase")
-    terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
-    strategies = request.json.get("strategies")
+    total_layers = request.json.get("totalLayers")
+    target_layer = request.json.get("targetLayer")
+    seed = request.json.get("seed")
 
     custom_strategies = None
 
-    if not all([mtd_interval, scheme, total_nodes]):
+    if not scheme:
         return {}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
@@ -72,7 +70,6 @@ def simulate():
         total_layers=total_layers,
         target_layer=target_layer,
         total_database=total_database,
-        terminate_compromise_ratio=terminate_compromise_ratio,
         custom_strategies=custom_strategies,
     )
 

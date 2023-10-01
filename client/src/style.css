@@ -17,6 +17,7 @@
     --hover-bg-color: 55, 65, 81;
     --simulation-color: 43 43 43;
     --navbar-icon-color: 164 164 164;
+    --complementary-color: 0 204 153;
   }
 
   .theme-light {
@@ -27,13 +28,23 @@
     --navbar-color: 183 209 218;
     --simulation-color: 245 245 245;
     --navbar-icon-color: 49 47 47;
+    --complementary-color: 183 230 240;
   }
 
-  .hide-scrollbar {
-    scrollbar-width: none;
+  .scrollbar{
+    scrollbar-width: thin;
   }
 
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--background-secondary)); 
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--complementary-color)); 
+    border-radius: 5px;
   }
 }
