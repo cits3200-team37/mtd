@@ -68,7 +68,7 @@ def path_lengths(graph):
 
 
 def characteristic_path_length(graph):
-    '''###'''
+    '''Method returns average path lengths'''
     return np.mean(list(path_lengths(graph)))
 
 
