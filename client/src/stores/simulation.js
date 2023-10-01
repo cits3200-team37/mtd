@@ -25,7 +25,7 @@ export const useSimulationStore = defineStore("simulation", {
         reqBody.networkSizeList = Number(this.parameters.networkSizeList);
       }
       if (this.parameters.scheme) {
-        reqBody.scheme = Number(this.parameters.scheme);
+        reqBody.scheme = this.parameters.scheme.toLowerCase()
       }
       if (this.parameters.totalNodes) {
         reqBody.totalNodes = Number(this.parameters.totalNodes);
