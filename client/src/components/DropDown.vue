@@ -71,7 +71,7 @@ const selected = ref(props.modelValue);
 
 watch(
   () => props.modelValue,
-  (val) => (selected.value = val)
+  (val) => (selected.value = val),
 );
 
 const handleClick = (item) => {
