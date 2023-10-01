@@ -36,7 +36,7 @@
         class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
         @click="handleClick(item)"
         :class="{
-          'hover:cursor-not-allowed text-gray-500 hover:text-black':
+          'hover:cursor-not-allowed text-black hover:text-black':
             item != 'Random',
           'bg-slate-300': item === selected,
         }"
