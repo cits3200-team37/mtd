@@ -21,16 +21,18 @@
       </div>
     </div>
   </div>
-    <div v-if="isOpen" class="z-10 rounded-sm bg-white shadow-md w-full overflow-hidden">
-      <ul>
-        <li v-for="(item, index) in menuOptions" :key="index"
-          class="px-4 py-2 text-sm text-gray-500 leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
-          @click="handleClick(item)"
-          :class="{ 'hover:cursor-not-allowed text-gray-500 hover:text-black': item != 'Random' }">
-          {{ item }}
-        </li>
-      </ul>
-    </div>
+  <div v-if="isOpen" class="z-10 rounded-md bg-white shadow-md w-full overflow-hidden">
+    <ul>
+      <li v-for="(item, index) in menuOptions" :key="index"
+        class="px-4 py-2 text-sm text-gray-500 leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+        @click="handleClick(item)" :class="{
+          'hover:cursor-not-allowed text-gray-500 hover:text-black': item != 'Random',
+          'bg-slate-300': item === selected
+        }">
+        {{ item }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup>
