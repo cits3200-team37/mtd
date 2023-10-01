@@ -13,11 +13,8 @@
           {{ selected }}
         </span>
       </div>
-      <div v-if="!isOpen" class="ml-auto">
-        <svg-icon type="mdi" size="20" :path="mdiArrowDown"></svg-icon>
-      </div>
-      <div v-else class="ml-auto">
-        <svg-icon type="mdi" size="20" :path="mdiArrowUp"></svg-icon>
+      <div class="ml-auto">
+        <svg-icon type="mdi" size="20" :path="mdiChevronDown" :class="{ 'rotate-180': isOpen }"></svg-icon>
       </div>
     </div>
   </div>
@@ -38,7 +35,7 @@
 <script setup>
 import { defineProps, defineEmits, ref, watch } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
+import { mdiChevronDown } from "@mdi/js";
 
 const props = defineProps({
   label: { type: String, default: "" },
@@ -68,4 +65,9 @@ const handleClick = (item) => {
   emit("update:modelValue", item);
 };
 </script>
-<style scoped></style>
+<style scoped>
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.2s ease-in-out;
+}
+</style>
