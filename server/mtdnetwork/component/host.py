@@ -1,3 +1,4 @@
+import logging
 import random
 import uuid
 import networkx as nx
@@ -682,7 +683,7 @@ class Host:
                     shortest_distance = path_len
                     shortest_path = path
             except Exception:
-                pass
+                logging.error("Failed to find shortest path from exposed endpoint")
 
         # This function is used for sorting so shouldn't raise an exception
         # some MTD cause this exception to be raised.

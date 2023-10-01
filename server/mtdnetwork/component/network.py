@@ -1,3 +1,4 @@
+import logging
 import networkx as nx
 import pkg_resources
 import matplotlib.pyplot as plt
@@ -637,7 +638,7 @@ class Network:
                     shortest_distance = path_len
                     shortest_path = path
             except Exception:
-                pass
+                logging.error("Failed to find shortest path from exposed endpoint")
 
         # This function is used when the attacker can't find a path to host
 
@@ -662,7 +663,7 @@ class Network:
                 if path_len < shortest_distance:
                     shortest_distance = path_len
             except Exception:
-                pass
+                logging.error("Failed to find shortest distance")
 
         return shortest_distance
 
