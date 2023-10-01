@@ -25,36 +25,36 @@ export const useSimulationStore = defineStore("simulation", {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
         scheme: this.parameters.scheme,
+      };
+      if (this.parameters.mtdInterval) {
+        reqBody.mtdInterval = Number(this.parameters.mtdInterval);
       }
-      if (this.parameters.mtdInterval){
-        reqBody.mtdInterval= Number(this.parameters.mtdInterval);
-      }
-      if (this.parameters.finishTime){
-        reqBody.finishTime= Number(this.parameters.finishTime);
+      if (this.parameters.finishTime) {
+        reqBody.finishTime = Number(this.parameters.finishTime);
       }
       if (this.parameters.totalNodes) {
         reqBody.totalNodes = Number(this.parameters.totalNodes);
       }
-      if (this.parameters.totalEndpoints){
-        reqBody.totalEndpoints= Number(this.parameters.totalEndpoints);
+      if (this.parameters.totalEndpoints) {
+        reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);
       }
-      if (this.parameters.totalSubnets){
-        reqBody.totalSubnets= Number(this.parameters.totalSubnets);
+      if (this.parameters.totalSubnets) {
+        reqBody.totalSubnets = Number(this.parameters.totalSubnets);
       }
-      if (this.parameters.totalDatabase){
-        reqBody.totalDatabase= Number(this.parameters.totalDatabase);
+      if (this.parameters.totalDatabase) {
+        reqBody.totalDatabase = Number(this.parameters.totalDatabase);
       }
       if (this.parameters.totalLayers) {
         reqBody.totalLayers = Number(this.parameters.totalLayers);
       }
-      if (this.parameters.targetLayer){
-        reqBody.targetLayer= Number(this.parameters.targetLayer);
+      if (this.parameters.targetLayer) {
+        reqBody.targetLayer = Number(this.parameters.targetLayer);
       }
-      if (this.parameters.seed){
+      if (this.parameters.seed) {
         reqBody.seed = hashCode(this.parameters.seed);
       }
 
-      console.log(reqBody)
+      console.log(reqBody);
 
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;

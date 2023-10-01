@@ -12,15 +12,15 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const graph = ref(true)
+const graph = ref(true);
 
 const Schemes = ref([
-    "None",
-    "random",
-    "single",
-    "simultaneous",
-    "alternative",
-  ])
+  "None",
+  "random",
+  "single",
+  "simultaneous",
+  "alternative",
+]);
 
 const showTooltip = ref(false);
 
@@ -55,9 +55,8 @@ onMounted(() => {
     // NOTE: could use pinia's storeToRefs, but i think using this
     // and copying objects will be easier for everyone to understand
     form.value = { ...simulationStore.parameters };
-  }
-  else{
-    graph.value = false
+  } else {
+    graph.value = false;
   }
 });
 
@@ -77,7 +76,7 @@ const errors = ref({
 
 const handleSubmit = async () => {
   // Reset errors
-  isValid.value = true
+  isValid.value = true;
   Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
   });
@@ -91,9 +90,8 @@ const handleSubmit = async () => {
   const totalDatabase = Number(form.value.totalDatabase);
   const targetLayer = Number(form.value.targetLayer);
 
-  if (!form.value.scheme ){
-    errors.value.scheme =
-      "Please pick a Scheme";
+  if (!form.value.scheme) {
+    errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
   }
 
@@ -101,7 +99,7 @@ const handleSubmit = async () => {
     if (isNaN(mtdInterval) || mtdInterval <= 0) {
       errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
       isValid.value = false;
-    } 
+    }
   }
 
   if (form.value.finishTime) {
@@ -110,7 +108,7 @@ const handleSubmit = async () => {
       isValid.value = false;
     }
   }
-  if (form.value.totalNodes){
+  if (form.value.totalNodes) {
     if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
       errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
       isValid.value = false;
@@ -130,15 +128,13 @@ const handleSubmit = async () => {
 
   if (form.value.totalSubnets) {
     if (isNaN(totalSubnets) || totalSubnets <= 4) {
-      errors.value.totalSubnets =
-        "Stable test limit: Total Subnents > 4";
+      errors.value.totalSubnets = "Stable test limit: Total Subnents > 4";
       isValid.value = false;
-    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2){
+    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2) {
       errors.value.totalSubnets =
         "Logical limit: (Total Nodes - Total Endpoints) / (Total Subnets - 1) > 2";
       isValid.value = false;
     }
-    
   }
 
   if (form.value.totalDatabase) {
@@ -155,24 +151,24 @@ const handleSubmit = async () => {
     }
   }
 
-  if (form.value.targetLayer) { 
+  if (form.value.targetLayer) {
     if (isNaN(targetLayer)) {
       errors.value.targetLayer = "Logical Limit: Target Layer > 0";
       isValid.value = false;
-    } else if (isNaN(totalLayers) || totalLayers < targetLayer){
+    } else if (isNaN(totalLayers) || totalLayers < targetLayer) {
       errors.value.targetLayer = "Logical Limit: Target Layer <= Total Layers";
-      if (errors.value.totalLayers == ""){
+      if (errors.value.totalLayers == "") {
         errors.value.totalLayers = "Required";
       }
       isValid.value = false;
     }
   }
-  console.log(form.value.totalNodes)
+  console.log(form.value.totalNodes);
   if (!isValid.value) {
     return;
   }
 
-  graph.value = true
+  graph.value = true;
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -501,27 +497,63 @@ const plotNetwork = (graphData) => {
       </div>
     </div>
 
-    <div class=" w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
-      <div v-if="graph"
-        id="network-graph"
-        class="flex-1 h-[calc(100vh)]"
-      ></div>
+    <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
+      <div v-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)]"></div>
       <div v-else class="flex-row">
-        <div id="sim_explanation" class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-navbar-primary scrollbar">
-          <div class=" h-full">
-          <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
+        <div
+          id="sim_explanation"
+          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-navbar-primary scrollbar"
+        >
+          <div class="h-full">
+            <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
 
-          <ul class="list-disc text-sm p-4">
-            <li class="mb-2">Scheme: the manor in which the simulation will employ MTD strategies</li>
-            <li class="mb-2">MTD Interval: the frequency of applying MTD strategies<br><span class="text-xs">Default: None</span></li>
-            <li class="mb-2">Finish Time: the maximum simulation duration<br><span class="text-xs">Default: None</span></li>
-            <li class="mb-2">Total Nodes: the number of nodes in the simulated network<br><span class="text-xs">Default: 50</span></li>
-            <li class="mb-2">Total Endpoints: the number of endpoints in the simulated network<br><span class="text-xs">Default: </span></li>
-            <li class="mb-2">Total Subnets: the number of sub-networks in the simulated network<br><span class="text-xs">Default: 8</span></li>
-            <li class="mb-2">Total Databases: the number of databases for the simulated network<br><span class="text-xs">Default: 2</span></li>
-            <li class="mb-2">Total Layers: the number of layers in the simulated network<br><span class="text-xs">Default: 4</span></li>
-            <li class="mb-2">Target Layer: the layer where the target host will be located<br><span class="text-xs"></span></li>
-          </ul>
+            <ul class="list-disc text-sm p-4">
+              <li class="mb-2">
+                Scheme: the manor in which the simulation will employ MTD
+                strategies
+              </li>
+              <li class="mb-2">
+                MTD Interval: the frequency of applying MTD strategies<br /><span
+                  class="text-xs"
+                  >Default: None</span
+                >
+              </li>
+              <li class="mb-2">
+                Finish Time: the maximum simulation duration<br /><span
+                  class="text-xs"
+                  >Default: None</span
+                >
+              </li>
+              <li class="mb-2">
+                Total Nodes: the number of nodes in the simulated network<br /><span
+                  class="text-xs"
+                  >Default: 50</span
+                >
+              </li>
+              <li class="mb-2">
+                Total Endpoints: the number of endpoints in the simulated
+                network<br /><span class="text-xs">Default: </span>
+              </li>
+              <li class="mb-2">
+                Total Subnets: the number of sub-networks in the simulated
+                network<br /><span class="text-xs">Default: 8</span>
+              </li>
+              <li class="mb-2">
+                Total Databases: the number of databases for the simulated
+                network<br /><span class="text-xs">Default: 2</span>
+              </li>
+              <li class="mb-2">
+                Total Layers: the number of layers in the simulated network<br /><span
+                  class="text-xs"
+                  >Default: 4</span
+                >
+              </li>
+              <li class="mb-2">
+                Target Layer: the layer where the target host will be located<br /><span
+                  class="text-xs"
+                ></span>
+              </li>
+            </ul>
           </div>
         </div>
         <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">

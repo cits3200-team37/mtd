@@ -31,7 +31,7 @@
     --complementary-color: 183 230 240;
   }
 
-  .scrollbar{
+  .scrollbar {
     scrollbar-width: thin;
   }
 
@@ -40,11 +40,11 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: rgb(var(--background-secondary)); 
+    background: rgb(var(--background-secondary));
   }
 
   ::-webkit-scrollbar-thumb {
-    background: rgb(var(--complementary-color)); 
+    background: rgb(var(--complementary-color));
     border-radius: 5px;
   }
 }
