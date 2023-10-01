@@ -1,9 +1,10 @@
-from mtdnetwork.mtd import MTD
+'''Module to diversify operating systems in network'''
 import random
+from mtdnetwork.mtd import MTD
 from mtdnetwork.data import constants
 
-
 class OSDiversity(MTD):
+    '''Subclass to diversify operating systems in network'''
     def __init__(self, network=None):
         super().__init__(
             name="OSDiversity",

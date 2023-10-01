@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
+import Scenario from "../components/Scenario.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -11,7 +12,6 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const isOpen = ref(true);
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
@@ -36,7 +36,6 @@ const defaultForm = ref({
   totalSubnets: "",
   totalDatabase: "",
   targetLayer: "",
-  terminateCompromiseRatio: "",
   seed: "",
 });
 
@@ -59,7 +58,15 @@ const errors = ref({
   mtdInterval: "",
   scheme: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  seed: "",
 });
+
+const showScenario = ref(true);
 
 const handleSubmit = async () => {
   // Reset errors
@@ -67,32 +74,43 @@ const handleSubmit = async () => {
     errors.value[key] = "";
   });
 
-  if (
-    !form.value.startTime ||
-    isNaN(form.value.startTime) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.startTime = "Start Time must be a non-negative number";
-    isValid.value = false;
+  const startTime = Number(form.value.startTime);
+  const finishTime = Number(form.value.finishTime);
+  const mtdInterval = Number(form.value.mtdInterval);
+  const totalNodes = Number(form.value.totalNodes);
+  const totalLayers = Number(form.value.totalLayers);
+  const totalEndpoints = Number(form.value.totalEndpoints);
+  const totalSubnets = Number(form.value.totalSubnets);
+  const totalDatabase = Number(form.value.totalDatabase);
+  const targetLayer = Number(form.value.targetLayer);
+  const seed = Number(form.value.seed);
+
+  if (form.value.startTime) {
+    if (isNaN(startTime) || startTime < 0) {
+      errors.value.startTime = "Stable test limit: startTime >= 0";
+      isValid.value = false;
+    } else if (finishTime < startTime) {
+      errors.value.startTime = "Logical limit: startTime <= finishTime";
+      isValid.value = false;
+    }
   }
 
-  if (
-    !form.value.finishTime ||
-    isNaN(form.value.finishTime) ||
-    form.value.finishTime <= form.value.startTime
-  ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
-    isValid.value = false;
+  if (form.value.finishTime) {
+    if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
+      errors.value.finishTime = "Stable test limit: 10 <= finishTime <= 5000";
+      isValid.value = false;
+    }
   }
 
-  if (
-    !form.value.mtdInterval ||
-    isNaN(form.value.mtdInterval) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
-    isValid.value = false;
+  if (form.value.mtdInterval) {
+    if (isNaN(mtdInterval) || mtdInterval <= 0) {
+      errors.value.mtdInterval = "Stable test limit: mtdInterval > 0";
+      isValid.value = false;
+    } else if (mtdInterval > finishTime - startTime) {
+      errors.value.mtdInterval =
+        "Logical limit: mtdInterval <= finishTime - startTime";
+      isValid.value = false;
+    }
   }
 
   const validSchemes = [
@@ -100,28 +118,78 @@ const handleSubmit = async () => {
     "simultaneous",
     "alternative",
     "single",
-    "None",
+    "none",
   ];
   if (
     !form.value.scheme ||
     !validSchemes.includes(form.value.scheme.toLowerCase())
   ) {
     errors.value.scheme =
-      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+      "Invalid scheme. Choose between Random, Simultaneous, Alternative, Single, or None";
     isValid.value = false;
   }
 
-  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
-    errors.value.totalNodes = "Total Nodes must be a number";
+  if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
+    errors.value.totalNodes = "Stable test limit: 20 <= totalNodes <= 1000";
     isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
-    isValid.value = false;
+  }
+
+  if (form.value.totalLayers) {
+    if (isNaN(totalLayers) || totalLayers <= 0 || totalLayers > 12) {
+      errors.value.totalLayers = "Stable test limit: 0 < totalLayers <= 12";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalEndpoints) {
+    if (isNaN(totalEndpoints) || totalEndpoints <= 0) {
+      errors.value.totalEndpoints = "Stable test limit: totalEndpoints > 0";
+      isValid.value = false;
+    } else if (totalEndpoints >= totalNodes) {
+      errors.value.totalEndpoints =
+        "Stable test limit: totalEndpoints < totalNodes";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalSubnets) {
+    if (
+      isNaN(totalSubnets) ||
+      (totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2
+    ) {
+      errors.value.totalSubnets =
+        "Logical limit: (totalNodes - totalEndpoints) / (totalSubnets - 1) > 2";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalDatabase) {
+    if (isNaN(totalDatabase)) {
+      errors.value.totalDatabase = "Total Database must be a number";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.targetLayer) {
+    if (isNaN(targetLayer)) {
+      errors.value.targetLayer = "Target Layer must be a number";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.seed) {
+    if (isNaN(seed)) {
+      errors.value.seed = "Seed must be a number";
+      isValid.value = false;
+    }
   }
 
   if (!isValid.value) {
     return;
   }
+
+  showScenario.value = false;
+
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
@@ -135,6 +203,12 @@ const resetSimulation = () => {
   resetGraph();
 
   simulationStore.reset();
+};
+
+const applyPredefinedScenario = (values) => {
+  for (let key in values) {
+    form.value[key] = values[key];
+  }
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -285,7 +359,7 @@ const plotNetwork = (graphData) => {
 
 <template>
   <div class="flex flex-row">
-    <div v-if="isOpen">
+    <div>
       <div
         class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
       >
@@ -324,7 +398,7 @@ const plotNetwork = (graphData) => {
               Reset
             </button>
             <form
-              class="flex flex-col space-y-2"
+              class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
               <div>
@@ -377,6 +451,7 @@ const plotNetwork = (graphData) => {
                   label="Total Layers"
                   placeholder="Total Layers"
                   type="text"
+                  :error="errors.totalLayers"
                 />
               </div>
               <div>
@@ -385,6 +460,7 @@ const plotNetwork = (graphData) => {
                   label="Total Endpoints"
                   placeholder="Total Endpoints"
                   type="text"
+                  :error="errors.totalEndpoints"
                 />
               </div>
               <div>
@@ -393,6 +469,7 @@ const plotNetwork = (graphData) => {
                   label="Total Subnets"
                   placeholder="Total Subnets"
                   type="text"
+                  :error="errors.totalSubnets"
                 />
               </div>
               <div>
@@ -401,6 +478,7 @@ const plotNetwork = (graphData) => {
                   label="Total Databases"
                   placeholder="Total Databases"
                   type="text"
+                  :error="errors.totalDatabase"
                 />
               </div>
               <div>
@@ -409,14 +487,7 @@ const plotNetwork = (graphData) => {
                   label="Target Layer"
                   placeholder="Target Layer"
                   type="text"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.terminateCompromiseRatio"
-                  label="Compromise Ratio"
-                  placeholder="Compromise Ratio"
-                  type="text"
+                  :error="errors.targetLayer"
                 />
               </div>
               <div>
@@ -425,6 +496,7 @@ const plotNetwork = (graphData) => {
                   label="Set Seed"
                   placeholder="Set Seed"
                   type="text"
+                  :error="errors.seed"
                 />
               </div>
               <div class="text-center">
@@ -468,21 +540,66 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
-      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
-        <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
-          </button>
-        </div>
-        <div v-else>
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
-          </button>
-        </div>
+
+    <div class="flex-1 flex flex-col mr-2 h-[calc(100vh-36px)]">
+      <div
+        id="network-graph"
+        class="flex-1 mr-2 h-[calc(100vh-36px - (showScenario ? 56px : 0px))]"
+      ></div>
+
+      <div
+        v-if="showScenario"
+        class="w-full p-4 grid grid-cols-2 gap-3 max-h-52"
+      >
+        <Scenario
+          :scenarioTitle="'Scenario 1'"
+          :scenarioDescription="'Random Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '1000',
+            mtdInterval: '200',
+            scheme: 'random',
+            totalNodes: '20',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 2'"
+          :scenarioDescription="'Simultaneous Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'simultaneous',
+            totalNodes: '50',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 3'"
+          :scenarioDescription="'Alternative Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '300',
+            mtdInterval: '50',
+            scheme: 'alternative',
+            totalNodes: '100',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 4'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '400',
+            mtdInterval: '150',
+            scheme: 'none',
+            totalNodes: '70',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip
