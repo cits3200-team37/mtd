@@ -193,7 +193,7 @@ const handleSubmit = async () => {
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 const colorByCompromised = () => {
-  activeGraphOption.value = 'compromised';
+  activeGraphOption.value = "compromised";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -206,7 +206,7 @@ const zoom = d3.zoom().on("zoom", function () {
 });
 
 const resetZoom = () => {
-  activeGraphOption.value = 'resetZoom';
+  activeGraphOption.value = "resetZoom";
   d3.select("#network-zoom-area")
     .transition()
     .duration(750)
@@ -214,7 +214,7 @@ const resetZoom = () => {
 };
 
 const colorByLayer = () => {
-  activeGraphOption.value = 'layer';
+  activeGraphOption.value = "layer";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -223,7 +223,7 @@ const colorByLayer = () => {
 };
 
 const colorBySubnet = () => {
-  activeGraphOption.value = 'subnet';
+  activeGraphOption.value = "subnet";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -492,28 +492,28 @@ const plotNetwork = (graphData) => {
             <button
               @click="colorByLayer"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{'bg-teal-500': activeGraphOption === 'layer'}"
+              :class="{ 'bg-teal-500': activeGraphOption === 'layer' }"
             >
               Color By Layer
             </button>
             <button
               @click="colorBySubnet"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{'bg-teal-500': activeGraphOption === 'subnet'}"
+              :class="{ 'bg-teal-500': activeGraphOption === 'subnet' }"
             >
               Color By Subnet
             </button>
             <button
               @click="colorByCompromised"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{'bg-teal-500': activeGraphOption === 'compromised'}"
+              :class="{ 'bg-teal-500': activeGraphOption === 'compromised' }"
             >
               Color by Compromised
             </button>
             <button
               @click="resetZoom"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{'bg-teal-500': activeGraphOption === 'resetZoom'}"
+              :class="{ 'bg-teal-500': activeGraphOption === 'resetZoom' }"
             >
               Reset Zoom
             </button>
