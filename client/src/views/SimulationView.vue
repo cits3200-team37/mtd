@@ -16,6 +16,7 @@ const showTooltip = ref(false);
 const isInputView = ref(true);
 
 const activeGraphOption = ref("");
+const isResetZoomActive = ref(false);
 
 const currentHost = ref({
   ip: "",
@@ -206,7 +207,13 @@ const zoom = d3.zoom().on("zoom", function () {
 });
 
 const resetZoom = () => {
-  activeGraphOption.value = "resetZoom";
+  isResetZoomActive.value = true;
+
+  // Reset the color after 750ms
+  setTimeout(() => {
+    isResetZoomActive.value = false;
+  }, 750);
+
   d3.select("#network-zoom-area")
     .transition()
     .duration(750)
@@ -513,7 +520,7 @@ const plotNetwork = (graphData) => {
             <button
               @click="resetZoom"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{ 'bg-teal-500': activeGraphOption === 'resetZoom' }"
+              :class="{ 'bg-teal-500': isResetZoomActive }"
             >
               Reset Zoom
             </button>
