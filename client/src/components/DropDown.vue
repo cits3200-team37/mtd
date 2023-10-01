@@ -20,7 +20,7 @@
           type="mdi"
           size="20"
           :path="mdiChevronDown"
-          :class="{ 'rotate-180': isOpen ,'rotate-0':!isOpen}"
+          :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
         ></svg-icon>
       </div>
     </div>
@@ -81,7 +81,6 @@ const handleClick = (item) => {
 };
 </script>
 <style scoped>
-
 .rotate-180 {
   transform: rotate(180deg);
   transition: transform 0.25s ease-in-out;
@@ -91,5 +90,4 @@ const handleClick = (item) => {
   transform: rotate(0deg);
   transition: transform 0.25s ease-in-out;
 }
-
 </style>
