@@ -20,7 +20,7 @@
           type="mdi"
           size="20"
           :path="mdiChevronDown"
-          :class="{ 'rotate-180': isOpen }"
+          :class="{ 'rotate-180': isOpen ,'rotate-0':!isOpen}"
         ></svg-icon>
       </div>
     </div>
@@ -33,7 +33,7 @@
       <li
         v-for="(item, index) in menuOptions"
         :key="index"
-        class="px-4 py-2 text-sm text-gray-500 leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+        class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
         @click="handleClick(item)"
         :class="{
           'hover:cursor-not-allowed text-gray-500 hover:text-black':
@@ -81,8 +81,15 @@ const handleClick = (item) => {
 };
 </script>
 <style scoped>
+
 .rotate-180 {
   transform: rotate(180deg);
-  transition: transform 0.2s ease-in-out;
+  transition: transform 0.25s ease-in-out;
 }
+
+.rotate-0 {
+  transform: rotate(0deg);
+  transition: transform 0.25s ease-in-out;
+}
+
 </style>
