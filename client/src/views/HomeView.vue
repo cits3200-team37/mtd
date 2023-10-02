@@ -27,7 +27,7 @@
         </a>
 
         <a
-          :href="DOCUMENTATION_URL"
+          href="https://cits3200-team37.github.io/mtd/"
           target="_blank"
           class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
