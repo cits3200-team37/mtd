@@ -10,6 +10,7 @@ export default {
         "background-color": 'rgb(var(--background-color))',
         "background-secondary": 'rgb(var(--background-secondary))',
         "simulation-color": `rgb(var(--simulation-color))`,
+        'hover-theme': `rgb(var(--hover-bg-color))`,
       },
       colors: {
         "navbar-primary": `rgb(var(--navbar-color))`,
