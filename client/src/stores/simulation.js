@@ -40,5 +40,11 @@ export const useSimulationStore = defineStore("simulation", {
       this.mtdRecord = mtd_record;
       // TODO: set other response variables related to the data object from the api call
     },
+    reset() {
+      this.parameters = null;
+      this.network = null;
+      this.attackRecord = null;
+      this.mtdRecord = null;
+    },
   },
 });

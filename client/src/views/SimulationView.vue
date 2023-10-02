@@ -25,7 +25,7 @@ const currentHost = ref({
   compromised: false,
 });
 
-const form = ref({
+const defaultForm = ref({
   startTime: "",
   finishTime: "",
   mtdInterval: "",
@@ -38,6 +38,8 @@ const form = ref({
   targetLayer: "",
   seed: "",
 });
+
+const form = ref({ ...defaultForm.value });
 
 onMounted(() => {
   // load past state of network and form
@@ -192,6 +194,15 @@ const handleSubmit = async () => {
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const resetSimulation = () => {
+  // Reset the form values
+  form.value = { ...defaultForm.value };
+
+  resetGraph();
+
+  simulationStore.reset();
 };
 
 const applyPredefinedScenario = (values) => {
@@ -380,6 +391,12 @@ const plotNetwork = (graphData) => {
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <button
+              @click="resetSimulation"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Reset
+            </button>
             <form
               class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
