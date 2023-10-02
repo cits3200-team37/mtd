@@ -1,5 +1,6 @@
-from mtdnetwork.mtd import MTD
+'''Module to swap hosts within a network by altering positions of host within network structure'''
 import random
+from mtdnetwork.mtd import MTD
 
 
 class HostTopologyShuffle(MTD):
@@ -16,12 +17,14 @@ class HostTopologyShuffle(MTD):
         )
 
     def random_different_host_id(self, curr_host_id, hosts_list):
+        '''Method provides a randomly chosen host ID'''
         other_host_id = random.choice(hosts_list)
         if other_host_id == curr_host_id:
             return self.random_different_host_id(curr_host_id, hosts_list)
         return other_host_id
 
     def mtd_operation(self, adversary=None):
+        '''Method conducts the host shuffle network'''
         hosts = self.network.get_hosts()
         layer_dict = self.network.get_layers()
         cur_layer = -1

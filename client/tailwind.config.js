@@ -10,6 +10,10 @@ export default {
         "background-color": 'rgb(var(--background-color))',
         "background-secondary": 'rgb(var(--background-secondary))',
         "simulation-color": `rgb(var(--simulation-color))`,
+        'hover-theme': `rgb(var(--hover-bg-color))`,
+        "scrollbar-track": 'rgb(var(--scrollbar-track-color))',
+        "scrollbar-thumb": 'rgb(var(--scrollbar-thumb-color))',
+        "scrollbar-thumb-hover": 'rgb(var(--scrollbar-thumb-hover-color))',
       },
       colors: {
         "navbar-primary": `rgb(var(--navbar-color))`,

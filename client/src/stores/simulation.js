@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
@@ -20,9 +21,6 @@ export const useSimulationStore = defineStore("simulation", {
         totalSubnets: Number(this.parameters.totalSubnets),
         totalDatabase: Number(this.parameters.totalDatabase),
         targetLayer: Number(this.parameters.targetLayer),
-        terminateCompromiseRatio: parseFloat(
-          this.parameters.terminateCompromiseRatio,
-        ),
         seed: Number(this.parameters.seed),
       };
       if (this.parameters.startTime) {
@@ -35,10 +33,7 @@ export const useSimulationStore = defineStore("simulation", {
         reqBody.mtdInterval = Number(this.parameters.mtdInterval);
       }
 
-      const { data } = await axios.post(
-        "http://localhost:8001/simulate",
-        reqBody,
-      );
+      const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
       this.network = network;
       this.attackRecord = attack_record;

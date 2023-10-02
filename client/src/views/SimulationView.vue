@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
+import Scenario from "../components/Scenario.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -35,7 +36,6 @@ const form = ref({
   totalSubnets: "",
   totalDatabase: "",
   targetLayer: "",
-  terminateCompromiseRatio: "",
   seed: "",
 });
 
@@ -61,9 +61,10 @@ const errors = ref({
   totalSubnets: "",
   totalDatabase: "",
   targetLayer: "",
-  terminateCompromiseRatio: "",
   seed: "",
 });
+
+const showScenario = ref(true);
 
 const handleSubmit = async () => {
   // Reset errors
@@ -80,7 +81,6 @@ const handleSubmit = async () => {
   const totalSubnets = Number(form.value.totalSubnets);
   const totalDatabase = Number(form.value.totalDatabase);
   const targetLayer = Number(form.value.targetLayer);
-  const terminateCompromiseRatio = Number(form.value.terminateCompromiseRatio);
   const seed = Number(form.value.seed);
 
   if (form.value.startTime) {
@@ -175,18 +175,6 @@ const handleSubmit = async () => {
     }
   }
 
-  if (form.value.terminateCompromiseRatio) {
-    if (
-      isNaN(terminateCompromiseRatio) ||
-      terminateCompromiseRatio <= 0.0 ||
-      terminateCompromiseRatio > 1.0
-    ) {
-      errors.value.terminateCompromiseRatio =
-        "Logical limit: 0.0 < terminateCompromiseRatio <= 1.0";
-      isValid.value = false;
-    }
-  }
-
   if (form.value.seed) {
     if (isNaN(seed)) {
       errors.value.seed = "Seed must be a number";
@@ -197,10 +185,19 @@ const handleSubmit = async () => {
   if (!isValid.value) {
     return;
   }
+
+  showScenario.value = false;
+
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const applyPredefinedScenario = (values) => {
+  for (let key in values) {
+    form.value[key] = values[key];
+  }
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -384,7 +381,7 @@ const plotNetwork = (graphData) => {
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
             <form
-              class="flex flex-col space-y-2"
+              class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
               <div>
@@ -478,15 +475,6 @@ const plotNetwork = (graphData) => {
               </div>
               <div>
                 <FormField
-                  v-model="form.terminateCompromiseRatio"
-                  label="Compromise Ratio"
-                  placeholder="Compromise Ratio"
-                  type="text"
-                  :error="errors.terminateCompromiseRatio"
-                />
-              </div>
-              <div>
-                <FormField
                   v-model="form.seed"
                   label="Set Seed"
                   placeholder="Set Seed"
@@ -535,7 +523,66 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
+
+    <div class="flex-1 flex flex-col mr-2 h-[calc(100vh-36px)]">
+      <div
+        id="network-graph"
+        class="flex-1 mr-2 h-[calc(100vh-36px - (showScenario ? 56px : 0px))]"
+      ></div>
+
+      <div
+        v-if="showScenario"
+        class="w-full p-4 grid grid-cols-2 gap-3 max-h-52"
+      >
+        <Scenario
+          :scenarioTitle="'Scenario 1'"
+          :scenarioDescription="'Random Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '1000',
+            mtdInterval: '200',
+            scheme: 'random',
+            totalNodes: '20',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 2'"
+          :scenarioDescription="'Simultaneous Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'simultaneous',
+            totalNodes: '50',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 3'"
+          :scenarioDescription="'Alternative Scheme'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '300',
+            mtdInterval: '50',
+            scheme: 'alternative',
+            totalNodes: '100',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+        <Scenario
+          :scenarioTitle="'Scenario 4'"
+          :scenarioValues="{
+            startTime: '0',
+            finishTime: '400',
+            mtdInterval: '150',
+            scheme: 'none',
+            totalNodes: '70',
+          }"
+          @apply-scenario="applyPredefinedScenario"
+        />
+      </div>
+    </div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip

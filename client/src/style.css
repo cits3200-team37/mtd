@@ -6,7 +6,9 @@
   :root {
     --text-color: 255 255 255;
     --background-color: 49 51 56;
+    --background-secondary: 64 61 57;
     --navbar-color: 31 31 31;
+    --simulation-color: 43 43 43;
     --navbar-icon-color: 164 164 164;
   }
 
@@ -14,16 +16,42 @@
     --text-color: 255 255 255;
     --background-color: 49 51 56;
     --background-secondary: 64 61 57;
+    --hover-bg-color: 55, 65, 81;
     --simulation-color: 43 43 43;
     --navbar-icon-color: 164 164 164;
+    --scrollbar-track-color: 55, 58, 62;
+    --scrollbar-thumb-color: 31 31 31;
+    --scrollbar-thumb-hover-color: 65, 68, 72;
   }
 
   .theme-light {
     --text-color: 0 0 0;
     --background-color: 255 255 255;
     --background-secondary: 237 237 237;
+    --hover-bg-color: 214 231 236;
     --navbar-color: 183 209 218;
     --simulation-color: 245 245 245;
     --navbar-icon-color: 49 47 47;
+    --scrollbar-track-color: 235, 235, 235;
+    --scrollbar-thumb-color: 214 231 236;
+    --scrollbar-thumb-hover-color: 183, 209, 218;
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(var(--scrollbar-track-color));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--scrollbar-thumb-color));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--scrollbar-thumb-hover-color));
 }
