@@ -44,19 +44,6 @@
   }
 
   ::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: rgb(var(--background-secondary));
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgb(var(--complementary-color));
-    border-radius: 5px;
-  }
-
-  ::-webkit-scrollbar {
     width: 10px;
   }
 

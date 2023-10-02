@@ -182,6 +182,7 @@ const resetSimulation = () => {
   // Reset the form values
   form.value = { ...defaultForm.value };
 
+  graph.value = false;
   resetGraph();
 
   simulationStore.reset();
@@ -550,7 +551,7 @@ const plotNetwork = (graphData) => {
               </li>
               <li class="mb-2">
                 Total Endpoints: the number of endpoints in the simulated
-                network<br /><span class="text-xs">Default: </span>
+                network<br /><span class="text-xs">Default: 5</span>
               </li>
               <li class="mb-2">
                 Total Subnets: the number of sub-networks in the simulated
