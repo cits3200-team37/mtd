@@ -1,32 +1,34 @@
+'''Module defines utility functions for graphs'''
+from itertools import chain, combinations
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
-from itertools import chain, combinations
-
 
 def powerset(iterable):
     "powerset([1,2,3]) --> () (1,) (2,) (3,) (1,2) (1,3) (2,3) (1,2,3)"
-    s = list(iterable)
-    return chain.from_iterable(combinations(s, r) for r in range(len(s) + 1))
+    set_instance = list(iterable)
+    return chain.from_iterable(combinations(set_instance, r) for r in range(len(set_instance) + 1))
 
 
 def remove_element(element, target_list):
+    '''Method returns list with element removed'''
     target_list.remove(element)
     return target_list
 
 
-def degrees(G):
+def degrees(graph):
     """List of degrees for nodes in `G`.
 
     G: Graph object
 
     returns: list of int
     """
-    return [G.degree(u) for u in G]
+    return [graph.degree(u) for u in graph]
 
 
 def all_pairs(nodes):
     """Generates all pairs of nodes."""
+    # pylint: disable=invalid-name
     for i, u in enumerate(nodes):
         for j, v in enumerate(nodes):
             if i < j:
@@ -34,6 +36,8 @@ def all_pairs(nodes):
 
 
 def node_clustering(G, u):
+    '''Method calculates clustering statistic'''
+    # pylint: disable=invalid-name
     neighbors = G[u]
     k = len(neighbors)
     if k < 2:
@@ -43,27 +47,29 @@ def node_clustering(G, u):
     return np.mean(edges)
 
 
-def clustering_coefficient(G):
+def clustering_coefficient(graph):
     """Average of the local clustering coefficients.
 
     G: Graph
 
     returns: float
     """
-    cu = [node_clustering(G, node) for node in G]
-    return np.nanmean(cu)
+    cluster = [node_clustering(graph, node) for node in graph]
+    return np.nanmean(cluster)
 
 
-def path_lengths(G):
-    length_iter = nx.shortest_path_length(G)
+def path_lengths(graph):
+    '''Method computes shortest parth length in graph'''
+    length_iter = nx.shortest_path_length(graph)
     for source, dist_map in length_iter:
         for dest, dist in dist_map.items():
             if source != dest:
                 yield dist
 
 
-def characteristic_path_length(G):
-    return np.mean(list(path_lengths(G)))
+def characteristic_path_length(graph):
+    '''Method returns average path lengths'''
+    return np.mean(list(path_lengths(graph)))
 
 
 def savefig(filename, **options):
@@ -79,16 +85,16 @@ def savefig(filename, **options):
     plt.savefig(filename, **options)
 
 
-def underride(d, **options):
+def underride(dic, **options):
     """Add key-value pairs to d only if key is not in d.
 
     d: dictionary
     options: keyword args to add to d
     """
     for key, val in options.items():
-        d.setdefault(key, val)
+        dic.setdefault(key, val)
 
-    return d
+    return dic
 
 
 def legend(**options):
@@ -100,10 +106,10 @@ def legend(**options):
     """
     underride(options, loc="best", frameon=False)
 
-    ax = plt.gca()
-    handles, labels = ax.get_legend_handles_labels()
+    axes = plt.gca()
+    handles, labels = axes.get_legend_handles_labels()
     if handles:
-        ax.legend(handles, labels, **options)
+        axes.legend(handles, labels, **options)
 
 
 def decorate(**options):
