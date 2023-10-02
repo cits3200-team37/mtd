@@ -3,16 +3,6 @@ import axios from "axios";
 // const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 const BACKEND_URL = "http://localhost:8001";
 
-const hashCode = (str) => {
-  let hash = 0;
-  if (str.length === 0) return hash;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-  }
-  return hash;
-};
-
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
     parameters: null,
@@ -51,7 +41,7 @@ export const useSimulationStore = defineStore("simulation", {
         reqBody.targetLayer = Number(this.parameters.targetLayer);
       }
       if (this.parameters.seed) {
-        reqBody.seed = hashCode(this.parameters.seed);
+        reqBody.seed = parseInt(this.parameters.seed);
       }
 
       console.log(reqBody);
