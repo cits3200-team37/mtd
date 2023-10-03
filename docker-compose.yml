@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: mtd_nginx
+    ports:
+      - 1337:80
+    depends_on:
+      - api
+  api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mtd_api
+    expose:
+      - 8001
