@@ -4,6 +4,7 @@ import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
 import Scenario from "../components/Scenario.vue";
+import StrategyDropDown from "../components/StrategyDropDown.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -15,6 +16,26 @@ const simulationStore = useSimulationStore();
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
+
+const Schemes = ref([
+  "None",
+  "random",
+  "single",
+  "simultaneous",
+  "alternative",
+]);
+
+const availableStrategies = ref([
+  "CompleteTopologyShuffle",
+  "IPShuffle",
+  "OSDiversity",
+  "ServiceDiversity",
+]);
+
+const selectedStrategies = ref([]);
+const firstSelectedStrategy = ref("");
+const secondSelectedStrategy = ref("");
+const thirdSelectedStrategy = ref("");
 
 const currentHost = ref({
   ip: "",
@@ -68,6 +89,7 @@ const showScenario = ref(true);
 
 const handleSubmit = async () => {
   // Reset errors
+  isValid.value = true;
   Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
   });
@@ -197,6 +219,18 @@ const handleSubmit = async () => {
 const applyPredefinedScenario = (values) => {
   for (let key in values) {
     form.value[key] = values[key];
+  }
+};
+
+const updateStrategies = (scheme) => {
+  if (scheme === "random" || scheme === "single") {
+    selectedStrategies.value = [undefined];
+  } else if (scheme === "alternative") {
+    selectedStrategies.value = [undefined, undefined];
+  } else if (scheme === "simultaneous") {
+    selectedStrategies.value = [undefined, undefined, undefined];
+  } else {
+    selectedStrategies.value = [];
   }
 };
 
@@ -413,9 +447,19 @@ const plotNetwork = (graphData) => {
               </div>
               <div>
                 <DropDown
+                  placeholder="Select Scheme"
                   v-model="form.scheme"
                   label="Scheme"
+                  :menu-options="Schemes"
                   :error="errors.scheme"
+                  @update:modelValue="updateStrategies"
+                />
+              </div>
+              <div>
+                <StrategyDropDown
+                  v-model="selectedStrategies"
+                  :scheme="form.scheme"
+                  :available-strategies="availableStrategies"
                 />
               </div>
               <div>

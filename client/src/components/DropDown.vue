@@ -23,6 +23,7 @@
       </div>
     </div>
   </div>
+  <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
   <div
     v-if="isOpen"
     class="z-10 rounded-md bg-white shadow-md w-full transition overflow-hidden"
@@ -49,11 +50,11 @@ import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
 
 const props = defineProps({
   label: { type: String, default: "" },
-  placeholder: { type: String, default: "Select Scheme" },
-  selected: { type: String, default: "Random" },
+  placeholder: { type: String, default: "" },
+  selected: { type: String, default: "" },
   menuOptions: {
     type: Array,
-    default: () => ["Random", "Simultaneous", "Alternative", "Single", "None"],
+    default: () => [],
   },
   modelValue: { type: String, default: "" },
   error: { type: String, default: "" },

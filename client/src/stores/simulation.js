@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = "http://localhost:8001";
 
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
@@ -13,25 +13,37 @@ export const useSimulationStore = defineStore("simulation", {
     async simulate(simulateFormValues) {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
-        networkSizeList: Number(this.parameters.networkSizeList),
-        scheme: this.parameters.scheme.toLowerCase(),
-        totalNodes: Number(this.parameters.totalNodes),
-        totalLayers: Number(this.parameters.totalLayers),
-        totalEndpoints: Number(this.parameters.totalEndpoints),
-        totalSubnets: Number(this.parameters.totalSubnets),
-        totalDatabase: Number(this.parameters.totalDatabase),
-        targetLayer: Number(this.parameters.targetLayer),
-        seed: Number(this.parameters.seed),
+        scheme: this.parameters.scheme,
       };
-      if (this.parameters.startTime) {
-        reqBody.startTime = Number(this.parameters.startTime);
+      if (this.parameters.mtdInterval) {
+        reqBody.mtdInterval = Number(this.parameters.mtdInterval);
       }
       if (this.parameters.finishTime) {
         reqBody.finishTime = Number(this.parameters.finishTime);
       }
-      if (this.parameters.mtdInterval) {
-        reqBody.mtdInterval = Number(this.parameters.mtdInterval);
+      if (this.parameters.totalNodes) {
+        reqBody.totalNodes = Number(this.parameters.totalNodes);
       }
+      if (this.parameters.totalEndpoints) {
+        reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);
+      }
+      if (this.parameters.totalSubnets) {
+        reqBody.totalSubnets = Number(this.parameters.totalSubnets);
+      }
+      if (this.parameters.totalDatabase) {
+        reqBody.totalDatabase = Number(this.parameters.totalDatabase);
+      }
+      if (this.parameters.totalLayers) {
+        reqBody.totalLayers = Number(this.parameters.totalLayers);
+      }
+      if (this.parameters.targetLayer) {
+        reqBody.targetLayer = Number(this.parameters.targetLayer);
+      }
+      if (this.parameters.seed) {
+        reqBody.seed = parseInt(this.parameters.seed);
+      }
+
+      console.log(reqBody);
 
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
@@ -39,6 +51,12 @@ export const useSimulationStore = defineStore("simulation", {
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
       // TODO: set other response variables related to the data object from the api call
+    },
+    reset() {
+      this.parameters = null;
+      this.network = null;
+      this.attackRecord = null;
+      this.mtdRecord = null;
     },
   },
 });
