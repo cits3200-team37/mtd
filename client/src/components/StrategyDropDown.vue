@@ -1,49 +1,13 @@
 <template>
   <div>
-    <div v-if="scheme === 'random' || scheme === 'single'">
-      <DropDown
-        placeholder="Select Strategy"
-        v-model="Strategies[0]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-    </div>
-
-    <div v-if="scheme === 'alternative'">
-      <DropDown
-        placeholder="Select Strategy 1"
-        v-model="Strategies[0]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-      <DropDown
-        placeholder="Select Strategy 2"
-        v-model="Strategies[1]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-    </div>
-
-    <div v-if="scheme === 'simultaneous'">
-      <DropDown
-        placeholder="Select Strategy 1"
-        v-model="Strategies[0]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-      <DropDown
-        placeholder="Select Strategy 2"
-        v-model="Strategies[1]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-      <DropDown
-        placeholder="Select Strategy 3"
-        v-model="Strategies[2]"
-        label="Strategy"
-        :menu-options="availableStrategies"
-      />
-    </div>
+    <DropDown
+      placeholder="Select Strategy"
+      v-model="Strategies"
+      label="Strategy"
+      :menu-options="availableStrategies"
+      :multi-select="true"
+      :max-selection="maxSelection()"
+    />
   </div>
 </template>
 
@@ -74,4 +38,18 @@ watch(
   () => props.modelValue,
   (val) => (Strategies.value = val),
 );
+
+const maxSelection = () => {
+  if (props.scheme == "None") {
+    return 0;
+  } else if (props.scheme == "random" || props.scheme == "single") {
+    return 1;
+  } else if (props.scheme == "alternative") {
+    return 2;
+  } else if (props.scheme == "simultaneous") {
+    return 4;
+  } else {
+    return 9;
+  }
+};
 </script>

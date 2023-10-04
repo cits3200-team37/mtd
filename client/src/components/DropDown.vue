@@ -5,14 +5,14 @@
     :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
   >
     <div class="flex items-center" @click="isOpen = !isOpen">
-      <div v-if="!selected">
+      <div v-if="selectedItems.length === 0">
         <span class="text-gray-400">
           {{ placeholder }}
         </span>
       </div>
       <div v-else>
-        <span class="">
-          {{ selected }}
+        <span>
+          {{ selectedItems.join(", ") }}
         </span>
       </div>
       <div v-if="!isOpen" class="ml-auto">
@@ -34,7 +34,10 @@
         :key="index"
         class="px-4 py-2 text-sm text-black leading-5 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
         @click="handleClick(item)"
-        :class="{ 'hover:cursor-not-allowed text-gray-500': item != 'Random' }"
+        :class="{
+          'hover:cursor-not-allowed text-gray-500': item != 'Random',
+          'font-bold': isSelected(item),
+        }"
       >
         <!-- todo change :class when we have all methods working -->
         {{ item }}
@@ -51,30 +54,38 @@ import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
 const props = defineProps({
   label: { type: String, default: "" },
   placeholder: { type: String, default: "" },
-  selected: { type: String, default: "" },
-  menuOptions: {
-    type: Array,
-    default: () => [],
-  },
-  modelValue: { type: String, default: "" },
+  menuOptions: { type: Array, default: () => [] },
+  modelValue: { type: Array, default: () => [] },
   error: { type: String, default: "" },
+  multiSelect: { type: Boolean, default: false },
+  maxSelection: { type: Number, default: Infinity },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-const selected = ref(props.modelValue);
+const selectedItems = ref([...props.modelValue]);
 
 watch(
   () => props.modelValue,
-  (val) => (selected.value = val),
+  (newVal) => {
+    selectedItems.value = [...newVal];
+  },
 );
 
 const handleClick = (item) => {
-  selected.value = item;
-  isOpen.value = false;
-  emit("update:modelValue", item);
+  if (props.multiSelect) {
+    if (selectedItems.value.includes(item)) {
+      selectedItems.value = selectedItems.value.filter((i) => i !== item);
+    } else if (selectedItems.value.length < props.maxSelection) {
+      selectedItems.value.push(item);
+    }
+  } else {
+    selectedItems.value = [item];
+    isOpen.value = false;
+  }
+  emit("update:modelValue", selectedItems.value);
 };
-</script>
 
-<style scoped></style>
+const isSelected = (item) => selectedItems.value.includes(item);
+</script>
