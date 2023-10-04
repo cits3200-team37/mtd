@@ -344,7 +344,7 @@ const plotNetwork = (graphData) => {
         <div class="flex flex-row">
           <div
             class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
-            :class="{ 'bg-complementary-color': isInputView }"
+            :class="{ 'bg-button-color': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -355,7 +355,7 @@ const plotNetwork = (graphData) => {
           </div>
           <div
             class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
-            :class="{ 'bg-complementary-color': !isInputView }"
+            :class="{ 'bg-button-color': !isInputView }"
             @click="
               () => {
                 isInputView = false;
@@ -516,7 +516,7 @@ const plotNetwork = (graphData) => {
       <div v-else class="flex-row">
         <div
           id="sim_explanation"
-          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-navbar-primary scrollbar"
+          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-simulation-color scrollbar"
         >
           <div class="h-full">
             <h1 class="font-bold ml-2">Simulation quick start guide:</h1>

@@ -14,16 +14,11 @@ export const useSimulationStore = defineStore("simulation", {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
         scheme: this.parameters.scheme,
+        mtdInterval : Number(this.parameters.mtdInterval),
+        finishTime : Number(this.parameters.finishTime),
+        totalNodes : Number(this.parameters.totalNodes),
       };
-      if (this.parameters.mtdInterval) {
-        reqBody.mtdInterval = Number(this.parameters.mtdInterval);
-      }
-      if (this.parameters.finishTime) {
-        reqBody.finishTime = Number(this.parameters.finishTime);
-      }
-      if (this.parameters.totalNodes) {
-        reqBody.totalNodes = Number(this.parameters.totalNodes);
-      }
+
       if (this.parameters.totalEndpoints) {
         reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);
       }
@@ -42,8 +37,6 @@ export const useSimulationStore = defineStore("simulation", {
       if (this.parameters.seed) {
         reqBody.seed = parseInt(this.parameters.seed);
       }
-
-      console.log(reqBody);
 
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
