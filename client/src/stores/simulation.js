@@ -14,9 +14,9 @@ export const useSimulationStore = defineStore("simulation", {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
         scheme: this.parameters.scheme,
-        mtdInterval : Number(this.parameters.mtdInterval),
-        finishTime : Number(this.parameters.finishTime),
-        totalNodes : Number(this.parameters.totalNodes),
+        mtdInterval: Number(this.parameters.mtdInterval),
+        finishTime: Number(this.parameters.finishTime),
+        totalNodes: Number(this.parameters.totalNodes),
       };
 
       if (this.parameters.totalEndpoints) {
