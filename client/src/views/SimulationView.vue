@@ -98,20 +98,19 @@ const handleSubmit = async () => {
     isValid.value = false;
   }
 
-
   if (isNaN(mtdInterval) || mtdInterval <= 0) {
-      errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
-      isValid.value = false;
+    errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
+    isValid.value = false;
   }
 
   if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
-      errors.value.finishTime = "Stable test limit: 10 <= Finish Time <= 5000";
-      isValid.value = false;
+    errors.value.finishTime = "Stable test limit: 10 <= Finish Time <= 5000";
+    isValid.value = false;
   }
 
   if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
-      errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
-      isValid.value = false;
+    errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
+    isValid.value = false;
   }
 
   if (form.value.totalEndpoints) {
