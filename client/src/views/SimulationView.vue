@@ -344,7 +344,7 @@ const plotNetwork = (graphData) => {
         <div class="flex flex-row">
           <div
             class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
-            :class="{ 'bg-button-color': isInputView }"
+            :class="{ 'bg-sub-color': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -355,7 +355,7 @@ const plotNetwork = (graphData) => {
           </div>
           <div
             class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
-            :class="{ 'bg-button-color': !isInputView }"
+            :class="{ 'bg-sub-color': !isInputView }"
             @click="
               () => {
                 isInputView = false;

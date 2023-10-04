@@ -18,7 +18,7 @@ export default {
       colors: {
         "navbar-primary": `rgb(var(--navbar-color))`,
         "navbar-icon": `rgb(var(--navbar-icon-color))`,
-        "button-color": `rgb(var(--button-color))`,
+        "sub-color": `rgb(var(--sub-color))`,
         "dark-background": "#313338",
 
       },
