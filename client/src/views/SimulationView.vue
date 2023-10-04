@@ -98,24 +98,20 @@ const handleSubmit = async () => {
     isValid.value = false;
   }
 
-  if (form.value.mtdInterval) {
-    if (isNaN(mtdInterval) || mtdInterval <= 0) {
+
+  if (isNaN(mtdInterval) || mtdInterval <= 0) {
       errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
       isValid.value = false;
-    }
   }
 
-  if (form.value.finishTime) {
-    if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
+  if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
       errors.value.finishTime = "Stable test limit: 10 <= Finish Time <= 5000";
       isValid.value = false;
-    }
   }
-  if (form.value.totalNodes) {
-    if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
+
+  if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
       errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
       isValid.value = false;
-    }
   }
 
   if (form.value.totalEndpoints) {
@@ -166,7 +162,7 @@ const handleSubmit = async () => {
       isValid.value = false;
     }
   }
-  console.log(form.value.totalNodes);
+
   if (!isValid.value) {
     return;
   }
@@ -532,22 +528,13 @@ const plotNetwork = (graphData) => {
                 strategies
               </li>
               <li class="mb-2">
-                MTD Interval: the frequency of applying MTD strategies<br /><span
-                  class="text-xs"
-                  >Default: None</span
-                >
+                MTD Interval: the frequency of applying MTD strategies<br />
               </li>
               <li class="mb-2">
-                Finish Time: the maximum simulation duration<br /><span
-                  class="text-xs"
-                  >Default: None</span
-                >
+                Finish Time: the maximum simulation duration<br />
               </li>
               <li class="mb-2">
-                Total Nodes: the number of nodes in the simulated network<br /><span
-                  class="text-xs"
-                  >Default: 50</span
-                >
+                Total Nodes: the number of nodes in the simulated network<br />
               </li>
               <li class="mb-2">
                 Total Endpoints: the number of endpoints in the simulated
@@ -614,7 +601,7 @@ const plotNetwork = (graphData) => {
             :scenarioValues="{
               finishTime: '400',
               mtdInterval: '150',
-              scheme: 'none',
+              scheme: 'None',
               totalNodes: '70',
             }"
             @apply-scenario="applyPredefinedScenario"

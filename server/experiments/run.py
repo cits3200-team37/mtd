@@ -419,8 +419,6 @@ def simulate_without_saving(
     :param terminate_compromise_ratio: terminate the simulation if reached compromise ratio
     :param new_network: True: create new snapshots based on network size, False: load snapshots based on network size
     """
-    if total_nodes is None:
-        total_nodes = 50
     if total_endpoints is None:
         total_endpoints = 5
     if total_subnets is None:

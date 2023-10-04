@@ -43,7 +43,7 @@ def simulate():
 
     custom_strategies = None
 
-    if not scheme:
+    if not all ([scheme, mtd_interval, finish_time, total_nodes]):
         return {}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
