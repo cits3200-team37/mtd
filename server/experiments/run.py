@@ -479,7 +479,7 @@ def simulate_without_saving(
     attack_operation.proceed_attack()
 
     # start mtd
-    if scheme != None:
+    if scheme != "None":
         mtd_operation = MTDOperation(
             env=env,
             end_event=end_event,
