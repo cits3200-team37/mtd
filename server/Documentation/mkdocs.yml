@@ -20,12 +20,12 @@ theme:
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
-      primary: blue
+      primary: teal
     - scheme: slate
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-      primary: blue
+      primary: teal
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -44,11 +44,12 @@ markdown_extensions:
 nav:
   - Home: index.md
   - User Guide:
-      - Simulation Guide: user/simulation_instructions.md
-      - Download Guide: user/download_instructions.md
+      - Simulation: user/simulation_instructions.md
+      - Download App: user/download_instructions.md
   - Back End:
       - End points: backend/endpoints.md
-  - MTD Network Code Base:
+  - MTD Network Code Base: 
+      - Introduction: mtdnetwork/introduction.md
       - MTD:
           - MTD init: mtdnetwork/mtd/mtdinit.md
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
