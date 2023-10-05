@@ -4,7 +4,7 @@ repo_name: cits3200-team37/mtd
 
 theme:
   name: material
-  logo: assets/logo_wide.png
+  logo: img/favicon.ico
   features:
     - navigation.tabs
     - navigation.sections
