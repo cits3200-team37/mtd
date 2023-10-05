@@ -45,7 +45,7 @@ onMounted(async () => {
     currentTheme.value = localStorage.getItem("user-theme");
     LatestVersion.value = await getTag();
     isElectron.value = findVersion(navigator.userAgent);
-    currentVersion.value = await window.electronAPI.processVersion();
+    currentVersion.value = await window.electronAPI?.processVersion();
     await setTheme(currentTheme.value);
   } catch (e) {
     console.log(e);
@@ -54,6 +54,9 @@ onMounted(async () => {
 });
 
 const setTheme = async (theme) => {
+  if (theme == null) {
+    theme = "Dark";
+  }
   localStorage.setItem("user-theme", theme.toLowerCase());
   window.dispatchEvent(
     new CustomEvent("theme-changed", {
