@@ -1,52 +1,59 @@
 <template>
   <label>{{ label }}</label>
-  <div
-    class="p-1 mt-2 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
-    :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
-  >
-    <div class="flex items-center" @click="isOpen = !isOpen">
-      <div v-if="!selected">
-        <span class="text-gray-400">
-          {{ placeholder }}
-        </span>
-      </div>
-      <div v-else>
-        <span class="">
-          {{ selected }}
-        </span>
-      </div>
-      <div v-if="!isOpen" class="ml-auto">
-        <svg-icon type="mdi" size="20" :path="mdiArrowDown"></svg-icon>
-      </div>
-      <div v-else class="ml-auto">
-        <svg-icon type="mdi" size="20" :path="mdiArrowUp"></svg-icon>
+  <div class="relative">
+    <div
+      class="p-1 mt-2 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
+      :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
+    >
+      <div class="flex items-center" @click="isOpen = !isOpen">
+        <div v-if="!selected">
+          <span class="text-gray-400">
+            {{ placeholder }}
+          </span>
+        </div>
+        <div v-else>
+          <span class="">
+            {{ selected }}
+          </span>
+        </div>
+        <div class="ml-auto">
+          <svg-icon
+            type="mdi"
+            size="20"
+            :path="mdiChevronDown"
+            :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
+          ></svg-icon>
+        </div>
       </div>
     </div>
-  </div>
-  <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
-  <div
-    v-if="isOpen"
-    class="z-10 rounded-md bg-white shadow-md w-full transition overflow-hidden"
-  >
-    <ul class="divide-y divide-gray-200">
-      <li
-        v-for="(item, index) in menuOptions"
-        :key="index"
-        class="px-4 py-2 text-sm text-black leading-5 hover:bg-gray-50 focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
-        @click="handleClick(item)"
-        :class="{ 'hover:cursor-not-allowed text-gray-500': item != 'Random' }"
-      >
-        <!-- todo change :class when we have all methods working -->
-        {{ item }}
-      </li>
-    </ul>
+    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+    <div
+      v-if="isOpen"
+      class="z-10 absolute w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
+    >
+      <ul>
+        <li
+          v-for="(item, index) in menuOptions"
+          :key="index"
+          class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+          @click="handleClick(item)"
+          :class="{
+            'hover:cursor-not-allowed text-black hover:text-black':
+              item != 'Random',
+            'bg-slate-300': item === selected,
+          }"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits, ref, watch } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
+import { mdiChevronDown } from "@mdi/js";
 
 const props = defineProps({
   label: { type: String, default: "" },
@@ -77,4 +84,14 @@ const handleClick = (item) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.25s ease-in-out;
+}
+
+.rotate-0 {
+  transform: rotate(0deg);
+  transition: transform 0.25s ease-in-out;
+}
+</style>
