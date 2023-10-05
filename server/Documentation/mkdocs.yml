@@ -43,7 +43,9 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Code Review: codereview.md
+  - User Guide:
+      - Simulation Guide: user/simulation_instructions.md
+      - Download Guide: user/download_instructions.md
   - Back End:
       - End points: backend/endpoints.md
   - MTD Network Code Base:
