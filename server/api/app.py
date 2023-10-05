@@ -49,7 +49,7 @@ def simulate():
         }, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
-    if scheme is not None and scheme not in ["random", None]:
+    if scheme is not None and scheme not in ["random", "None"]:
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
         custom_strategies = []
@@ -101,7 +101,7 @@ def simulate():
 
 @app.route("/schemes", methods=["GET"])
 def schemes():
-    return ["random", "simultaneous", "alternative", "single", None], 200
+    return ["random", "simultaneous", "alternative", "single", "None"], 200
 
 
 @app.route("/health", methods=["GET"])

@@ -14,7 +14,7 @@ export const useSimulationStore = defineStore("simulation", {
       this.parameters = { ...simulateFormValues };
       const reqBody = {
         networkSizeList: Number(this.parameters.networkSizeList),
-        scheme: this.parameters.scheme,
+        scheme: this.parameters.scheme.toLowerCase(),
         totalNodes: Number(this.parameters.totalNodes),
       };
 
