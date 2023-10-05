@@ -1,4 +1,4 @@
-site_name: mtd
+site_name: Moving Target Defence Simulator
 repo_url: https://github.com/cits3200-team37/mtd
 repo_name: cits3200-team37/mtd
 
@@ -16,12 +16,12 @@ theme:
     - content.code.copy
   language: en
   palette:
-    - scheme: default
+    - scheme: slate
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
       primary: teal
-    - scheme: slate
+    - scheme: default
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
