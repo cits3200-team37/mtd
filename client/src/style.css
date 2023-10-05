@@ -19,6 +19,7 @@
     --hover-bg-color: 55, 65, 81;
     --simulation-color: 43 43 43;
     --navbar-icon-color: 164 164 164;
+    --sub-color: 0 174 153;
     --scrollbar-track-color: 55, 58, 62;
     --scrollbar-thumb-color: 31 31 31;
     --scrollbar-thumb-hover-color: 65, 68, 72;
@@ -32,26 +33,31 @@
     --navbar-color: 183 209 218;
     --simulation-color: 245 245 245;
     --navbar-icon-color: 49 47 47;
+    --sub-color: 183 230 240;
     --scrollbar-track-color: 235, 235, 235;
     --scrollbar-thumb-color: 214 231 236;
     --scrollbar-thumb-hover-color: 183, 209, 218;
   }
-}
 
-::-webkit-scrollbar {
-  width: 10px;
-}
+  .scrollbar {
+    scrollbar-width: thin;
+  }
 
-::-webkit-scrollbar-track {
-  background: rgb(var(--scrollbar-track-color));
-  border-radius: 5px;
-}
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: rgb(var(--scrollbar-thumb-color));
-  border-radius: 5px;
-}
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--scrollbar-track-color));
+    border-radius: 5px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--scrollbar-thumb-hover-color));
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--scrollbar-thumb-color));
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--scrollbar-thumb-hover-color));
+  }
 }
