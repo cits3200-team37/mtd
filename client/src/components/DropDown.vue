@@ -1,10 +1,8 @@
 <template>
   <label>{{ label }}</label>
   <div class="relative">
-    <div
-      class="p-1 mt-2 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
-      :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
-    >
+    <div class="p-1 mt-2 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
+      :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }">
       <div class="flex items-center" @click="isOpen = !isOpen">
         <div v-if="!selectedItems[0]">
           <span class="text-gray-400">
@@ -13,44 +11,28 @@
         </div>
         <div v-else>
           <div v-if="multiSelect">
-            <Chip
-              v-for="item in selectedItems"
-              :key="item"
-              :label="item"
-              @remove="handleChipRemove"
-            />
+            <Chip v-for="item in selectedItems" :key="item" :label="item" @remove="handleChipRemove" />
           </div>
           <div v-else>
             <span>{{ selectedItems[0] }}</span>
           </div>
           <div class="ml-auto">
-            <svg-icon
-              type="mdi"
-              size="20"
-              :path="mdiChevronDown"
-              :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
-            ></svg-icon>
+            <svg-icon type="mdi" size="20" :path="mdiChevronDown"
+              :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"></svg-icon>
           </div>
         </div>
       </div>
       <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
-      <div
-        v-if="isOpen"
-        class="z-10 absolute w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
-      >
+      <div v-if="isOpen" class="z-10 absolute top-full left-0 w-full mt-1 rounded-md bg-white shadow-md overflow-hidden">
         <ul>
-          <li
-            v-for="(item, index) in menuOptions"
-            :key="index"
+          <li v-for="(item, index) in menuOptions" :key="index"
             class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
-            @click="handleClick(item)"
-            :class="{
+            @click="handleClick(item)" :class="{
               'hover:cursor-not-allowed text-black hover:text-black':
                 item != 'Random',
               'font-bold': isSelected(item),
-              'bg-slate-300': isSelected(item),
-            }"
-          >
+              'bg-slate-300': isSelected(item)
+            }">
             {{ item }}
           </li>
         </ul>
@@ -69,7 +51,7 @@ const props = defineProps({
   label: { type: String, default: "" },
   placeholder: { type: String, default: "" },
   menuOptions: { type: Array, default: () => [] },
-  modelValue: { type: [Array, String], default: () => [] },
+  modelValue: { type: Array, default: () => [] },
   error: { type: String, default: "" },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: Infinity },
@@ -78,13 +60,16 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-const selectedItems = ref([]);
+// Check whether it is string(scheme) or array(strategy)
+const selectedItems = ref(
+  Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue],
+);
 
 watch(
   () => props.modelValue,
   (newVal) => {
     selectedItems.value = Array.isArray(newVal) ? [...newVal] : [newVal];
-  }
+  },
 );
 
 const handleClick = (item) => {
@@ -103,7 +88,7 @@ const handleClick = (item) => {
 
 const handleChipRemove = (itemToRemove) => {
   selectedItems.value = selectedItems.value.filter(
-    (item) => item !== itemToRemove
+    (item) => item !== itemToRemove,
   );
   emit("update:modelValue", selectedItems.value);
 };
