@@ -438,17 +438,6 @@ const plotNetwork = (graphData) => {
                 />
               </div>
               <div>
-                <DropDown
-                  placeholder="Select Strategy"
-                  v-model="form.strategies"
-                  label="Strategy"
-                  :menu-options="availableStrategies"
-                  :multi-select="true"
-                  :error="errors.strategies"
-                  :max-selection="maxSelection(form.scheme)"
-                />
-              </div>
-              <div>
                 <FormField
                   v-model="form.mtdInterval"
                   label="MTD Interval"
@@ -473,6 +462,17 @@ const plotNetwork = (graphData) => {
                   placeholder="Total Nodes"
                   type="text"
                   :error="errors.totalNodes"
+                />
+              </div>
+              <div>
+                <DropDown
+                  placeholder="Select Strategy"
+                  v-model="form.strategies"
+                  label="Strategy"
+                  :menu-options="availableStrategies"
+                  :multi-select="true"
+                  :error="errors.strategies"
+                  :max-selection="maxSelection(form.scheme)"
                 />
               </div>
               <div>

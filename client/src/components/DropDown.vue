@@ -26,7 +26,6 @@
           ></svg-icon>
         </div>
       </div>
-      <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
       <div v-if="isOpen" class="z-10 absolute top-full left-0 w-full mt-1 rounded-md bg-white shadow-md overflow-hidden">
         <ul>
           <li v-for="(item, index) in menuOptions" :key="index"
@@ -42,6 +41,7 @@
         </ul>
       </div>
     </div>
+    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
   </div>
 </template>
 
