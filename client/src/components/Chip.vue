@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-flex bg-gray-200 rounded-full px-3 py-1 justify-center content-center cursor-default"
+    class="inline-flex bg-gray-200 rounded-full px-3 py-px justify-center content-center cursor-default"
   >
     <span class="truncate block max-w-xs align-middle text-xs">{{
       label
@@ -31,5 +31,3 @@ const handleRemove = () => {
   emit("remove", props.label);
 };
 </script>
-
-<style scoped></style>
