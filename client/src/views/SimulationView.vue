@@ -630,6 +630,7 @@ const plotNetwork = (graphData) => {
               finishTime: '1000',
               mtdInterval: '200',
               scheme: 'random',
+              strategies: ['CompleteTopologyShuffle'],
               totalNodes: '20',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -641,6 +642,7 @@ const plotNetwork = (graphData) => {
               finishTime: '500',
               mtdInterval: '100',
               scheme: 'simultaneous',
+              strategies: ['IPShuffle', 'OSDiversity', 'ServiceDiversity'],
               totalNodes: '50',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -652,6 +654,7 @@ const plotNetwork = (graphData) => {
               finishTime: '300',
               mtdInterval: '50',
               scheme: 'alternative',
+              strategies: ['IPShuffle', 'OSDiversity'],
               totalNodes: '100',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -662,6 +665,7 @@ const plotNetwork = (graphData) => {
               finishTime: '400',
               mtdInterval: '150',
               scheme: 'None',
+              strategies: [],
               totalNodes: '70',
             }"
             @apply-scenario="applyPredefinedScenario"
