@@ -125,7 +125,7 @@ const handleSubmit = async () => {
     errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
   }
-  
+
   if (form.value.scheme && form.value.scheme != "None") {
     const maxStrategies = maxSelection(form.value.scheme);
 

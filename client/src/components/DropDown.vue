@@ -1,8 +1,10 @@
 <template>
   <label>{{ label }}</label>
   <div class="relative">
-    <div class="p-1 mt-2 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer hover:border-gray-400"
-      :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }">
+    <div
+      class="p-1 mt-2 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer hover:border-gray-400"
+      :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
+    >
       <div class="flex items-center" @click="isOpen = !isOpen">
         <div v-if="!selectedItems[0]">
           <span class="text-gray-400">
@@ -11,7 +13,12 @@
         </div>
         <div v-else>
           <div v-if="multiSelect">
-            <Chip v-for="item in selectedItems" :key="item" :label="item" @remove="handleChipRemove" />
+            <Chip
+              v-for="item in selectedItems"
+              :key="item"
+              :label="item"
+              @remove="handleChipRemove"
+            />
           </div>
           <div v-else>
             <span>{{ selectedItems[0] }}</span>
@@ -26,16 +33,23 @@
           ></svg-icon>
         </div>
       </div>
-      <div v-if="isOpen" class="z-10 absolute top-full left-0 w-full mt-1 rounded-md bg-white shadow-md overflow-hidden">
+      <div
+        v-if="isOpen"
+        class="z-10 absolute top-full left-0 w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
+      >
         <ul>
-          <li v-for="(item, index) in menuOptions" :key="index"
+          <li
+            v-for="(item, index) in menuOptions"
+            :key="index"
             class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
-            @click="handleClick(item)" :class="{
+            @click="handleClick(item)"
+            :class="{
               'hover:cursor-not-allowed text-black hover:text-black':
                 item != 'Random',
               'font-bold': isSelected(item),
-              'bg-slate-300': isSelected(item)
-            }">
+              'bg-slate-300': isSelected(item),
+            }"
+          >
             {{ item }}
           </li>
         </ul>
