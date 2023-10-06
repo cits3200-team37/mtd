@@ -4,7 +4,6 @@ import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
 import Scenario from "../components/Scenario.vue";
-import StrategyDropDown from "../components/StrategyDropDown.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
