@@ -18,8 +18,8 @@ export const useSimulationStore = defineStore("simulation", {
         finishTime: Number(this.parameters.finishTime),
         totalNodes: Number(this.parameters.totalNodes),
       };
-      if (this.parameters.selectedStrategies) {
-        reqBody.strategies = this.parameters.selectedStrategies;
+      if (this.parameters.strategies) {
+        reqBody.strategies = this.parameters.strategies;
       }
       if (this.parameters.totalEndpoints) {
         reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);

@@ -34,6 +34,7 @@ def simulate():
     mtd_interval = request.json.get("mtdInterval")
     finish_time = request.json.get("finishTime")
     total_nodes = request.json.get("totalNodes")
+    strategies = request.json.get("strategies")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
     total_database = request.json.get("totalDatabase")
@@ -87,7 +88,8 @@ def simulate():
 
     visible_hosts = []
     for c_host in result._network.reachable:
-        visible_hosts = visible_hosts + list(result._network.graph.neighbors(c_host))
+        visible_hosts = visible_hosts + \
+            list(result._network.graph.neighbors(c_host))
 
     visible_hosts = visible_hosts + result._network.reachable
     visible_hosts = visible_hosts + result._network.exposed_endpoints
