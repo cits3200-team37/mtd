@@ -23,38 +23,38 @@
           <div v-else>
             <span>{{ selectedItems[0] }}</span>
           </div>
-        </div>
-        <div class="ml-auto">
-          <svg-icon
-            type="mdi"
-            size="20"
-            :path="mdiChevronDown"
-            :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
-          ></svg-icon>
+          <div class="ml-auto">
+            <svg-icon
+              type="mdi"
+              size="20"
+              :path="mdiChevronDown"
+              :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
+            ></svg-icon>
+          </div>
         </div>
       </div>
-    </div>
-    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
-    <div
-      v-if="isOpen"
-      class="z-10 absolute w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
-    >
-      <ul>
-        <li
-          v-for="(item, index) in menuOptions"
-          :key="index"
-          class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
-          @click="handleClick(item)"
-          :class="{
-            'hover:cursor-not-allowed text-black hover:text-black':
-              item != 'Random',
-            'bg-slate-300': item === selectedItems,
-            'font-bold': isSelected(item),
-          }"
-        >
-          {{ item }}
-        </li>
-      </ul>
+      <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+      <div
+        v-if="isOpen"
+        class="z-10 absolute w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
+      >
+        <ul>
+          <li
+            v-for="(item, index) in menuOptions"
+            :key="index"
+            class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+            @click="handleClick(item)"
+            :class="{
+              'hover:cursor-not-allowed text-black hover:text-black':
+                item != 'Random',
+              'font-bold': isSelected(item),
+              'bg-slate-300': isSelected(item),
+            }"
+          >
+            {{ item }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>

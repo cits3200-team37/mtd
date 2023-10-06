@@ -1,12 +1,16 @@
 <template>
-  <div class="inline-flex bg-gray-200 rounded-full px-2 py-1 text-xs">
-    <span>{{ label }}</span>
-    <button @click="handleRemove" class="ml-1">×</button>
+  <div class="inline-flex bg-gray-200 rounded-full px-3 py-1 justify-center content-center">
+    <span class="truncate block max-w-[70px] align-middle">{{ label }}</span>
+    <div class="">
+      <svg-icon type="mdi" size="20" :path="mdiCloseCircleOutline" @click=handleRemove></svg-icon>
+    </div>  
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import { mdiCloseCircleOutline } from '@mdi/js';
+import SvgIcon from "@jamescoyle/vue-icon";
 
 const props = defineProps({
   label: String,
@@ -18,3 +22,5 @@ const handleRemove = () => {
   emit("remove", props.label);
 };
 </script>
+
+<style scoped></style>

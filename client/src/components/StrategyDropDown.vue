@@ -39,7 +39,7 @@ watch(
   () => {
     Strategies.value = [];
     emit("update:modelValue", Strategies.value);
-  }
+  },
 );
 
 const maxSelection = () => {
