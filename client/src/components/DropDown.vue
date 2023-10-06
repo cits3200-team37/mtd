@@ -23,14 +23,14 @@
           <div v-else>
             <span>{{ selectedItems[0] }}</span>
           </div>
-          <div class="ml-auto">
-            <svg-icon
-              type="mdi"
-              size="20"
-              :path="mdiChevronDown"
-              :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
-            ></svg-icon>
-          </div>
+        </div>
+        <div class="ml-auto">
+          <svg-icon
+            type="mdi"
+            size="20"
+            :path="mdiChevronDown"
+            :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
+          ></svg-icon>
         </div>
       </div>
       <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
