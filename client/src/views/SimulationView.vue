@@ -13,9 +13,7 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const showTooltip = ref(false);
-
-const isInputView = ref(true);
+const graph = ref(true);
 
 const Schemes = ref([
   "None",
@@ -31,6 +29,10 @@ const availableStrategies = ref([
   "OSDiversity",
   "ServiceDiversity",
 ]);
+
+const showTooltip = ref(false);
+
+const isInputView = ref(true);
 
 const currentHost = ref({
   ip: "",
@@ -65,15 +67,16 @@ onMounted(() => {
     // NOTE: could use pinia's storeToRefs, but i think using this
     // and copying objects will be easier for everyone to understand
     form.value = { ...simulationStore.parameters };
+  } else {
+    graph.value = false;
   }
 });
 
 const isValid = ref(true);
 const errors = ref({
-  startTime: "",
-  finishTime: "",
-  mtdInterval: "",
   scheme: "",
+  mtdInterval: "",
+  finishTime: "",
   totalNodes: "",
   totalLayers: "",
   totalEndpoints: "",
@@ -83,8 +86,6 @@ const errors = ref({
   seed: "",
 });
 
-const showScenario = ref(true);
-
 const handleSubmit = async () => {
   // Reset errors
   isValid.value = true;
@@ -92,7 +93,6 @@ const handleSubmit = async () => {
     errors.value[key] = "";
   });
 
-  const startTime = Number(form.value.startTime);
   const finishTime = Number(form.value.finishTime);
   const mtdInterval = Number(form.value.mtdInterval);
   const totalNodes = Number(form.value.totalNodes);
@@ -101,76 +101,45 @@ const handleSubmit = async () => {
   const totalSubnets = Number(form.value.totalSubnets);
   const totalDatabase = Number(form.value.totalDatabase);
   const targetLayer = Number(form.value.targetLayer);
-  const seed = Number(form.value.seed);
-
-  if (form.value.startTime) {
-    if (isNaN(startTime) || startTime < 0) {
-      errors.value.startTime = "Stable test limit: startTime >= 0";
-      isValid.value = false;
-    } else if (finishTime < startTime) {
-      errors.value.startTime = "Logical limit: startTime <= finishTime";
-      isValid.value = false;
-    }
-  }
-
-  if (form.value.finishTime) {
-    if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
-      errors.value.finishTime = "Stable test limit: 10 <= finishTime <= 5000";
-      isValid.value = false;
-    }
-  }
-
-  if (form.value.mtdInterval) {
-    if (isNaN(mtdInterval) || mtdInterval <= 0) {
-      errors.value.mtdInterval = "Stable test limit: mtdInterval > 0";
-      isValid.value = false;
-    } else if (mtdInterval > finishTime - startTime) {
-      errors.value.mtdInterval =
-        "Logical limit: mtdInterval <= finishTime - startTime";
-      isValid.value = false;
-    }
-  }
 
   if (!form.value.scheme) {
     errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
   }
 
-  if(form.value.scheme && form.value.scheme != "None" && !form.value.selectedStrategies){
-    errors.value.selectedStrategies = "Please pick a Strategy";
+  if (isNaN(mtdInterval) || mtdInterval <= 0) {
+    errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
+    isValid.value = false;
+  }
+
+  if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
+    errors.value.finishTime = "Stable test limit: 10 <= Finish Time <= 5000";
     isValid.value = false;
   }
 
   if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
-    errors.value.totalNodes = "Stable test limit: 20 <= totalNodes <= 1000";
+    errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
     isValid.value = false;
-  }
-
-  if (form.value.totalLayers) {
-    if (isNaN(totalLayers) || totalLayers <= 0 || totalLayers > 12) {
-      errors.value.totalLayers = "Stable test limit: 0 < totalLayers <= 12";
-      isValid.value = false;
-    }
   }
 
   if (form.value.totalEndpoints) {
     if (isNaN(totalEndpoints) || totalEndpoints <= 0) {
-      errors.value.totalEndpoints = "Stable test limit: totalEndpoints > 0";
+      errors.value.totalEndpoints = "Stable test limit: Total Endpoints > 0";
       isValid.value = false;
-    } else if (totalEndpoints >= totalNodes) {
+    } else if (isNaN(totalNodes) || totalEndpoints >= totalNodes) {
       errors.value.totalEndpoints =
-        "Stable test limit: totalEndpoints < totalNodes";
+        "Logical limit: Total Endpoints < Total Nodes";
       isValid.value = false;
     }
   }
 
   if (form.value.totalSubnets) {
-    if (
-      isNaN(totalSubnets) ||
-      (totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2
-    ) {
+    if (isNaN(totalSubnets) || totalSubnets <= 4) {
+      errors.value.totalSubnets = "Stable test limit: Total Subnents > 4";
+      isValid.value = false;
+    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2) {
       errors.value.totalSubnets =
-        "Logical limit: (totalNodes - totalEndpoints) / (totalSubnets - 1) > 2";
+        "Logical limit: (Total Nodes - Total Endpoints) / (Total Subnets - 1) > 2";
       isValid.value = false;
     }
   }
@@ -182,16 +151,22 @@ const handleSubmit = async () => {
     }
   }
 
-  if (form.value.targetLayer) {
-    if (isNaN(targetLayer)) {
-      errors.value.targetLayer = "Target Layer must be a number";
+  if (form.value.totalLayers) {
+    if (isNaN(totalLayers) || totalLayers <= 0 || totalLayers > 6) {
+      errors.value.totalLayers = "Stable test limit: 0 < Total Layers <= 6";
       isValid.value = false;
     }
   }
 
-  if (form.value.seed) {
-    if (isNaN(seed)) {
-      errors.value.seed = "Seed must be a number";
+  if (form.value.targetLayer) {
+    if (isNaN(targetLayer)) {
+      errors.value.targetLayer = "Logical Limit: Target Layer > 0";
+      isValid.value = false;
+    } else if (isNaN(totalLayers) || totalLayers < targetLayer) {
+      errors.value.targetLayer = "Logical Limit: Target Layer <= Total Layers";
+      if (errors.value.totalLayers == "") {
+        errors.value.totalLayers = "Required";
+      }
       isValid.value = false;
     }
   }
@@ -200,12 +175,21 @@ const handleSubmit = async () => {
     return;
   }
 
-  showScenario.value = false;
-
+  graph.value = true;
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const resetSimulation = () => {
+  // Reset the form values
+  form.value = { ...defaultForm.value };
+
+  graph.value = false;
+  resetGraph();
+
+  simulationStore.reset();
 };
 
 const applyPredefinedScenario = (values) => {
@@ -368,8 +352,8 @@ const plotNetwork = (graphData) => {
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
-            :class="{ 'bg-teal-500': isInputView }"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
+            :class="{ 'bg-sub-color': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -379,32 +363,47 @@ const plotNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
-            :class="{ 'bg-teal-500': !isInputView }"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
+            :class="{ 'bg-sub-color': !isInputView }"
             @click="
               () => {
                 isInputView = false;
               }
             "
           >
-            Visualisation
+            Graph
           </div>
         </div>
 
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <button
+              @click="resetSimulation"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Reset
+            </button>
             <form
               class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
               <div>
+                <DropDown
+                  placeholder="Select Scheme"
+                  v-model="form.scheme"
+                  label="Scheme"
+                  :menu-options="Schemes"
+                  :error="errors.scheme"
+                />
+              </div>
+              <div>
                 <FormField
-                  v-model="form.startTime"
-                  label="Start Time"
-                  placeholder="Start Time"
+                  v-model="form.mtdInterval"
+                  label="MTD Interval"
+                  placeholder="MTD Interval"
                   type="text"
-                  :error="errors.startTime"
+                  :error="errors.mtdInterval"
                 />
               </div>
               <div>
@@ -451,16 +450,6 @@ const plotNetwork = (graphData) => {
                   :error="errors.totalNodes"
                 />
               </div>
-              <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
-              <div>
-                <FormField
-                  v-model="form.totalLayers"
-                  label="Total Layers"
-                  placeholder="Total Layers"
-                  type="text"
-                  :error="errors.totalLayers"
-                />
-              </div>
               <div>
                 <FormField
                   v-model="form.totalEndpoints"
@@ -486,6 +475,15 @@ const plotNetwork = (graphData) => {
                   placeholder="Total Databases"
                   type="text"
                   :error="errors.totalDatabase"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalLayers"
+                  label="Total Layers"
+                  placeholder="Total Layers"
+                  type="text"
+                  :error="errors.totalLayers"
                 />
               </div>
               <div>
@@ -548,63 +546,101 @@ const plotNetwork = (graphData) => {
       </div>
     </div>
 
-    <div class="flex-1 flex flex-col mr-2 h-[calc(100vh-36px)]">
-      <div
-        id="network-graph"
-        class="flex-1 mr-2 h-[calc(100vh-36px - (showScenario ? 56px : 0px))]"
-      ></div>
+    <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
+      <div v-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)]"></div>
+      <div v-else class="flex-row">
+        <div
+          id="sim_explanation"
+          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-simulation-color scrollbar"
+        >
+          <div class="h-full">
+            <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
 
-      <div
-        v-if="showScenario"
-        class="w-full p-4 grid grid-cols-2 gap-3 max-h-52"
-      >
-        <Scenario
-          :scenarioTitle="'Scenario 1'"
-          :scenarioDescription="'Random Scheme'"
-          :scenarioValues="{
-            startTime: '0',
-            finishTime: '1000',
-            mtdInterval: '200',
-            scheme: 'random',
-            totalNodes: '20',
-          }"
-          @apply-scenario="applyPredefinedScenario"
-        />
-        <Scenario
-          :scenarioTitle="'Scenario 2'"
-          :scenarioDescription="'Simultaneous Scheme'"
-          :scenarioValues="{
-            startTime: '0',
-            finishTime: '500',
-            mtdInterval: '100',
-            scheme: 'simultaneous',
-            totalNodes: '50',
-          }"
-          @apply-scenario="applyPredefinedScenario"
-        />
-        <Scenario
-          :scenarioTitle="'Scenario 3'"
-          :scenarioDescription="'Alternative Scheme'"
-          :scenarioValues="{
-            startTime: '0',
-            finishTime: '300',
-            mtdInterval: '50',
-            scheme: 'alternative',
-            totalNodes: '100',
-          }"
-          @apply-scenario="applyPredefinedScenario"
-        />
-        <Scenario
-          :scenarioTitle="'Scenario 4'"
-          :scenarioValues="{
-            startTime: '0',
-            finishTime: '400',
-            mtdInterval: '150',
-            scheme: 'none',
-            totalNodes: '70',
-          }"
-          @apply-scenario="applyPredefinedScenario"
-        />
+            <ul class="list-disc text-sm p-4">
+              <li class="mb-2">
+                Scheme: the manor in which the simulation will employ MTD
+                strategies
+              </li>
+              <li class="mb-2">
+                MTD Interval: the frequency of applying MTD strategies<br />
+              </li>
+              <li class="mb-2">
+                Finish Time: the maximum simulation duration<br />
+              </li>
+              <li class="mb-2">
+                Total Nodes: the number of nodes in the simulated network<br />
+              </li>
+              <li class="mb-2">
+                Total Endpoints: the number of endpoints in the simulated
+                network<br /><span class="text-xs">Default: 5</span>
+              </li>
+              <li class="mb-2">
+                Total Subnets: the number of sub-networks in the simulated
+                network<br /><span class="text-xs">Default: 8</span>
+              </li>
+              <li class="mb-2">
+                Total Databases: the number of databases for the simulated
+                network<br /><span class="text-xs">Default: 2</span>
+              </li>
+              <li class="mb-2">
+                Total Layers: the number of layers in the simulated network<br /><span
+                  class="text-xs"
+                  >Default: 4</span
+                >
+              </li>
+              <li class="mb-2">
+                Target Layer: the layer where the target host will be located<br /><span
+                  class="text-xs"
+                ></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
+          <Scenario
+            :scenarioTitle="'Scenario 1'"
+            :scenarioDescription="'Random Scheme'"
+            :scenarioValues="{
+              finishTime: '1000',
+              mtdInterval: '200',
+              scheme: 'random',
+              totalNodes: '20',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 2'"
+            :scenarioDescription="'Simultaneous Scheme'"
+            :scenarioValues="{
+              finishTime: '500',
+              mtdInterval: '100',
+              scheme: 'simultaneous',
+              totalNodes: '50',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 3'"
+            :scenarioDescription="'Alternative Scheme'"
+            :scenarioValues="{
+              finishTime: '300',
+              mtdInterval: '50',
+              scheme: 'alternative',
+              totalNodes: '100',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 4'"
+            :scenarioValues="{
+              finishTime: '400',
+              mtdInterval: '150',
+              scheme: 'None',
+              totalNodes: '70',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+        </div>
       </div>
     </div>
   </div>

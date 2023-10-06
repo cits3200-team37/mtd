@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 const path = require("path");
-
+require("update-electron-app")({
+  updateInterval: "1 hour",
+});
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -81,4 +83,7 @@ ipcMain.on("window-close", handleWindowClose);
 ipcMain.on("window-maximise", handleWindowMaximise);
 ipcMain.handle("operating-system", (event, args) => {
   return process.platform;
+});
+ipcMain.handle("process-version", (event, args) => {
+  return app.getVersion();
 });

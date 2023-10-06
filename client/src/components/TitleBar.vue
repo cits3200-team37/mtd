@@ -70,7 +70,7 @@ const os = ref("");
 
 onMounted(async () => {
   try {
-    os.value = await window.electronAPI.operatingSystem();
+    os.value = await window.electronAPI?.operatingSystem();
   } catch (error) {
     console.log(error);
   }

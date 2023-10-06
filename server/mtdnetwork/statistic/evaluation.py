@@ -1,14 +1,15 @@
+'''Module to evaluate and visualise network simulation'''
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 import networkx as nx
-import pandas as pd
-import os
 
 directory = os.getcwd()
 
 
 class Evaluation:
+    '''Class to evaluate metrics related to network simulation'''
     def __init__(self, network, adversary):
         self._network = network
         self._adversary = adversary
@@ -16,31 +17,13 @@ class Evaluation:
         self._attack_record = adversary.get_attack_stats().get_record()
 
     def compromised_num(self, record=None):
+        '''Method returns number of compromised hosts'''
         if record is None:
             record = self._attack_record
         compromised_hosts = record[record["compromise_host_uuid"] != "None"][
             "compromise_host_uuid"
         ].unique()
         return len(compromised_hosts)
-
-    # def mean_time_to_compromise_10_timestamp(self):
-    #     record = self._attack_record
-    #     step = max(record['finish_time']) / 10
-    #     MTTC = []
-    #     for i in range(1, 11, 1):
-    #         compromised_num = self.compromised_num_by_timestamp(step * i)
-    #         if compromised_num == 0:
-    #             continue
-    #         attack_action_time = record[(record['name'].isin(['SCAN_PORT', 'EXPLOIT_VULN', 'BRUTE_FORCE'])) &
-    #                                     (record['finish_time'] <= step * i)]['duration'].sum()
-    #         MTTC.append({'Mean Time to Compromise': attack_action_time / compromised_num, 'Time': step * i})
-    #
-    #     return MTTC
-    # def compromised_num_by_timestamp(self, timestamp):
-    #     record = self._attack_record
-    #     compromised_hosts = record[(record['compromise_host_uuid'] != 'None') &
-    #                                (record['finish_time'] <= timestamp)]['compromise_host_uuid'].unique()
-    #     return len(compromised_hosts)
 
     def mtd_execution_frequency(self):
         """
@@ -118,7 +101,7 @@ class Evaluation:
 
     def draw_network(self):
         """
-        Draws the topology of the network while also highlighting compromised and exposed endpoint nodes.
+        Draws the topology of the network, highlight compromised/exposed endpoints
         """
         plt.figure(1, figsize=(15, 12))
         nx.draw(
@@ -165,23 +148,23 @@ class Evaluation:
         """
         record = self._attack_record
 
-        fig, ax = plt.subplots(1, figsize=(16, 5))
+        fig, axes = plt.subplots(1, figsize=(16, 5))
         colors = ["purple", "blue", "green", "yellow", "orange", "red"]
         attack_action_legend = []
         attack_action_legend_name = []
-        for i, v in enumerate(record["name"].unique()):
-            record.loc[record.name == v, "color"] = colors[i]
+        for i, name in enumerate(record["name"].unique()):
+            record.loc[record.name == name, "color"] = colors[i]
             attack_action_legend.append(Line2D([0], [0], color=colors[i], lw=4))
-            attack_action_legend_name.append(v)
+            attack_action_legend_name.append(name)
 
         hosts = record["current_host_uuid"].unique()
         host_token = [str(x) for x in range(len(hosts))]
-        for i, v in enumerate(hosts):
+        for i, name in enumerate(hosts):
             record.loc[
-                record["current_host_uuid"] == v, "curr_host_token"
+                record["current_host_uuid"] == name, "curr_host_token"
             ] = host_token[i]
 
-        ax.barh(
+        axes.barh(
             record["curr_host_token"],
             record["duration"],
             left=record["start_time"],
@@ -189,7 +172,7 @@ class Evaluation:
             color=record["color"],
         )
 
-        ax.legend(attack_action_legend, attack_action_legend_name, loc="lower left")
+        axes.legend(attack_action_legend, attack_action_legend_name, loc="lower left")
         plt.gca().invert_yaxis()
         plt.xlabel("Time", weight="bold", fontsize=18)
         plt.ylabel("Hosts", weight="bold", fontsize=18)
@@ -205,8 +188,8 @@ class Evaluation:
         visualise the action flow of attack operation
         """
         record = self._attack_record
-        fig, ax = plt.subplots(1, figsize=(16, 5))
-        ax.barh(
+        fig, axes = plt.subplots(1, figsize=(16, 5))
+        axes.barh(
             record["name"],
             record["duration"],
             left=record["start_time"],
@@ -218,7 +201,7 @@ class Evaluation:
         interrupted_record["color"] = np.where(
             interrupted_record["interrupted_in"] == "network", "green", "orange"
         )
-        ax.scatter(
+        axes.scatter(
             interrupted_record["finish_time"],
             interrupted_record["name"],
             color=interrupted_record["color"],
@@ -227,7 +210,7 @@ class Evaluation:
 
         compromise_record = record[record["compromise_host"] != "None"]
         print("total compromised hosts: ", len(compromise_record))
-        ax.scatter(
+        axes.scatter(
             compromise_record["finish_time"],
             compromise_record["name"],
             color="red",
@@ -246,7 +229,7 @@ class Evaluation:
             ),
         ]
 
-        ax.legend(
+        axes.legend(
             custom_lines_attack,
             ["network layer MTD", "application layer MTD", "compromise host"],
             loc="upper right",
@@ -266,22 +249,22 @@ class Evaluation:
         if len(self._mtd_record) == 0:
             return
         record = self._mtd_record
-        fig, ax = plt.subplots(1, figsize=(16, 6))
+        fig, axes = plt.subplots(1, figsize=(16, 6))
         colors = ["blue", "green", "orange"]
         mtd_action_legend = []
         mtd_action_legend_name = []
-        for i, v in enumerate(record["executed_at"].unique()):
-            record.loc[record["executed_at"] == v, "color"] = colors[i]
+        for i, name in enumerate(record["executed_at"].unique()):
+            record.loc[record["executed_at"] == name, "color"] = colors[i]
             mtd_action_legend.append(Line2D([0], [0], color=colors[i], lw=4))
-            mtd_action_legend_name.append(v)
-        ax.barh(
+            mtd_action_legend_name.append(name)
+        axes.barh(
             record["name"].astype(str),
             record["duration"],
             left=record["start_time"],
             height=0.4,
             color=record["color"],
         )
-        ax.legend(mtd_action_legend, mtd_action_legend_name, loc="lower right")
+        axes.legend(mtd_action_legend, mtd_action_legend_name, loc="lower right")
         plt.gca().invert_yaxis()
         plt.xlabel("Time", weight="bold", fontsize=18)
         plt.ylabel("MTD Strategies", weight="bold", fontsize=18)
@@ -290,4 +273,5 @@ class Evaluation:
         plt.show()
 
     def get_network(self):
+        '''Method returns network'''
         return self._network

@@ -5,7 +5,6 @@
   >
     <h3 class="text-base font-semibold mb-2">{{ scenarioTitle }}</h3>
     <p class="text-sm">{{ scenarioDescription }}</p>
-    {{ scenarioMessage }}
   </div>
 </template>
 
@@ -21,7 +20,7 @@ const props = defineProps({
     type: String,
     default: "Click to have a predefined scenario",
   },
-  scenarioValues: { type: String, default: "" },
+  scenarioValues: { type: Object, default: {} },
 });
 
 const emit = defineEmits(["apply-scenario"]);
