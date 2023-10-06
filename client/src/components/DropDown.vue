@@ -1,7 +1,7 @@
 <template>
   <label>{{ label }}</label>
   <div class="relative">
-    <div class="p-1 mt-2 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
+    <div class="p-1 mt-2 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer hover:border-gray-400"
       :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }">
       <div class="flex items-center" @click="isOpen = !isOpen">
         <div v-if="!selectedItems[0]">

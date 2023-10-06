@@ -1,8 +1,8 @@
 <template>
-  <div class="inline-flex bg-gray-200 rounded-full px-3 py-1 justify-center content-center">
-    <span class="truncate block max-w-[70px] align-middle">{{ label }}</span>
-    <div class="">
-      <svg-icon type="mdi" size="20" :path="mdiCloseCircleOutline" @click=handleRemove></svg-icon>
+  <div class="inline-flex bg-gray-200 rounded-full px-3 py-1 justify-center content-center cursor-default">
+    <span class="truncate block max-w-xs align-middle text-xs">{{ label }}</span>
+    <div class="cursor-pointer">
+      <svg-icon type="mdi" size="20" :path="mdiCloseCircleOutline" @click.stop=handleRemove></svg-icon>
     </div>  
   </div>
 </template>
