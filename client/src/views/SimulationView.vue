@@ -425,16 +425,6 @@ const plotNetwork = (graphData) => {
                 />
               </div>
               <div>
-                <DropDown
-                  placeholder="Select Scheme"
-                  v-model="form.scheme"
-                  label="Scheme"
-                  :menu-options="Schemes"
-                  :multi-select="false"
-                  :error="errors.scheme"
-                />
-              </div>
-              <div>
                 <StrategyDropDown
                   v-model="form.selectedStrategies"
                   :scheme="form.scheme"
