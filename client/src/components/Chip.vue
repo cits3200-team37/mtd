@@ -1,12 +1,17 @@
 <template>
-  <div class="chip-container inline-flex bg-gray-200 rounded-full px-2 py-1">
-    <span class="chip-label">{{ label }}</span>
-    <button @click="handleRemove" class="ml-1">×</button>
+  <div class="inline-flex bg-gray-200 rounded-full px-3 py-1">
+    <span class="truncate block max-w-[70px] align-middle">{{ label }}</span>
+    <div class="ml-auto">
+            <svg-icon type="mdi" size="20" :path="mdiCloseCircleOutline"
+              :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"></svg-icon>
+          </div>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import { mdiCloseCircleOutline } from '@mdi/js';
+import SvgIcon from "@jamescoyle/vue-icon";
 
 const props = defineProps({
   label: String,
@@ -19,17 +24,4 @@ const handleRemove = () => {
 };
 </script>
 
-<style scoped>
-.chip-container {
-  max-width: 100px; 
-}
-
-.chip-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100px; 
-  display: inline-block;
-  vertical-align: middle;
-}
-</style>
+<style scoped></style>
