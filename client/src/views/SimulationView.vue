@@ -214,7 +214,6 @@ const applyPredefinedScenario = (values) => {
   }
 };
 
-
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 const colorByCompromised = () => {
@@ -365,7 +364,7 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div>
       <div
-        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
+        class="w-64 bg-simulation-color h-[calc(100vh-36px)] float-left px-4 pt-5 overflow-y-auto"
       >
         <div class="flex flex-row">
           <div

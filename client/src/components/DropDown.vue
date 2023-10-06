@@ -5,15 +5,23 @@
     :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
   >
     <div class="flex items-center" @click="isOpen = !isOpen">
-      <div v-if="selectedItems.length === 0">
+      <div v-if="!selectedItems[0]">
         <span class="text-gray-400">
           {{ placeholder }}
         </span>
       </div>
       <div v-else>
-        <span>
-          {{ selectedItems.join(", ") }}
-        </span>
+        <div v-if="multiSelect">
+          <Chip
+            v-for="item in selectedItems"
+            :key="item"
+            :label="item"
+            @remove="handleChipRemove"
+          />
+        </div>
+        <div v-else>
+          <span>{{ selectedItems[0] }}</span>
+        </div>
       </div>
       <div v-if="!isOpen" class="ml-auto">
         <svg-icon type="mdi" size="20" :path="mdiArrowDown"></svg-icon>
@@ -50,6 +58,7 @@
 import { defineProps, defineEmits, ref, watch } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowDown, mdiArrowUp } from "@mdi/js";
+import Chip from "./Chip.vue";
 
 const props = defineProps({
   label: { type: String, default: "" },
@@ -64,13 +73,16 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-const selectedItems = ref(Array.isArray(props.modelValue) ? props.modelValue : []);
+// Check whether it is string(scheme) or array(strategy)
+const selectedItems = ref(
+  Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
+);
 
 watch(
   () => props.modelValue,
   (newVal) => {
-    selectedItems.value = [...newVal];
-  },
+    selectedItems.value = Array.isArray(newVal) ? [...newVal] : [newVal];
+  }
 );
 
 const handleClick = (item) => {
@@ -85,6 +97,13 @@ const handleClick = (item) => {
     emit("update:modelValue", item);
     isOpen.value = false;
   }
+};
+
+const handleChipRemove = (itemToRemove) => {
+  selectedItems.value = selectedItems.value.filter(
+    (item) => item !== itemToRemove
+  );
+  emit("update:modelValue", selectedItems.value);
 };
 
 const isSelected = (item) => selectedItems.value.includes(item);
