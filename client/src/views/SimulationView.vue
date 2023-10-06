@@ -48,7 +48,7 @@ const defaultForm = ref({
   finishTime: null,
   mtdInterval: null,
   scheme: null,
-  selectedStrategies: [],
+  strategies: [],
   totalNodes: null,
   totalLayers: null,
   totalEndpoints: null,
@@ -59,6 +59,26 @@ const defaultForm = ref({
 });
 
 const form = ref({ ...defaultForm.value });
+
+const resetStrategy = () => {
+  form.value.strategies = [];
+};
+
+const maxSelection = (scheme) => {
+  switch (scheme) {
+    case "None":
+      return 0;
+    case "random":
+    case "single":
+      return 1;
+    case "alternative":
+      return 2;
+    case "simultaneous":
+      return 4;
+    default:
+      return 0;
+  }
+};
 
 onMounted(() => {
   // load past state of network and form
@@ -105,6 +125,25 @@ const handleSubmit = async () => {
   if (!form.value.scheme) {
     errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
+  }
+  
+  if (form.value.scheme && form.value.scheme != "None") {
+    const maxStrategies = maxSelection(form.value.scheme);
+
+    if (!form.value.strategies || form.value.strategies.length === 0) {
+      errors.value.strategies = "Please select at least one Strategy";
+      isValid.value = false;
+    } else if (
+      form.value.scheme === "alternative" &&
+      form.value.strategies.length !== 2
+    ) {
+      errors.value.strategies =
+        "Please select exactly 2 Strategies for the 'alternative' scheme";
+      isValid.value = false;
+    } else if (form.value.strategies.length > maxStrategies) {
+      errors.value.strategies = `You can select up to ${maxStrategies} strategies for this scheme`;
+      isValid.value = false;
+    }
   }
 
   if (isNaN(mtdInterval) || mtdInterval <= 0) {
@@ -394,7 +433,20 @@ const plotNetwork = (graphData) => {
                   v-model="form.scheme"
                   label="Scheme"
                   :menu-options="Schemes"
+                  :multi-select="false"
                   :error="errors.scheme"
+                  @update:modelValue="resetStrategy"
+                />
+              </div>
+              <div>
+                <DropDown
+                  placeholder="Select Strategy"
+                  v-model="form.strategies"
+                  label="Strategy"
+                  :menu-options="availableStrategies"
+                  :multi-select="true"
+                  :error="errors.strategies"
+                  :max-selection="maxSelection(form.scheme)"
                 />
               </div>
               <div>
@@ -413,32 +465,6 @@ const plotNetwork = (graphData) => {
                   placeholder="Finish Time"
                   type="text"
                   :error="errors.finishTime"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.mtdInterval"
-                  label="MTD Interval"
-                  placeholder="MTD Interval"
-                  type="text"
-                  :error="errors.mtdInterval"
-                />
-              </div>
-              <div>
-                <DropDown
-                  placeholder="Select Scheme"
-                  v-model="form.scheme"
-                  label="Scheme"
-                  :menu-options="Schemes"
-                  :multi-select="false"
-                  :error="errors.scheme"
-                />
-              </div>
-              <div>
-                <StrategyDropDown
-                  v-model="form.selectedStrategies"
-                  :scheme="form.scheme"
-                  :available-strategies="availableStrategies"
                 />
               </div>
               <div>

@@ -14,15 +14,16 @@
         <div v-else>
           <div v-if="multiSelect">
             <Chip
-            v-for="item in selectedItems"
-            :key="item"
-            :label="item"
-            @remove="handleChipRemove"
-          />
+              v-for="item in selectedItems"
+              :key="item"
+              :label="item"
+              @remove="handleChipRemove"
+            />
           </div>
           <div v-else>
             <span>{{ selectedItems[0] }}</span>
           </div>
+        </div>
         <div class="ml-auto">
           <svg-icon
             type="mdi"
@@ -33,8 +34,8 @@
         </div>
       </div>
     </div>
-  <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
-  <div
+    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+    <div
       v-if="isOpen"
       class="z-10 absolute w-full mt-1 rounded-md bg-white shadow-md overflow-hidden"
     >
@@ -47,8 +48,8 @@
           :class="{
             'hover:cursor-not-allowed text-black hover:text-black':
               item != 'Random',
-              'bg-slate-300': item === selected,
-              'font-bold': isSelected(item),
+            'bg-slate-300': item === selectedItems,
+            'font-bold': isSelected(item),
           }"
         >
           {{ item }}
@@ -68,7 +69,7 @@ const props = defineProps({
   label: { type: String, default: "" },
   placeholder: { type: String, default: "" },
   menuOptions: { type: Array, default: () => [] },
-  modelValue: { type: Array, default: () => [] },
+  modelValue: { type: [Array, String], default: () => [] },
   error: { type: String, default: "" },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: Infinity },
@@ -77,10 +78,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-// Check whether it is string(scheme) or array(strategy)
-const selectedItems = ref(
-  Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue]
-);
+const selectedItems = ref([]);
 
 watch(
   () => props.modelValue,
