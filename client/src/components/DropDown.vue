@@ -30,8 +30,8 @@
             @click="handleClick(item)" :class="{
               'hover:cursor-not-allowed text-black hover:text-black':
                 item != 'Random',
-              'bg-slate-300': item === selected,
               'font-bold': isSelected(item),
+              'bg-slate-300': isSelected(item)
             }">
             {{ item }}
           </li>
