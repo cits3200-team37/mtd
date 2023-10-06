@@ -32,11 +32,6 @@ const availableStrategies = ref([
   "ServiceDiversity",
 ]);
 
-const selectedStrategies = ref([]);
-const firstSelectedStrategy = ref("");
-const secondSelectedStrategy = ref("");
-const thirdSelectedStrategy = ref("");
-
 const currentHost = ref({
   ip: "",
   osType: "",
@@ -46,19 +41,22 @@ const currentHost = ref({
   compromised: false,
 });
 
-const form = ref({
-  startTime: "",
-  finishTime: "",
-  mtdInterval: "",
-  scheme: "",
-  totalNodes: "",
-  totalLayers: "",
-  totalEndpoints: "",
-  totalSubnets: "",
-  totalDatabase: "",
-  targetLayer: "",
-  seed: "",
+const defaultForm = ref({
+  startTime: null,
+  finishTime: null,
+  mtdInterval: null,
+  scheme: null,
+  selectedStrategies: [],
+  totalNodes: null,
+  totalLayers: null,
+  totalEndpoints: null,
+  totalSubnets: null,
+  totalDatabase: null,
+  targetLayer: null,
+  seed: null,
 });
+
+const form = ref({ ...defaultForm.value });
 
 onMounted(() => {
   // load past state of network and form
@@ -133,19 +131,13 @@ const handleSubmit = async () => {
     }
   }
 
-  const validSchemes = [
-    "random",
-    "simultaneous",
-    "alternative",
-    "single",
-    "none",
-  ];
-  if (
-    !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme.toLowerCase())
-  ) {
-    errors.value.scheme =
-      "Invalid scheme. Choose between Random, Simultaneous, Alternative, Single, or None";
+  if (!form.value.scheme) {
+    errors.value.scheme = "Please pick a Scheme";
+    isValid.value = false;
+  }
+
+  if(form.value.scheme && form.value.scheme != "None" && !form.value.selectedStrategies){
+    errors.value.selectedStrategies = "Please pick a Strategy";
     isValid.value = false;
   }
 
@@ -222,17 +214,6 @@ const applyPredefinedScenario = (values) => {
   }
 };
 
-const updateStrategies = (scheme) => {
-  if (scheme === "random" || scheme === "single") {
-    selectedStrategies.value = [undefined];
-  } else if (scheme === "alternative") {
-    selectedStrategies.value = [undefined, undefined];
-  } else if (scheme === "simultaneous") {
-    selectedStrategies.value = [undefined, undefined, undefined];
-  } else {
-    selectedStrategies.value = [];
-  }
-};
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -451,13 +432,13 @@ const plotNetwork = (graphData) => {
                   v-model="form.scheme"
                   label="Scheme"
                   :menu-options="Schemes"
+                  :multi-select="false"
                   :error="errors.scheme"
-                  @update:modelValue="updateStrategies"
                 />
               </div>
               <div>
                 <StrategyDropDown
-                  v-model="selectedStrategies"
+                  v-model="form.selectedStrategies"
                   :scheme="form.scheme"
                   :available-strategies="availableStrategies"
                 />

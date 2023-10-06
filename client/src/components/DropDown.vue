@@ -64,7 +64,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-const selectedItems = ref([...props.modelValue]);
+const selectedItems = ref(Array.isArray(props.modelValue) ? props.modelValue : []);
 
 watch(
   () => props.modelValue,
@@ -80,11 +80,11 @@ const handleClick = (item) => {
     } else if (selectedItems.value.length < props.maxSelection) {
       selectedItems.value.push(item);
     }
+    emit("update:modelValue", selectedItems.value);
   } else {
-    selectedItems.value = [item];
+    emit("update:modelValue", item);
     isOpen.value = false;
   }
-  emit("update:modelValue", selectedItems.value);
 };
 
 const isSelected = (item) => selectedItems.value.includes(item);

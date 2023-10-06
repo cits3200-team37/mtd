@@ -15,6 +15,9 @@ export const useSimulationStore = defineStore("simulation", {
       const reqBody = {
         scheme: this.parameters.scheme,
       };
+      if (this.parameters.selectedStrategies) {
+        reqBody.strategies = this.parameters.selectedStrategies;
+      }
       if (this.parameters.mtdInterval) {
         reqBody.mtdInterval = Number(this.parameters.mtdInterval);
       }
