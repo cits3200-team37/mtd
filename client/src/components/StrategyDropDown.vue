@@ -7,7 +7,7 @@
       :menu-options="availableStrategies"
       :multi-select="true"
       :max-selection="maxSelection()"
-      @update:modelValue="value => emit('update:modelValue', value)"
+      @update:modelValue="(value) => emit('update:modelValue', value)"
     />
   </div>
 </template>
@@ -35,8 +35,11 @@ const emit = defineEmits(["update:modelValue"]);
 const Strategies = ref(Array.isArray(props.modelValue) ? props.modelValue : []);
 
 watch(
-  () => props.modelValue,
-  (val) => (Strategies.value = val),
+  () => props.scheme,
+  () => {
+    Strategies.value = [];
+    emit("update:modelValue", Strategies.value);
+  }
 );
 
 const maxSelection = () => {
