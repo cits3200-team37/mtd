@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex items-center bg-gray-200 rounded px-2 py-1 text-sm">
+  <div class="inline-flex bg-gray-200 rounded-full px-2 py-1 text-xs">
     <span>{{ label }}</span>
     <button @click="handleRemove" class="ml-1">×</button>
   </div>
