@@ -61,18 +61,3 @@
     background: rgb(var(--scrollbar-thumb-hover-color));
   }
 }
-
-*::-webkit-scrollbar {
-  width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-  background-color: rgb(31 31 31);
-  border-radius: 4px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: gray;
-  border-radius: 14px;
-  min-height: 200px;
-}
