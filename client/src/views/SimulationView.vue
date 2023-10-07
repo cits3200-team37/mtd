@@ -62,7 +62,6 @@ onMounted(async () => {
   // load past state of network and form
   if (!simulationStore.strategies) {
     await simulationStore.getStrategies();
-    console.log(simulationStore.strategies);
   }
   if (simulationStore.network && simulationStore.parameters) {
     plotNetwork(simulationStore.network);
