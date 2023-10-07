@@ -4,11 +4,8 @@ on: push
 
 jobs:
   release:
-    runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-13-xlarge]
         include:
           - os: macos-13-xlarge
             script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
@@ -16,6 +13,8 @@ jobs:
             script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
           - os: windows-latest
             script_define: set GITHUB_TOKEN=$PUBLISH_TOKEN &&
+
+    runs-on: [ubuntu-latest, windows-latest, macos-13-xlarge]
 
     steps:
       - uses: actions/checkout@v2
