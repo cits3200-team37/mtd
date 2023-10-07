@@ -2,14 +2,14 @@
   <div
     class="inline-flex bg-gray-200 rounded-full px-3 py-px justify-center content-center cursor-default"
   >
-    <span class="truncate block max-w-xs align-middle text-xs">{{
+    <span class="truncate block max-w-xs align-middle text-xs mr-2">{{
       label
     }}</span>
     <div class="cursor-pointer">
       <svg-icon
         type="mdi"
         size="20"
-        :path="mdiCloseCircleOutline"
+        :path="mdiClose"
         @click.stop="handleRemove"
       ></svg-icon>
     </div>
@@ -18,7 +18,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
-import { mdiCloseCircleOutline } from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 
 const props = defineProps({
