@@ -2,12 +2,8 @@ import random
 from collections import deque
 from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
 from mtdnetwork.mtd.ipshuffle import IPShuffle
-from mtdnetwork.mtd.hosttopologyshuffle import HostTopologyShuffle
-from mtdnetwork.mtd.portshuffle import PortShuffle
 from mtdnetwork.mtd.osdiversity import OSDiversity
 from mtdnetwork.mtd.servicediversity import ServiceDiversity
-from mtdnetwork.mtd.usershuffle import UserShuffle
-from mtdnetwork.mtd.osdiversityassignment import OSDiversityAssignment
 from mtdnetwork.data.constants import MTD_TRIGGER_INTERVAL
 from heapq import heappush, heappop
 

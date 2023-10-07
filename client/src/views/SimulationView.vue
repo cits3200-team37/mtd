@@ -3,6 +3,7 @@ import { onMounted, ref } from "vue";
 import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
+import Scenario from "../components/Scenario.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiArrowLeft } from "@mdi/js";
 import { mdiArrowRight } from "@mdi/js";
@@ -11,7 +12,16 @@ import { useSimulationStore } from "../stores/simulation.js";
 
 const simulationStore = useSimulationStore();
 
-const isOpen = ref(true);
+const graph = ref(true);
+
+const Schemes = ref([
+  "None",
+  "random",
+  "single",
+  "simultaneous",
+  "alternative",
+]);
+
 const showTooltip = ref(false);
 
 const isInputView = ref(true);
@@ -25,20 +35,21 @@ const currentHost = ref({
   compromised: false,
 });
 
-const form = ref({
-  startTime: "",
-  finishTime: "",
-  mtdInterval: "",
-  scheme: "",
-  totalNodes: "",
-  totalLayers: "",
-  totalEndpoints: "",
-  totalSubnets: "",
-  totalDatabase: "",
-  targetLayer: "",
-  terminateCompromiseRatio: "",
-  seed: "",
+const defaultForm = ref({
+  startTime: null,
+  finishTime: null,
+  mtdInterval: null,
+  scheme: null,
+  totalNodes: null,
+  totalLayers: null,
+  totalEndpoints: null,
+  totalSubnets: null,
+  totalDatabase: null,
+  targetLayer: null,
+  seed: null,
 });
+
+const form = ref({ ...defaultForm.value });
 
 onMounted(() => {
   // load past state of network and form
@@ -47,83 +58,135 @@ onMounted(() => {
     // NOTE: could use pinia's storeToRefs, but i think using this
     // and copying objects will be easier for everyone to understand
     form.value = { ...simulationStore.parameters };
+  } else {
+    graph.value = false;
   }
 });
 
 const isValid = ref(true);
 const errors = ref({
-  startTime: "",
-  finishTime: "",
-  mtdInterval: "",
   scheme: "",
+  mtdInterval: "",
+  finishTime: "",
   totalNodes: "",
+  totalLayers: "",
+  totalEndpoints: "",
+  totalSubnets: "",
+  totalDatabase: "",
+  targetLayer: "",
+  seed: "",
 });
 
 const handleSubmit = async () => {
   // Reset errors
+  isValid.value = true;
   Object.keys(errors.value).forEach((key) => {
     errors.value[key] = "";
   });
 
-  if (
-    !form.value.startTime ||
-    isNaN(form.value.startTime) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.startTime = "Start Time must be a non-negative number";
+  const finishTime = Number(form.value.finishTime);
+  const mtdInterval = Number(form.value.mtdInterval);
+  const totalNodes = Number(form.value.totalNodes);
+  const totalLayers = Number(form.value.totalLayers);
+  const totalEndpoints = Number(form.value.totalEndpoints);
+  const totalSubnets = Number(form.value.totalSubnets);
+  const totalDatabase = Number(form.value.totalDatabase);
+  const targetLayer = Number(form.value.targetLayer);
+
+  if (!form.value.scheme) {
+    errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
   }
 
-  if (
-    !form.value.finishTime ||
-    isNaN(form.value.finishTime) ||
-    form.value.finishTime <= form.value.startTime
-  ) {
-    errors.value.finishTime =
-      "Finish Time must be a number greater than Start Time";
+  if (isNaN(mtdInterval) || mtdInterval <= 0) {
+    errors.value.mtdInterval = "Stable test limit: MTD Interval > 0";
     isValid.value = false;
   }
 
-  if (
-    !form.value.mtdInterval ||
-    isNaN(form.value.mtdInterval) ||
-    form.value.startTime < 0
-  ) {
-    errors.value.mtdInterval = "MTD Interval must be a non-negative number";
+  if (isNaN(finishTime) || finishTime < 10 || finishTime > 5000) {
+    errors.value.finishTime = "Stable test limit: 10 <= Finish Time <= 5000";
     isValid.value = false;
   }
 
-  const validSchemes = [
-    "random",
-    "simultaneous",
-    "alternative",
-    "single",
-    "None",
-  ];
-  if (
-    !form.value.scheme ||
-    !validSchemes.includes(form.value.scheme.toLowerCase())
-  ) {
-    errors.value.scheme =
-      "Invalid scheme. Choose between random, simultaneous, alternative, single, or None.";
+  if (isNaN(totalNodes) || totalNodes < 20 || totalNodes > 1000) {
+    errors.value.totalNodes = "Stable test limit: 20 <= Total Nodes <= 1000";
     isValid.value = false;
   }
 
-  if (!form.value.totalNodes || isNaN(form.value.totalNodes)) {
-    errors.value.totalNodes = "Total Nodes must be a number";
-    isValid.value = false;
-  } else if (parseInt(form.value.totalNodes) < 20) {
-    errors.value.totalNodes = "Total Nodes must be 20 or greater";
-    isValid.value = false;
+  if (form.value.totalEndpoints) {
+    if (isNaN(totalEndpoints) || totalEndpoints <= 0) {
+      errors.value.totalEndpoints = "Stable test limit: Total Endpoints > 0";
+      isValid.value = false;
+    } else if (isNaN(totalNodes) || totalEndpoints >= totalNodes) {
+      errors.value.totalEndpoints =
+        "Logical limit: Total Endpoints < Total Nodes";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalSubnets) {
+    if (isNaN(totalSubnets) || totalSubnets <= 4) {
+      errors.value.totalSubnets = "Stable test limit: Total Subnents > 4";
+      isValid.value = false;
+    } else if ((totalNodes - totalEndpoints) / (totalSubnets - 1) <= 2) {
+      errors.value.totalSubnets =
+        "Logical limit: (Total Nodes - Total Endpoints) / (Total Subnets - 1) > 2";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalDatabase) {
+    if (isNaN(totalDatabase)) {
+      errors.value.totalDatabase = "Total Database must be a number";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.totalLayers) {
+    if (isNaN(totalLayers) || totalLayers <= 0 || totalLayers > 6) {
+      errors.value.totalLayers = "Stable test limit: 0 < Total Layers <= 6";
+      isValid.value = false;
+    }
+  }
+
+  if (form.value.targetLayer) {
+    if (isNaN(targetLayer)) {
+      errors.value.targetLayer = "Logical Limit: Target Layer > 0";
+      isValid.value = false;
+    } else if (isNaN(totalLayers) || totalLayers < targetLayer) {
+      errors.value.targetLayer = "Logical Limit: Target Layer <= Total Layers";
+      if (errors.value.totalLayers == "") {
+        errors.value.totalLayers = "Required";
+      }
+      isValid.value = false;
+    }
   }
 
   if (!isValid.value) {
     return;
   }
+
+  graph.value = true;
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+};
+
+const resetSimulation = () => {
+  // Reset the form values
+  form.value = { ...defaultForm.value };
+
+  graph.value = false;
+  resetGraph();
+
+  simulationStore.reset();
+};
+
+const applyPredefinedScenario = (values) => {
+  for (let key in values) {
+    form.value[key] = values[key];
+  }
 };
 
 const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -274,14 +337,14 @@ const plotNetwork = (graphData) => {
 
 <template>
   <div class="flex flex-row">
-    <div v-if="isOpen">
+    <div>
       <div
-        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-auto"
+        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll scrollbar"
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer"
-            :class="{ 'bg-teal-500': isInputView }"
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
+            :class="{ 'bg-sub-color': isInputView }"
             @click="
               () => {
                 isInputView = true;
@@ -291,32 +354,47 @@ const plotNetwork = (graphData) => {
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer"
-            :class="{ 'bg-teal-500': !isInputView }"
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
+            :class="{ 'bg-sub-color': !isInputView }"
             @click="
               () => {
                 isInputView = false;
               }
             "
           >
-            Visualisation
+            Graph
           </div>
         </div>
 
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
+            <button
+              @click="resetSimulation"
+              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+            >
+              Reset
+            </button>
             <form
-              class="flex flex-col space-y-2"
+              class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
               <div>
+                <DropDown
+                  placeholder="Select Scheme"
+                  v-model="form.scheme"
+                  label="Scheme"
+                  :menu-options="Schemes"
+                  :error="errors.scheme"
+                />
+              </div>
+              <div>
                 <FormField
-                  v-model="form.startTime"
-                  label="Start Time"
-                  placeholder="Start Time"
+                  v-model="form.mtdInterval"
+                  label="MTD Interval"
+                  placeholder="MTD Interval"
                   type="text"
-                  :error="errors.startTime"
+                  :error="errors.mtdInterval"
                 />
               </div>
               <div>
@@ -330,36 +408,11 @@ const plotNetwork = (graphData) => {
               </div>
               <div>
                 <FormField
-                  v-model="form.mtdInterval"
-                  label="MTD Interval"
-                  placeholder="MTD Interval"
-                  type="text"
-                  :error="errors.mtdInterval"
-                />
-              </div>
-              <div>
-                <DropDown
-                  v-model="form.scheme"
-                  label="Scheme"
-                  :error="errors.scheme"
-                />
-              </div>
-              <div>
-                <FormField
                   v-model="form.totalNodes"
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
                   :error="errors.totalNodes"
-                />
-              </div>
-              <p class="text-red-500 text-sm">{{ errors.totalNodes }}</p>
-              <div>
-                <FormField
-                  v-model="form.totalLayers"
-                  label="Total Layers"
-                  placeholder="Total Layers"
-                  type="text"
                 />
               </div>
               <div>
@@ -368,6 +421,7 @@ const plotNetwork = (graphData) => {
                   label="Total Endpoints"
                   placeholder="Total Endpoints"
                   type="text"
+                  :error="errors.totalEndpoints"
                 />
               </div>
               <div>
@@ -376,6 +430,7 @@ const plotNetwork = (graphData) => {
                   label="Total Subnets"
                   placeholder="Total Subnets"
                   type="text"
+                  :error="errors.totalSubnets"
                 />
               </div>
               <div>
@@ -384,6 +439,16 @@ const plotNetwork = (graphData) => {
                   label="Total Databases"
                   placeholder="Total Databases"
                   type="text"
+                  :error="errors.totalDatabase"
+                />
+              </div>
+              <div>
+                <FormField
+                  v-model="form.totalLayers"
+                  label="Total Layers"
+                  placeholder="Total Layers"
+                  type="text"
+                  :error="errors.totalLayers"
                 />
               </div>
               <div>
@@ -392,14 +457,7 @@ const plotNetwork = (graphData) => {
                   label="Target Layer"
                   placeholder="Target Layer"
                   type="text"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.terminateCompromiseRatio"
-                  label="Compromise Ratio"
-                  placeholder="Compromise Ratio"
-                  type="text"
+                  :error="errors.targetLayer"
                 />
               </div>
               <div>
@@ -408,6 +466,7 @@ const plotNetwork = (graphData) => {
                   label="Set Seed"
                   placeholder="Set Seed"
                   type="text"
+                  :error="errors.seed"
                 />
               </div>
               <div class="text-center">
@@ -451,21 +510,104 @@ const plotNetwork = (graphData) => {
         </div>
       </div>
     </div>
-    <div class="w-6 h-[calc(100vh-36px)] float-left z-50">
-      <div class="h-[calc(100vh-36px)] flex items-center justify-center">
-        <div v-if="isOpen">
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowLeft" size="24"></svg-icon>
-          </button>
+
+    <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
+      <div v-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)]"></div>
+      <div v-else class="flex-row">
+        <div
+          id="sim_explanation"
+          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-simulation-color scrollbar"
+        >
+          <div class="h-full">
+            <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
+
+            <ul class="list-disc text-sm p-4">
+              <li class="mb-2">
+                Scheme: the manor in which the simulation will employ MTD
+                strategies
+              </li>
+              <li class="mb-2">
+                MTD Interval: the frequency of applying MTD strategies<br />
+              </li>
+              <li class="mb-2">
+                Finish Time: the maximum simulation duration<br />
+              </li>
+              <li class="mb-2">
+                Total Nodes: the number of nodes in the simulated network<br />
+              </li>
+              <li class="mb-2">
+                Total Endpoints: the number of endpoints in the simulated
+                network<br /><span class="text-xs">Default: 5</span>
+              </li>
+              <li class="mb-2">
+                Total Subnets: the number of sub-networks in the simulated
+                network<br /><span class="text-xs">Default: 8</span>
+              </li>
+              <li class="mb-2">
+                Total Databases: the number of databases for the simulated
+                network<br /><span class="text-xs">Default: 2</span>
+              </li>
+              <li class="mb-2">
+                Total Layers: the number of layers in the simulated network<br /><span
+                  class="text-xs"
+                  >Default: 4</span
+                >
+              </li>
+              <li class="mb-2">
+                Target Layer: the layer where the target host will be located<br /><span
+                  class="text-xs"
+                ></span>
+              </li>
+            </ul>
+          </div>
         </div>
-        <div v-else>
-          <button @click="isOpen = !isOpen" class="text-text-color">
-            <svg-icon type="mdi" :path="mdiArrowRight" size="24"></svg-icon>
-          </button>
+        <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
+          <Scenario
+            :scenarioTitle="'Scenario 1'"
+            :scenarioDescription="'Random Scheme'"
+            :scenarioValues="{
+              finishTime: '1000',
+              mtdInterval: '200',
+              scheme: 'random',
+              totalNodes: '20',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 2'"
+            :scenarioDescription="'Simultaneous Scheme'"
+            :scenarioValues="{
+              finishTime: '500',
+              mtdInterval: '100',
+              scheme: 'simultaneous',
+              totalNodes: '50',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 3'"
+            :scenarioDescription="'Alternative Scheme'"
+            :scenarioValues="{
+              finishTime: '300',
+              mtdInterval: '50',
+              scheme: 'alternative',
+              totalNodes: '100',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
+          <Scenario
+            :scenarioTitle="'Scenario 4'"
+            :scenarioValues="{
+              finishTime: '400',
+              mtdInterval: '150',
+              scheme: 'None',
+              totalNodes: '70',
+            }"
+            @apply-scenario="applyPredefinedScenario"
+          />
         </div>
       </div>
     </div>
-    <div id="network-graph" class="flex-1 mr-2 h-[calc(100vh-36px)]"></div>
   </div>
   <!-- NOTE: have left the props this way so it is easier for someone to see what is in the host object -->
   <ToolTip

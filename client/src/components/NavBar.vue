@@ -16,9 +16,7 @@
             }"
           >
             <div v-if="route.active">
-              <div
-                class="top left-0 absolute h-9 bg-white w-1 rounded-md"
-              ></div>
+              <div class="top absolute h-10 bg-white w-0.5 rounded-md"></div>
             </div>
             <div class="flex flex-col items-center justify-center">
               <svg-icon
@@ -52,7 +50,7 @@ import findVersion from "../helpers/findVersion";
 
 onMounted(async () => {
   try {
-    handleVersion(findVersion(window));
+    handleVersion(findVersion(navigator.userAgent));
   } catch (error) {
     console.log(error);
   }
@@ -118,9 +116,7 @@ router.afterEach(async (to, _) => {
 });
 
 const handleVersion = async (version) => {
-  // todo change this to only website when we deploy later
-  // remove ! mark
-  if (!version) {
+  if (version) {
     routes.value.forEach((route) => {
       if (route.path == "/download") {
         routes.value.splice(routes.value.indexOf(route), 1);

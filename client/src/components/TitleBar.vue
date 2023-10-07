@@ -1,6 +1,6 @@
 <template>
-  <div class="drag w-screen inset-x-0 top-0 bg-navbar-primary h-9 pl-20 p-1.5">
-    <div class="flex flex-row items-center justify-center">
+  <div class="drag w-screen top-0 bg-navbar-primary h-9 pt-1.5">
+    <div class="flex justify-center w-[calc(100vw-64px)]">
       <button
         class="no-drag hover:bg-gray-500 hover:opacity-70 rounded-md px-2"
         @click="handleBack"
@@ -14,7 +14,7 @@
         <svg-icon type="mdi" color="white" size="22" :path="mdiArrowRight" />
       </button>
       <div
-        class="no-drag rounded-md bg-background-secondary w-1/3 text-center text-text-color"
+        class="no-drag rounded-md bg-background-secondary w-64 text-center text-text-color"
       >
         <p>{{ router.currentRoute.value.name }}</p>
       </div>
@@ -70,7 +70,7 @@ const os = ref("");
 
 onMounted(async () => {
   try {
-    os.value = await window.electronAPI.operatingSystem();
+    os.value = await window.electronAPI?.operatingSystem();
   } catch (error) {
     console.log(error);
   }
