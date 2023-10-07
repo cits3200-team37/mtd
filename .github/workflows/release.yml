@@ -7,14 +7,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-13-xlarge
+          - os: macos-latest-xl
             script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
           - os: ubuntu-latest
             script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
           - os: windows-latest
             script_define: set GITHUB_TOKEN=$PUBLISH_TOKEN &&
 
-    runs-on: [ubuntu-latest, windows-latest, macos-13-xlarge]
+    runs-on: [ubuntu-latest, windows-latest, macos-latest-xl]
 
     steps:
       - uses: actions/checkout@v2
