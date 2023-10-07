@@ -69,7 +69,7 @@ const props = defineProps({
   label: { type: String, default: "" },
   placeholder: { type: String, default: "" },
   menuOptions: { type: Array, default: () => [] },
-  modelValue: { type: Array, default: () => [] },
+  modelValue: { type: [Array, String], default: () => [] },
   error: { type: String, default: "" },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: Infinity },
@@ -78,10 +78,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
-// Check whether it is string(scheme) or array(strategy)
-const selectedItems = ref(
-  Array.isArray(props.modelValue) ? props.modelValue : [props.modelValue],
-);
+const selectedItems = ref([]);
 
 watch(
   () => props.modelValue,
@@ -96,6 +93,9 @@ const handleClick = (item) => {
       selectedItems.value = selectedItems.value.filter((i) => i !== item);
     } else if (selectedItems.value.length < props.maxSelection) {
       selectedItems.value.push(item);
+      if (selectedItems.value.length == props.maxSelection) {
+        isOpen.value = false;
+      }
     }
     emit("update:modelValue", selectedItems.value);
   } else {

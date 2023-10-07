@@ -73,7 +73,7 @@ const maxSelection = (scheme) => {
     case "alternative":
       return 2;
     case "simultaneous":
-      return 4;
+      return availableStrategies.value.length;
     default:
       return 0;
   }
