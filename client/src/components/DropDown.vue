@@ -41,11 +41,9 @@
           <li
             v-for="(item, index) in menuOptions"
             :key="index"
-            class="px-4 py-2 text-sm text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+            class="px-4 py-2 text-xs text-black leading-5 hover:bg-slate-300 hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
             @click="handleClick(item)"
             :class="{
-              'hover:cursor-not-allowed text-black hover:text-black':
-                item != 'Random',
               'font-bold': isSelected(item),
               'bg-slate-300': isSelected(item),
             }"
@@ -72,7 +70,7 @@ const props = defineProps({
   modelValue: { type: [Array, String], default: () => [] },
   error: { type: String, default: "" },
   multiSelect: { type: Boolean, default: false },
-  maxSelection: { type: Number, default: Infinity },
+  maxSelection: { type: Number, default: 0 },
 });
 
 const emit = defineEmits(["update:modelValue"]);
