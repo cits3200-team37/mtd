@@ -1,8 +1,10 @@
-from mtdnetwork.mtd import MTD
+'''Module of MTD strategy to diversify network services'''
 import random
+from mtdnetwork.mtd import MTD
 
 
 class ServiceDiversity(MTD):
+    '''Class of diversifying network services'''
     def __init__(self, network=None, shuffles=50):
         self.shuffles = shuffles
         super().__init__(
@@ -13,6 +15,7 @@ class ServiceDiversity(MTD):
         )
 
     def mtd_operation(self, adversary=None):
+        '''Method to implement service diversity to network'''
         service_generator = self.network.get_service_generator()
         hosts = self.network.get_hosts()
         for host_id, host_instance in hosts.items():

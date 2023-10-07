@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+const BACKEND_URL = "http://localhost:8001";
 
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
@@ -12,24 +13,33 @@ export const useSimulationStore = defineStore("simulation", {
   actions: {
     async simulate(simulateFormValues) {
       this.parameters = { ...simulateFormValues };
-      // const reqBody = {
-      //   networkSizeList: Number(this.parameters.networkSizeList),
-      //   startTime: Number(this.parameters.startTime),
-      //   finishTime: Number(this.parameters.finishTime),
-      //   mtdInterval: Number(this.parameters.mtdInterval),
-      //   scheme: this.parameters.scheme.toLowerCase(),
-      //   totalNodes: Number(this.parameters.totalNodes),
-      // };
       const reqBody = {
-        finishTime: 3000,
-        mtdInterval: 200,
-        scheme: "None",
-        totalNodes: 100,
+        scheme: this.parameters.scheme,
+        mtdInterval: Number(this.parameters.mtdInterval),
+        finishTime: Number(this.parameters.finishTime),
+        totalNodes: Number(this.parameters.totalNodes),
       };
-      const { data } = await axios.post(
-        "http://localhost:8001/simulate",
-        reqBody,
-      );
+
+      if (this.parameters.totalEndpoints) {
+        reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);
+      }
+      if (this.parameters.totalSubnets) {
+        reqBody.totalSubnets = Number(this.parameters.totalSubnets);
+      }
+      if (this.parameters.totalDatabase) {
+        reqBody.totalDatabase = Number(this.parameters.totalDatabase);
+      }
+      if (this.parameters.totalLayers) {
+        reqBody.totalLayers = Number(this.parameters.totalLayers);
+      }
+      if (this.parameters.targetLayer) {
+        reqBody.targetLayer = Number(this.parameters.targetLayer);
+      }
+      if (this.parameters.seed) {
+        reqBody.seed = parseInt(this.parameters.seed);
+      }
+
+      const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
       this.network = network;
       this.attackRecord = attack_record;
@@ -39,6 +49,12 @@ export const useSimulationStore = defineStore("simulation", {
     async getStrategies() {
       const { data } = await axios.get("http://localhost:8001/strategies");
       this.strategies = data;
+    },
+    reset() {
+      this.parameters = null;
+      this.network = null;
+      this.attackRecord = null;
+      this.mtdRecord = null;
     },
   },
 });
