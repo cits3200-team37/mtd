@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-flex bg-gray-200 rounded-full px-3 py-px justify-center content-center cursor-default"
+    class="inline-flex text-white bg-teal-600 rounded-full px-3 py-px justify-center content-center cursor-default"
   >
     <span class="truncate block max-w-xs align-middle text-xs mr-2">{{
       label
