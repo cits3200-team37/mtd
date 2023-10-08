@@ -88,8 +88,7 @@ def simulate():
 
     visible_hosts = []
     for c_host in result._network.reachable:
-        visible_hosts = visible_hosts + \
-            list(result._network.graph.neighbors(c_host))
+        visible_hosts = visible_hosts + list(result._network.graph.neighbors(c_host))
 
     visible_hosts = visible_hosts + result._network.reachable
     visible_hosts = visible_hosts + result._network.exposed_endpoints
