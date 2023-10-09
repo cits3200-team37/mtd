@@ -23,10 +23,10 @@ const Schemes = ref([
 ]);
 
 const availableStrategies = ref([
-  "CompleteTopologyShuffle",
-  "IPShuffle",
-  "OSDiversity",
-  "ServiceDiversity",
+  "IP Shuffle",
+  "OS Diversity",
+  "Service Diversity",
+  "Complete Topology Shuffle",
 ]);
 
 const showTooltip = ref(false);
@@ -432,7 +432,6 @@ const plotNetwork = (graphData) => {
                   v-model="form.scheme"
                   label="Scheme"
                   :menu-options="Schemes"
-                  :multi-select="false"
                   :error="errors.scheme"
                   @update:modelValue="resetStrategy"
                 />
@@ -470,6 +469,7 @@ const plotNetwork = (graphData) => {
                   v-model="form.strategies"
                   label="Strategy"
                   :menu-options="availableStrategies"
+                  :isStrategy="true"
                   :multi-select="true"
                   :error="errors.strategies"
                   :max-selection="maxSelection(form.scheme)"
@@ -629,7 +629,7 @@ const plotNetwork = (graphData) => {
               finishTime: '1000',
               mtdInterval: '200',
               scheme: 'random',
-              strategies: ['CompleteTopologyShuffle'],
+              strategies: [],
               totalNodes: '20',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -641,7 +641,7 @@ const plotNetwork = (graphData) => {
               finishTime: '500',
               mtdInterval: '100',
               scheme: 'simultaneous',
-              strategies: ['IPShuffle', 'OSDiversity', 'ServiceDiversity'],
+              strategies: ['IP Shuffle', 'OS Diversity', 'Service Diversity'],
               totalNodes: '50',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -653,7 +653,7 @@ const plotNetwork = (graphData) => {
               finishTime: '300',
               mtdInterval: '50',
               scheme: 'alternative',
-              strategies: ['IPShuffle', 'OSDiversity'],
+              strategies: ['IP Shuffle', 'OS Diversity'],
               totalNodes: '100',
             }"
             @apply-scenario="applyPredefinedScenario"

@@ -5,7 +5,7 @@
       class="p-1 mt-2 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer hover:border-gray-400"
       :class="{ 'mb-2.5': !isOpen, 'border-red-500 border-4': error }"
     >
-      <div class="flex items-center" @click="isOpen = !isOpen">
+      <div class="flex items-center" @click="toggleDropdown">
         <div v-if="!selectedItems[0]">
           <span class="text-gray-400">
             {{ placeholder }}
@@ -69,6 +69,7 @@ const props = defineProps({
   menuOptions: { type: Array, default: () => [] },
   modelValue: { type: [Array, String], default: () => [] },
   error: { type: String, default: "" },
+  isStrategy: { type: Boolean, default: false },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: 0 },
 });
@@ -84,6 +85,12 @@ watch(
     selectedItems.value = Array.isArray(newVal) ? [...newVal] : [newVal];
   },
 );
+
+const toggleDropdown = () => {
+  if (!props.isStrategy || (props.isStrategy && props.maxSelection != 0)) {
+    isOpen.value = !isOpen.value;
+  }
+};
 
 const handleClick = (item) => {
   if (props.multiSelect) {
