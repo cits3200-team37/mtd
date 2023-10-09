@@ -41,7 +41,7 @@
           <li
             v-for="(item, index) in menuOptions"
             :key="index"
-            class="px-4 py-2 text-xs text-black leading-5 hover:bg-sub-color hover:text-black focus:outline-none focus:bg-gray-50 hover:cursor-pointer"
+            class="px-4 py-2 text-xs text-black leading-5 hover:bg-sub-color hover:text-black hover:cursor-pointer"
             @click="handleClick(item)"
             :class="{
               'font-bold': isSelected(item),
