@@ -66,8 +66,8 @@ const resetStrategy = () => {
 const maxSelection = (scheme) => {
   switch (scheme) {
     case "None":
-      return 0;
     case "random":
+      return 0;
     case "single":
       return 1;
     case "alternative":
