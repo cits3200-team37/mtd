@@ -126,15 +126,15 @@ const handleSubmit = async () => {
     isValid.value = false;
   }
 
-  if (form.value.scheme && form.value.scheme != "None") {
+  if (form.value.scheme && form.value.scheme != "None" && form.value.scheme != "random") {
     const maxStrategies = maxSelection(form.value.scheme);
 
-    if (!form.value.strategies || form.value.strategies.length === 0) {
+    if (!form.value.strategies || form.value.strategies.length == 0) {
       errors.value.strategies = "Please select at least one Strategy";
       isValid.value = false;
     } else if (
-      form.value.scheme === "alternative" &&
-      form.value.strategies.length !== 2
+      form.value.scheme == "alternative" &&
+      form.value.strategies.length != 2
     ) {
       errors.value.strategies =
         "Please select exactly 2 Strategies for the 'alternative' scheme";
