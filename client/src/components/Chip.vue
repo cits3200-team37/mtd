@@ -1,6 +1,6 @@
 <template>
   <div
-    class="inline-flex text-white rounded-full bg-chip-color text-center justify-center content-center cursor-default py-1 px-3 my-0.5"
+    class="inline-flex text-white rounded-full bg-sub-color text-center justify-center content-center cursor-default py-1 px-3 my-0.5"
   >
     <span
       class="truncate block max-w-xs align-middle text-xs mr-2 justify-self-center self-center"
