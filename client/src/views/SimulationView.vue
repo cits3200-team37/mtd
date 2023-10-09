@@ -386,7 +386,7 @@ const plotNetwork = (graphData) => {
   <div class="flex flex-row">
     <div>
       <div
-        class="w-64 bg-simulation-color h-[calc(100vh-36px)] float-left px-4 pt-5 overflow-y-auto"
+        class="w-72 bg-simulation-color h-[calc(100vh-36px)] float-left px-4 pt-5 overflow-y-auto"
       >
         <div class="flex flex-row">
           <div
