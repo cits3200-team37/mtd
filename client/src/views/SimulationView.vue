@@ -126,7 +126,11 @@ const handleSubmit = async () => {
     isValid.value = false;
   }
 
-  if (form.value.scheme && form.value.scheme != "None" && form.value.scheme != "random") {
+  if (
+    form.value.scheme &&
+    form.value.scheme != "None" &&
+    form.value.scheme != "random"
+  ) {
     const maxStrategies = maxSelection(form.value.scheme);
 
     if (!form.value.strategies || form.value.strategies.length == 0) {
