@@ -44,14 +44,15 @@ markdown_extensions:
   - attr_list
 
 nav:
-  - Home: index.md
+  - Home:
+      - Introduction: index.md
+      - MkDocs Instructions: mkdocs_instructions.md
   - User Guide:
       - Simulation: user/simulation_instructions.md
       - Download App: user/download_instructions.md
   - Back End:
       - End points: backend/endpoints.md
   - MTD Network Code Base: 
-      - Introduction: mtdnetwork/introduction.md
       - MTD:
           - MTD init: mtdnetwork/mtd/mtdinit.md
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
