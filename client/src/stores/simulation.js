@@ -18,7 +18,9 @@ export const useSimulationStore = defineStore("simulation", {
         finishTime: Number(this.parameters.finishTime),
         totalNodes: Number(this.parameters.totalNodes),
       };
-
+      if (this.parameters.strategies) {
+        reqBody.strategies = this.parameters.strategies;
+      }
       if (this.parameters.totalEndpoints) {
         reqBody.totalEndpoints = Number(this.parameters.totalEndpoints);
       }
@@ -27,6 +29,15 @@ export const useSimulationStore = defineStore("simulation", {
       }
       if (this.parameters.totalDatabase) {
         reqBody.totalDatabase = Number(this.parameters.totalDatabase);
+      }
+      if (this.parameters.totalLayers) {
+        reqBody.totalLayers = Number(this.parameters.totalLayers);
+      }
+      if (this.parameters.targetLayer) {
+        reqBody.targetLayer = Number(this.parameters.targetLayer);
+      }
+      if (this.parameters.seed) {
+        reqBody.seed = parseInt(this.parameters.seed);
       }
       if (this.parameters.totalLayers) {
         reqBody.totalLayers = Number(this.parameters.totalLayers);
