@@ -66,6 +66,7 @@ const currentHost = ref({
 });
 
 const form = ref({ ...defaultForm.value });
+const strategies = ref(null);
 
 const resetStrategy = () => {
   form.value.strategies = [];
@@ -81,7 +82,7 @@ const maxSelection = (scheme) => {
     case "alternative":
       return 2;
     case "simultaneous":
-      return availableStrategies.value.length;
+      return strategies.value.length;
     default:
       return 0;
   }
@@ -92,6 +93,7 @@ onMounted(async () => {
   if (!simulationStore.strategies) {
     await simulationStore.getStrategies();
   }
+  strategies.value = [...simulationStore.strategies];
   if (simulationStore.network && simulationStore.parameters) {
     plotNetwork(simulationStore.network);
     // NOTE: could use pinia's storeToRefs, but i think using this
@@ -101,8 +103,6 @@ onMounted(async () => {
     graph.value = false;
   }
 });
-
-const strategies = ref([...simulationStore.strategies]);
 
 const closeModal = () => {
   showModal.value = false;
@@ -583,7 +583,7 @@ const plotServiceNetwork = (graphData) => {
                   placeholder="Select Strategy"
                   v-model="form.strategies"
                   label="Strategy"
-                  :menu-options="availableStrategies"
+                  :menu-options="strategies"
                   :isStrategy="true"
                   :multi-select="true"
                   :error="errors.strategies"
