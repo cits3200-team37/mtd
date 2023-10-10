@@ -30,7 +30,6 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const toggleTheme = (theme) => {
-  console.log(theme);
   emit("update:modelValue", theme);
 };
 </script>

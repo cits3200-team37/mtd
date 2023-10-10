@@ -49,8 +49,6 @@ export const useSimulationStore = defineStore("simulation", {
         reqBody.seed = parseInt(this.parameters.seed);
       }
 
-      console.log(reqBody);
-
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
       const { network, attack_record, mtd_record } = data;
       this.network = network;
