@@ -47,7 +47,7 @@ export const useSimulationStore = defineStore("simulation", {
       // TODO: set other response variables related to the data object from the api call
     },
     async getStrategies() {
-      const { data } = await axios.get("http://localhost:8001/strategies");
+      const { data } = await axios.get(`${BACKEND_URL}/strategies`);
       this.strategies = data;
     },
     reset() {

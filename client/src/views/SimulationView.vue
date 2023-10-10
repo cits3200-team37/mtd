@@ -43,6 +43,7 @@ const defaultForm = ref({
   totalDatabase: null,
   targetLayer: null,
   seed: null,
+  strategies: [],
 });
 
 const serviceNetworkHost = ref(null);
@@ -72,6 +73,8 @@ onMounted(async () => {
     graph.value = false;
   }
 });
+
+const strategies = ref([...simulationStore.strategies]);
 
 const closeModal = () => {
   showModal.value = false;
