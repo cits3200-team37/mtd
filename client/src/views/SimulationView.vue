@@ -20,13 +20,6 @@ const Schemes = ref([
   "alternative",
 ]);
 
-const availableStrategies = ref([
-  "IP Shuffle",
-  "OS Diversity",
-  "Service Diversity",
-  "Complete Topology Shuffle",
-]);
-
 const showTooltip = ref(false);
 
 const showModal = ref(false);
