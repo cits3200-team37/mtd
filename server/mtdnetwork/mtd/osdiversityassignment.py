@@ -376,11 +376,11 @@ ECC = sum( P(e)* (1-P(e))  * sum(connectivity function) )
 
 DAP = argmax(ECC)
 
-1. problems for connectivity function: one type (client only) vs two types (client & database)? 
+1. problems for connectivity function: one type (client only) vs two types (client & database)?
 
 2. how can we determine the probability of compromise of each variant?
 
- - compromise event e = OS variant v, 
+ - compromise event e = OS variant v,
  - but the variants in our model are vulnerabilities on services?
 
 
