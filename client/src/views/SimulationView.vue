@@ -792,7 +792,7 @@ const plotServiceNetwork = (graphData) => {
       @mounted="plotServiceNetwork(modalServiceGraph)"
       @close="closeModal"
     >
-      <div class="h-full divide-x-2 divide-zinc-600 flex">
+      <div class="h-full divide-x-2 divide-zinc-600 flex overflow-hidden">
         <div id="service-network-graph" class="h-full w-1/2"></div>
         <div class="w-1/2 flex-col">
           <div class="flex justify-center">
