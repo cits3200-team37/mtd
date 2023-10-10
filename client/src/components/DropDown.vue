@@ -2,8 +2,12 @@
   <label>{{ label }}</label>
   <div class="relative">
     <div
-      class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer hover:border-gray-400"
-      :class="{ 'border-red-500 border-4': error }"
+      class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
+      :class="{
+        'border-red-500 border-4': error,
+        'bg-slate-100 hover:cursor-not-allowed':
+          maxSelection == 0 && isStrategy,
+      }"
     >
       <div class="flex items-center" @click="toggleDropdown">
         <div v-if="!selectedItems[0]">
@@ -78,6 +82,14 @@ const emit = defineEmits(["update:modelValue"]);
 
 const isOpen = ref(false);
 const selectedItems = ref([]);
+
+watch(
+  // close on new max selection value
+  () => props.maxSelection,
+  () => {
+    isOpen.value = false;
+  },
+);
 
 watch(
   () => props.modelValue,
