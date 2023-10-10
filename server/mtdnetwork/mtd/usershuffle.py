@@ -1,9 +1,11 @@
-'''Module of MTD strategy that randomly reassigns users to network hosts'''
+"""Module of MTD strategy that randomly reassigns users to network hosts"""
 import random
 from mtdnetwork.mtd import MTD
 
+
 class UserShuffle(MTD):
-    '''Class to implement MTD strategy'''
+    """Class to implement MTD strategy"""
+
     def __init__(self, network=None):
         super().__init__(
             name="UserShuffle",
