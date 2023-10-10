@@ -20,6 +20,13 @@ const Schemes = ref([
   "alternative",
 ]);
 
+const availableStrategies = ref([
+  "IP Shuffle",
+  "OS Diversity",
+  "Service Diversity",
+  "Complete Topology Shuffle",
+]);
+
 const showTooltip = ref(false);
 
 const showModal = ref(false);
@@ -36,6 +43,7 @@ const defaultForm = ref({
   finishTime: null,
   mtdInterval: null,
   scheme: null,
+  strategies: [],
   totalNodes: null,
   totalLayers: null,
   totalEndpoints: null,
@@ -58,6 +66,26 @@ const currentHost = ref({
 });
 
 const form = ref({ ...defaultForm.value });
+
+const resetStrategy = () => {
+  form.value.strategies = [];
+};
+
+const maxSelection = (scheme) => {
+  switch (scheme) {
+    case "None":
+    case "random":
+      return 0;
+    case "single":
+      return 1;
+    case "alternative":
+      return 2;
+    case "simultaneous":
+      return availableStrategies.value.length;
+    default:
+      return 0;
+  }
+};
 
 onMounted(async () => {
   // load past state of network and form
@@ -113,6 +141,29 @@ const handleSubmit = async () => {
   if (!form.value.scheme) {
     errors.value.scheme = "Please pick a Scheme";
     isValid.value = false;
+  }
+
+  if (
+    form.value.scheme &&
+    form.value.scheme != "None" &&
+    form.value.scheme != "random"
+  ) {
+    const maxStrategies = maxSelection(form.value.scheme);
+
+    if (!form.value.strategies || form.value.strategies.length == 0) {
+      errors.value.strategies = "Please select at least one Strategy";
+      isValid.value = false;
+    } else if (
+      form.value.scheme == "alternative" &&
+      form.value.strategies.length != 2
+    ) {
+      errors.value.strategies =
+        "Please select exactly 2 Strategies for the 'alternative' scheme";
+      isValid.value = false;
+    } else if (form.value.strategies.length > maxStrategies) {
+      errors.value.strategies = `You can select up to ${maxStrategies} strategies for this scheme`;
+      isValid.value = false;
+    }
   }
 
   if (isNaN(mtdInterval) || mtdInterval <= 0) {
@@ -450,7 +501,7 @@ const plotServiceNetwork = (graphData) => {
   <div class="flex flex-row">
     <div>
       <div
-        class="w-48 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll scrollbar"
+        class="w-64 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll scrollbar"
       >
         <div class="flex flex-row">
           <div
@@ -497,6 +548,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Scheme"
                   :menu-options="Schemes"
                   :error="errors.scheme"
+                  @update:modelValue="resetStrategy"
                 />
               </div>
               <div>
@@ -524,6 +576,18 @@ const plotServiceNetwork = (graphData) => {
                   placeholder="Total Nodes"
                   type="text"
                   :error="errors.totalNodes"
+                />
+              </div>
+              <div>
+                <DropDown
+                  placeholder="Select Strategy"
+                  v-model="form.strategies"
+                  label="Strategy"
+                  :menu-options="availableStrategies"
+                  :isStrategy="true"
+                  :multi-select="true"
+                  :error="errors.strategies"
+                  :max-selection="maxSelection(form.scheme)"
                 />
               </div>
               <div>
@@ -680,6 +744,7 @@ const plotServiceNetwork = (graphData) => {
               finishTime: '1000',
               mtdInterval: '200',
               scheme: 'random',
+              strategies: [],
               totalNodes: '20',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -691,6 +756,7 @@ const plotServiceNetwork = (graphData) => {
               finishTime: '500',
               mtdInterval: '100',
               scheme: 'simultaneous',
+              strategies: ['IP Shuffle', 'OS Diversity', 'Service Diversity'],
               totalNodes: '50',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -702,6 +768,7 @@ const plotServiceNetwork = (graphData) => {
               finishTime: '300',
               mtdInterval: '50',
               scheme: 'alternative',
+              strategies: ['IP Shuffle', 'OS Diversity'],
               totalNodes: '100',
             }"
             @apply-scenario="applyPredefinedScenario"
@@ -712,6 +779,7 @@ const plotServiceNetwork = (graphData) => {
               finishTime: '400',
               mtdInterval: '150',
               scheme: 'None',
+              strategies: [],
               totalNodes: '70',
             }"
             @apply-scenario="applyPredefinedScenario"

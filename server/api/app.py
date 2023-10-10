@@ -34,6 +34,7 @@ def simulate():
     mtd_interval = request.json.get("mtdInterval")
     finish_time = request.json.get("finishTime")
     total_nodes = request.json.get("totalNodes")
+    strategies = request.json.get("strategies")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
     total_database = request.json.get("totalDatabase")
