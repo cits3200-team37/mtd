@@ -8,6 +8,7 @@ export const useSimulationStore = defineStore("simulation", {
     network: null,
     attackRecord: null,
     mtdRecord: null,
+    compromiseMetrics: null,
   }),
   actions: {
     async simulate(simulateFormValues) {
@@ -50,17 +51,19 @@ export const useSimulationStore = defineStore("simulation", {
       }
 
       const { data } = await axios.post(`${BACKEND_URL}/simulate`, reqBody);
-      const { network, attack_record, mtd_record } = data;
+      const { network, attack_record, mtd_record, compromise_metrics } = data;
       this.network = network;
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
-      // TODO: set other response variables related to the data object from the api call
+      this.compromiseMetrics = compromise_metrics
+      
     },
     reset() {
       this.parameters = null;
       this.network = null;
       this.attackRecord = null;
       this.mtdRecord = null;
+      this.compromiseMetrics = null;
     },
   },
 });

@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import SimulationView from "../views/SimulationView.vue";
 import ChartView from "../views/ChartView.vue";
-import StatisticsView from "../views/StatisticsView.vue";
 import SettingsView from "../views/SettingsView.vue";
 import DownloadView from "../views/DownloadView.vue";
 
@@ -24,11 +23,6 @@ const router = createRouter({
       path: "/charts",
       name: "Charts",
       component: ChartView,
-    },
-    {
-      path: "/statistics",
-      name: "Statistics",
-      component: StatisticsView,
     },
     {
       path: "/settings",
