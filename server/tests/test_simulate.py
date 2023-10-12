@@ -135,3 +135,15 @@ def test_mtd_simulation_simulatneous(client):
         expected_response = json.load(f)
 
     assert_response_equals_expected(response_data, expected_response)
+
+
+def test_scheme_does_not_exist(client):
+    req_body = {
+        "finishTime": 3000,
+        "mtdInterval": 200,
+        "totalNodes": 50,
+        "scheme": "CITS3200",
+    }
+    response = client.post("/simulate", json=req_body)
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "scheme CITS3200 does not exist"}
