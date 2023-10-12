@@ -48,7 +48,7 @@ def simulate():
         return {"Error": "mtd_interval, finish_time, total_nodes must be provided"}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
-    if scheme is not None and scheme not in ["random", "None"]:
+    if scheme is not None and scheme != "random":
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
         custom_strategies = []
