@@ -29,7 +29,6 @@ def test_mtd_simulation_none(client):
         "mtdInterval": 200,
         "scheme": "random",
         "totalNodes": 50,
-        "seed": 3200,
     }
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 200

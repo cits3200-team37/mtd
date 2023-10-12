@@ -1,5 +1,7 @@
 import pytest
 from api import app
+import random
+import numpy as np
 
 
 @pytest.fixture()
@@ -14,4 +16,6 @@ def app_fixture():
 
 @pytest.fixture()
 def client(app_fixture):
+    random.seed(3200)
+    np.random.seed(3200)
     return app_fixture.test_client()
