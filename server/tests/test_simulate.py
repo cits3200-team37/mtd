@@ -185,3 +185,15 @@ def test_strategy_does_not_exist(client):
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 400
     assert response.get_json() == {"error": "Strategy 'CITS3200' does not exist"}
+
+
+def test_strategy_not_specified(client):
+    req_body = {
+        "finishTime": 3000,
+        "mtdInterval": 200,
+        "totalNodes": 50,
+        "scheme": "single",
+    }
+    response = client.post("/simulate", json=req_body)
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "MTD strategy not specified"}
