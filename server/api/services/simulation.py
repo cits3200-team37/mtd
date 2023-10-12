@@ -81,7 +81,7 @@ def run_simulation(
     attack_operation.proceed_attack()
 
     # start mtd
-    if scheme != "None":
+    if scheme is not None:
         mtd_operation = MTDOperation(
             env=env,
             end_event=end_event,
