@@ -27,7 +27,7 @@ def test_mtd_simulation_none(client):
     req_body = {
         "finishTime": 3000,
         "mtdInterval": 200,
-        "scheme": "None",
+        "scheme": "random",
         "totalNodes": 50,
         "seed": 3200,
     }
@@ -37,7 +37,7 @@ def test_mtd_simulation_none(client):
     response_data = json.loads(response.data)
     expected_response = None
 
-    with open("./tests/data/mtd_simulation_none.json", "r") as f:
+    with open("./tests/data/mtd_simulation_random.json", "r") as f:
         expected_response = json.load(f)
 
     assert_response_equals_expected(response_data, expected_response)
