@@ -23,7 +23,7 @@ def assert_response_equals_expected(response, expected):
         assert node in expected["network"]["nodes"]
 
 
-def test_mtd_simulation_none(client):
+def test_mtd_simulation_random(client):
     req_body = {
         "finishTime": 3000,
         "mtdInterval": 200,
@@ -40,3 +40,33 @@ def test_mtd_simulation_none(client):
         expected_response = json.load(f)
 
     assert_response_equals_expected(response_data, expected_response)
+
+
+def test_mtd_simulation_single(client):
+    req_body = {
+        "finishTime": 3000,
+        "mtdInterval": 200,
+        "scheme": "single",
+        "totalNodes": 50,
+    }
+    strategies = [
+        "IP Shuffle",
+        "OS Diversity",
+        "Service Diversity",
+        "Complete Topology Shuffle",
+    ]
+    for strategy in strategies:
+        req_body["strategies"] = [strategy]
+
+        response = client.post("/simulate", json=req_body)
+        assert response.status_code == 200
+
+        response_data = json.loads(response.data)
+        expected_response = None
+
+        with open(
+            f"./tests/data/mtd_simulation_single_{strategy.replace(' ','_')}.json", "r"
+        ) as f:
+            expected_response = json.load(f)
+
+        assert_response_equals_expected(response_data, expected_response)
