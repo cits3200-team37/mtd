@@ -55,8 +55,7 @@ export const useSimulationStore = defineStore("simulation", {
       this.network = network;
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
-      this.compromiseMetrics = compromise_metrics
-      
+      this.compromiseMetrics = compromise_metrics;
     },
     reset() {
       this.parameters = null;
