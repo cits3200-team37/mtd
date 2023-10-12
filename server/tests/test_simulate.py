@@ -70,3 +70,27 @@ def test_mtd_simulation_single(client):
             expected_response = json.load(f)
 
         assert_response_equals_expected(response_data, expected_response)
+
+
+def test_mtd_simulation_alternative(client):
+    req_body = {
+        "finishTime": 3000,
+        "mtdInterval": 200,
+        "scheme": "alternative",
+        "totalNodes": 50,
+        "strategies": ["IP Shuffle", "OS Diversity"],
+    }
+
+    response = client.post("/simulate", json=req_body)
+    assert response.status_code == 200
+
+    response_data = json.loads(response.data)
+    expected_response = None
+
+    with open("./tests/data/mtd_simulation_alternative.json", "w") as f:
+        json.dump(response_data, f, indent=4)
+
+    with open("./tests/data/mtd_simulation_alternative.json", "r") as f:
+        expected_response = json.load(f)
+
+    assert_response_equals_expected(response_data, expected_response)
