@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
-from experiments.run import simulate_without_saving
+from api.services import run_simulation
 from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
 from mtdnetwork.mtd.ipshuffle import IPShuffle
 from mtdnetwork.mtd.osdiversity import OSDiversity
@@ -62,7 +62,7 @@ def simulate():
     if scheme == "single" and len(custom_strategies) > 1:
         return {"error": "More than one MTD strategy specified for single scheme"}, 400
 
-    result = simulate_without_saving(
+    result = run_simulation(
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
