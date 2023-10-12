@@ -167,3 +167,21 @@ def test_multiple_strategies_for_single_scheme(client):
     assert response.get_json() == {
         "error": "More than one MTD strategy specified for single scheme"
     }
+
+
+def test_strategy_does_not_exist(client):
+    req_body = {
+        "finishTime": 3000,
+        "mtdInterval": 200,
+        "totalNodes": 50,
+        "scheme": "single",
+        "strategies": [
+            "IP Shuffle",
+            "CITS3200",
+            "Service Diversity",
+            "Complete Topology Shuffle",
+        ],
+    }
+    response = client.post("/simulate", json=req_body)
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "Strategy 'CITS3200' does not exist"}
