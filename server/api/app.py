@@ -49,7 +49,7 @@ def simulate():
         return {"Error": "mtd_interval, finish_time, total_nodes must be provided"}, 400
 
     if scheme is not None and scheme not in available_schemes:
-        return {"error": f"scheme {scheme} does not exist"}
+        return {"error": f"scheme {scheme} does not exist"}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
     if scheme is not None and scheme != "random":
