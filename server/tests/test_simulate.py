@@ -32,7 +32,7 @@ def test_mtd_simulation_none(client):
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 200
 
-    response_data = json.loads(response.data)
+    response_data = response.get_json()
     expected_response = None
 
     with open("./tests/data/mtd_simulation_none.json", "r") as f:
@@ -51,7 +51,7 @@ def test_mtd_simulation_random(client):
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 200
 
-    response_data = json.loads(response.data)
+    response_data = response.get_json()
     expected_response = None
 
     with open("./tests/data/mtd_simulation_random.json", "r") as f:
@@ -79,7 +79,7 @@ def test_mtd_simulation_single(client):
         response = client.post("/simulate", json=req_body)
         assert response.status_code == 200
 
-        response_data = json.loads(response.data)
+        response_data = response.get_json()
         expected_response = None
 
         with open(
@@ -102,7 +102,7 @@ def test_mtd_simulation_alternative(client):
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 200
 
-    response_data = json.loads(response.data)
+    response_data = response.get_json()
     expected_response = None
 
     with open("./tests/data/mtd_simulation_alternative.json", "r") as f:
@@ -128,7 +128,7 @@ def test_mtd_simulation_simulatneous(client):
     response = client.post("/simulate", json=req_body)
     assert response.status_code == 200
 
-    response_data = json.loads(response.data)
+    response_data = response.get_json()
     expected_response = None
 
     with open("./tests/data/mtd_simulation_simultaneous.json", "r") as f:
