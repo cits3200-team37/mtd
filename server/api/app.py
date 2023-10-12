@@ -17,6 +17,7 @@ strategy_mapping = {
     "Service Diversity": ServiceDiversity,
     "Complete Topology Shuffle": CompleteTopologyShuffle,
 }
+available_schemes = ["random", "simultaneous", "alternative", "single"]
 
 
 @app.route("/strategies", methods=["GET"])
@@ -46,6 +47,9 @@ def simulate():
 
     if not all([mtd_interval, finish_time, total_nodes]):
         return {"Error": "mtd_interval, finish_time, total_nodes must be provided"}, 400
+
+    if scheme is not None and scheme not in available_schemes:
+        return {"error": f"scheme {scheme} does not exist"}
 
     # NOTE: custom strategies are ignored if scheme is in random or None
     if scheme is not None and scheme != "random":
