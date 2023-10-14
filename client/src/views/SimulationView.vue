@@ -625,7 +625,7 @@ const plotNetwork = (graphData) => {
             </ul>
           </div>
         </div>
-        <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
+        <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-62">
           <Scenario
             :scenarioTitle="'Scenario 1'"
             :scenarioDescription="'Random Scheme'"
