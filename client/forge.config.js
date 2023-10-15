@@ -1,7 +1,6 @@
 module.exports = {
   packagerConfig: {
     icon: "./src/assets/mtd_logo.icns"
-
   },
   rebuildConfig: {},
   makers: [

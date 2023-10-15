@@ -18,6 +18,7 @@ const createWindow = () => {
     center: true,
     frame: false,
     icon: path.join(__dirname, "./assets/mtd_logo.png"),
+    name: "MTDSim",
     titleBarStyle: "hiddenInset",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
