@@ -51,7 +51,7 @@ nav:
       - Download App: user/download_instructions.md
   - Back End:
       - End points: backend/endpoints.md
-  - MTD Network Code Base: 
+  - MTD Network Code Base:
       - MTD:
           - MTD init: mtdnetwork/mtd/mtdinit.md
           - Complete Topology Shuffle: mtdnetwork/mtd/completetopologyshuffle.md
@@ -72,3 +72,5 @@ nav:
           - Service: mtdnetwork/component/service.md
       - Statistic:
           - Evaluation: mtdnetwork/statistic/evaluation.md
+  - Deployment:
+      - MTD API: deployment/api_deployment.md
