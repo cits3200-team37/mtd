@@ -698,7 +698,6 @@ const plotServiceNetwork = (graphData) => {
         >
           <div class="h-full">
             <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
-            
           </div>
         </div>
         <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
