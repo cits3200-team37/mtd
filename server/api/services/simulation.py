@@ -20,7 +20,6 @@ def run_simulation(
     total_layers=4,
     target_layer=4,
     total_database=2,
-    terminate_compromise_ratio=0.8,
     seed=None,
 ):
     """
@@ -38,7 +37,6 @@ def run_simulation(
     :param total_layers: the number of layers in the network
     :param target_layer: the target layer in the network (for targetted attack scenario only)
     :param total_database: the number of database nodes used for computing DAP algorithm
-    :param terminate_compromise_ratio: terminate the simulation if reached compromise ratio
     :param new_network: True: create new snapshots based on network size, False: load snapshots based on network size
     """
     if total_endpoints is None:
@@ -51,8 +49,6 @@ def run_simulation(
         target_layer = 4
     if total_database is None:
         total_database = 2
-    if terminate_compromise_ratio is None:
-        terminate_compromise_ratio = 0.8
 
     # initialise the simulation
     env = simpy.Environment()
@@ -68,7 +64,6 @@ def run_simulation(
         total_layers=total_layers,
         target_layer=target_layer,
         total_database=total_database,
-        terminate_compromise_ratio=terminate_compromise_ratio,
         seed=seed,
     )
 
@@ -81,7 +76,7 @@ def run_simulation(
     attack_operation.proceed_attack()
 
     # start mtd
-    if scheme != "None":
+    if scheme is not None:
         mtd_operation = MTDOperation(
             env=env,
             end_event=end_event,

@@ -1,6 +1,10 @@
 # Welcome to the Moving Target Defence Simulator
 
-<div style="display: flex;">
+Welcome to the documentation webpage for the Moving Target Defence Simulator. This webpage contains information on how to use the simulator, as well as information regarding how to download the simulator and some of its core features.
+
+Please navigate to the User Guide tab to learn how to use the simulator.
+
+<div style="display: flex; padding-top: 24px;">
     <div style="flex: 1;">
         <img src="JinHong.jpeg" alt="Alt Text" width="150" style="border-radius: 10px;">
     </div>
