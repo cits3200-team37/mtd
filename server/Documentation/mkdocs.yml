@@ -75,3 +75,4 @@ nav:
   - Deployment:
       - MTD API: deployment/api_deployment.md
       - Github Pages: deployment/github_pages.md
+      - Vercel: deployment/vercel.md
