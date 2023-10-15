@@ -1,6 +1,14 @@
 <template>
-  <label>{{ label }}</label>
+  <div class="flex items-center justify-between">
+    <label>{{ label }}</label>
+    <div v-if="info != null" @mouseover="showInfo = true" @mouseleave="showInfo = false">
+      <svg-icon type="mdi" size="18" :path="mdiInformationOutline"/>
+    </div>
+  </div>
   <div class="relative">
+    <div v-if="info && showInfo" class="border border-[2px] rounded p-[2px] max-w-[155px] z-75 bg-background-color absolute top-full left-0 w-full mt-[5px]">
+      <div v-html="info" class="text-xs"></div>
+    </div>
     <div
       class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
       :class="{
@@ -57,14 +65,14 @@
         </ul>
       </div>
     </div>
-    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+    <p v-if="error" class="text-red-500 text-xs mt-[5px] max-w-[178px]">{{ error }}</p>
   </div>
 </template>
 
 <script setup>
 import { defineProps, defineEmits, ref, watch } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiChevronDown } from "@mdi/js";
+import { mdiChevronDown, mdiInformationOutline} from "@mdi/js";
 import Chip from "./Chip.vue";
 
 const props = defineProps({
@@ -76,10 +84,12 @@ const props = defineProps({
   isStrategy: { type: Boolean, default: false },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: 0 },
+  info: {type: String, default: null}
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
+const showInfo = ref(false);
 const isOpen = ref(false);
 const selectedItems = ref([]);
 
