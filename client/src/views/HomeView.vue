@@ -60,7 +60,7 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
-const GITHUB_URL = import.meta.env.VITE_GITHUB_URL;
+const GITHUB_URL = "https://github.com/cits3200-team37/mtd";
 const DOCUMENTATION_URL = import.meta.env.VITE_DOCUMENTATION_URL;
 
 const router = useRouter();
