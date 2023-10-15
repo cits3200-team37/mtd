@@ -27,7 +27,7 @@
         </a>
 
         <a
-          href="https://cits3200-team37.github.io/mtd/"
+          :href="DOCUMENTATION_URL"
           target="_blank"
           class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
@@ -61,7 +61,7 @@ import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
 const GITHUB_URL = "https://github.com/cits3200-team37/mtd";
-const DOCUMENTATION_URL = import.meta.env.VITE_DOCUMENTATION_URL;
+const DOCUMENTATION_URL = "https://cits3200-team37.github.io/mtd/";
 
 const router = useRouter();
 const toSimulateView = async () => {
