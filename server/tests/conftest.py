@@ -1,4 +1,6 @@
 import pytest
+import uuid
+import random
 from api import app
 
 
@@ -13,5 +15,7 @@ def app_fixture():
 
 
 @pytest.fixture()
-def client(app_fixture):
+def client(app_fixture, monkeypatch):
+    random.seed(3200)
+    monkeypatch.setattr(uuid, "uuid4", lambda: "test_id")
     return app_fixture.test_client()

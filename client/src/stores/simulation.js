@@ -8,6 +8,7 @@ export const useSimulationStore = defineStore("simulation", {
     network: null,
     attackRecord: null,
     mtdRecord: null,
+    strategies: null,
   }),
   actions: {
     async simulate(simulateFormValues) {
@@ -55,6 +56,10 @@ export const useSimulationStore = defineStore("simulation", {
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
       // TODO: set other response variables related to the data object from the api call
+    },
+    async getStrategies() {
+      const { data } = await axios.get(`${BACKEND_URL}/strategies`);
+      this.strategies = data;
     },
     reset() {
       this.parameters = null;

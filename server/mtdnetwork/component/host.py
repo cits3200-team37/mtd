@@ -693,6 +693,11 @@ class Host:
 
     def to_json(self):
         # TODO: find out if graph object is required for plotting
+        graph = nx.node_link_data(self.graph)
+        for node in graph["nodes"]:
+            if node.get("service"):
+                node["service"] = node["service"].to_json()
+
         return {
             "osType": self.os_type,
             "osVersion": self.os_version,
@@ -705,4 +710,5 @@ class Host:
             "totalNodes": self.total_nodes,
             "compromised": self.compromised,
             "compromisedServices": self.compromised_services,
+            "graph": graph,
         }
