@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-const BACKEND_URL = "http://localhost:8001";
+const BACKEND_URL = "https://mtd-sim-api-u5ffcbdh3q-ts.a.run.app/";
 
 export const useSimulationStore = defineStore("simulation", {
   state: () => ({
