@@ -18,7 +18,6 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
 import { mdiClose } from "@mdi/js";
 import SvgIcon from "@jamescoyle/vue-icon";
 
