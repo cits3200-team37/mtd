@@ -73,11 +73,6 @@ const routes = ref([
     icon: mdiChartTimeline,
   },
   {
-    path: "/statistics",
-    active: false,
-    icon: mdiSigma,
-  },
-  {
     path: "/settings",
     active: false,
     icon: mdiCog,
