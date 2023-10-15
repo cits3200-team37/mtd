@@ -1,8 +1,6 @@
 import pytest
-import uuid
 import random
 from api import app
-import random
 import numpy as np
 
 
