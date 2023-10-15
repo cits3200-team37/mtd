@@ -74,3 +74,4 @@ nav:
           - Evaluation: mtdnetwork/statistic/evaluation.md
   - Deployment:
       - MTD API: deployment/api_deployment.md
+      - Github Pages: deployment/github_pages.md
