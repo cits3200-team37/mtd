@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiChevronDown } from "@mdi/js";
 import Chip from "./Chip.vue";
