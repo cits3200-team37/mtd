@@ -46,7 +46,6 @@ markdown_extensions:
 nav:
   - Home:
       - Introduction: index.md
-      - MkDocs Instructions: mkdocs_instructions.md
   - User Guide:
       - Simulation: user/simulation_instructions.md
       - Download App: user/download_instructions.md
