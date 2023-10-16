@@ -1,4 +1,3 @@
-import logging
 import random
 import uuid
 import networkx as nx
@@ -69,8 +68,7 @@ class Host:
         self.total_nodes: int = self.total_services + 1
         self.compromised: bool = False
         self.compromised_services: list[int] = []
-        self.gen_internal_network(
-            k_nearest_neighbors_percent, prob_strogatz_rewire)
+        self.gen_internal_network(k_nearest_neighbors_percent, prob_strogatz_rewire)
         self.setup_network(service_generator)
         self.set_host_users(users_list)
 
@@ -242,8 +240,7 @@ class Host:
                     if n in self.exposed_endpoints:
                         self.exposed_endpoints.remove(n)
 
-        print("Blank endpoints: ", blank_endpoints,
-              "target node: ", self.target_node)
+        print("Blank endpoints: ", blank_endpoints, "target node: ", self.target_node)
         self.total_nodes = self.total_nodes - len(blank_endpoints)
 
     def get_services(self, just_exploited=False):
@@ -389,8 +386,7 @@ class Host:
         for service_dict in services_dict:
             service = service_dict["service"]
             vulns = vulns + service.get_vulns(roa_threshold=roa_threshold)
-            discovery_time += service.discover_vuln_time(
-                roa_threshold=roa_threshold)
+            discovery_time += service.discover_vuln_time(roa_threshold=roa_threshold)
 
         new_vulns = []
         for vuln in vulns:
@@ -467,8 +463,7 @@ class Host:
             users_list:
                 the tuple users list specifying the username and if the user reuses their password
         """
-        self.users = {user_tuple[0]: user_tuple[1]
-                      for user_tuple in users_list}
+        self.users = {user_tuple[0]: user_tuple[1] for user_tuple in users_list}
         for user_reuse in self.users.values():
             self.total_users += 1
             if user_reuse:
@@ -542,8 +537,7 @@ class Host:
                 n for n in self.graph.neighbors(o1_node) if n in self.exposed_endpoints
             ]
             if len(exposed_neighbors) == 0:
-                self.graph.add_edge(
-                    o1_node, random.choice(self.exposed_endpoints))
+                self.graph.add_edge(o1_node, random.choice(self.exposed_endpoints))
 
             for o2_node in other_nodes:
                 if o1_node == o2_node:
@@ -608,8 +602,7 @@ class Host:
         total_versions = len(versions)
         return random.choices(
             versions,
-            weights=[total_versions -
-                     index for index in range(total_versions)],
+            weights=[total_versions - index for index in range(total_versions)],
             k=1,
         )[0]
 
@@ -635,8 +628,7 @@ class Host:
         """
         if existing_addresses is None:
             existing_addresses = []
-        new_ip = "{}.{}.{}.{}".format(
-            *[random.randint(1, 256) for _i in range(4)])
+        new_ip = "{}.{}.{}.{}".format(*[random.randint(1, 256) for _i in range(4)])
         if new_ip in existing_addresses:
             return Host.get_random_address(existing_addresses=existing_addresses)
         return new_ip
@@ -682,8 +674,9 @@ class Host:
                 if path_len < shortest_distance:
                     shortest_distance = path_len
                     shortest_path = path
-            except Exception:
-                logging.error("Failed to find shortest path from exposed endpoint")
+            except Exception:  # noqa
+                # TODO: handle exception. logging removed as it is triggered on every run
+                pass
 
         # This function is used for sorting so shouldn't raise an exception
         # some MTD cause this exception to be raised.
@@ -692,7 +685,11 @@ class Host:
         return shortest_path
 
     def to_json(self):
-        # TODO: find out if graph object is required for plotting
+        graph = nx.node_link_data(self.graph)
+        for node in graph["nodes"]:
+            if node.get("service"):
+                node["service"] = node["service"].to_json()
+
         return {
             "osType": self.os_type,
             "osVersion": self.os_version,
@@ -705,4 +702,5 @@ class Host:
             "totalNodes": self.total_nodes,
             "compromised": self.compromised,
             "compromisedServices": self.compromised_services,
+            "graph": graph,
         }

@@ -17,6 +17,11 @@ class MTDScheme:
         mtd_trigger_std=0.5,
         custom_strategies=None,
     ):
+        self.schemes = ["simultaneous", "random", "alternative", "single"]
+
+        if scheme not in self.schemes:
+            raise ValueError(f"scheme {scheme} does not exist")
+
         self._scheme = scheme
         self._mtd_trigger_interval = mtd_trigger_interval
         self._mtd_trigger_std = mtd_trigger_std
@@ -36,7 +41,6 @@ class MTDScheme:
         self._init_mtd_scheme(scheme)
 
     def _init_mtd_scheme(self, scheme):
-        # WARN: simultaneous and single scheme do not work
         """
         assign an MTD scheme based on the parameter
         """

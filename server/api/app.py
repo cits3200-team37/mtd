@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
-from experiments.run import simulate_without_saving
+from api.services import run_simulation
 from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
 from mtdnetwork.mtd.ipshuffle import IPShuffle
 from mtdnetwork.mtd.osdiversity import OSDiversity
@@ -17,6 +17,7 @@ strategy_mapping = {
     "Service Diversity": ServiceDiversity,
     "Complete Topology Shuffle": CompleteTopologyShuffle,
 }
+available_schemes = ["random", "simultaneous", "alternative", "single"]
 
 
 @app.route("/strategies", methods=["GET"])
@@ -44,13 +45,14 @@ def simulate():
 
     custom_strategies = None
 
-    if not all([scheme, mtd_interval, finish_time, total_nodes]):
-        return {
-            "Error": "scheme, mtd_interval, finish_time, total_nodes must be provided"
-        }, 400
+    if not all([mtd_interval, finish_time, total_nodes]):
+        return {"Error": "mtd_interval, finish_time, total_nodes must be provided"}, 400
+
+    if scheme is not None and scheme not in available_schemes:
+        return {"error": f"scheme {scheme} does not exist"}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
-    if scheme is not None and scheme not in ["random", "None"]:
+    if scheme is not None and scheme != "random":
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
         custom_strategies = []
@@ -62,7 +64,7 @@ def simulate():
     if scheme == "single" and len(custom_strategies) > 1:
         return {"error": "More than one MTD strategy specified for single scheme"}, 400
 
-    result = simulate_without_saving(
+    result = run_simulation(
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
@@ -91,7 +93,7 @@ def simulate():
 
 @app.route("/schemes", methods=["GET"])
 def schemes():
-    return ["random", "simultaneous", "alternative", "single", "None"], 200
+    return available_schemes, 200
 
 
 @app.route("/health", methods=["GET"])

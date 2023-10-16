@@ -2,6 +2,7 @@ docs/
 Documentation/
 venv/
 tests/
+experiments/
 
 Dockerfile
 README.md

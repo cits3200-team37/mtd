@@ -1,5 +1,10 @@
 <template>
-  <label>{{ label }}</label>
+  <div class="flex items-center justify-between">
+    <label>{{ label }}</label>
+    <div v-if="info" @mouseover="showTooltip" @mouseleave="showInfo = false">
+      <svg-icon type="mdi" size="18" :path="mdiInformationOutline" />
+    </div>
+  </div>
   <div class="relative">
     <div
       class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
@@ -57,14 +62,20 @@
         </ul>
       </div>
     </div>
-    <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
+    <p v-if="error" class="text-red-500 text-xs mt-[5px] max-w-[178px]">
+      {{ error }}
+    </p>
   </div>
+  <ToolTip :showTooltip="showInfo" :offsetX="tooltipX" :offsetY="tooltipY">{{
+    info
+  }}</ToolTip>
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { ref, watch } from "vue";
+import ToolTip from "./ToolTip.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiChevronDown } from "@mdi/js";
+import { mdiChevronDown, mdiInformationOutline } from "@mdi/js";
 import Chip from "./Chip.vue";
 
 const props = defineProps({
@@ -76,12 +87,16 @@ const props = defineProps({
   isStrategy: { type: Boolean, default: false },
   multiSelect: { type: Boolean, default: false },
   maxSelection: { type: Number, default: 0 },
+  info: { type: String, default: null },
 });
 
 const emit = defineEmits(["update:modelValue"]);
 
+const showInfo = ref(false);
 const isOpen = ref(false);
 const selectedItems = ref([]);
+const tooltipX = ref(0);
+const tooltipY = ref(0);
 
 watch(
   // close on new max selection value
@@ -129,6 +144,12 @@ const handleChipRemove = (itemToRemove) => {
 };
 
 const isSelected = (item) => selectedItems.value.includes(item);
+
+const showTooltip = (e) => {
+  showInfo.value = true;
+  tooltipX.value = e.clientX + 25;
+  tooltipY.value = e.clientY - 40;
+};
 </script>
 
 <style scoped>
