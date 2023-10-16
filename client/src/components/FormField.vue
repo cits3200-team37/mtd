@@ -20,7 +20,7 @@
   <div class="relative">
     <div
       v-if="info && showInfo"
-      class="border border-[2px] rounded p-[2px] max-w-[155px] z-75 bg-background-color absolute top-full left-0 w-full mt-[5px]"
+      class="border-[2px] rounded p-[2px] max-w-[155px] z-75 bg-background-color absolute top-full left-0 w-full mt-[5px]"
     >
       <div v-html="info" class="text-xs"></div>
     </div>
