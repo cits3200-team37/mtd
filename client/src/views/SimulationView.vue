@@ -748,7 +748,7 @@ const toggleView = () => {
     <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
       <div
         v-if="loading"
-        class="bg-blue-8000 flex flex-1 h-[calc(100vh)] items-center justify-center"
+        class="flex flex-1 h-[calc(100vh)] items-center justify-center"
       >
         <svg-icon
           type="mdi"
