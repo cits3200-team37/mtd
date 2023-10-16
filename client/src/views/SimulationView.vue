@@ -594,7 +594,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Endpoints"
                   placeholder="Total Endpoints"
                   type="text"
-                  info="The number of endpoints in the simulated network.<br>Default: 5"
+                  info="The number of endpoints in the simulated network. Default: 5"
                   :error="errors.totalEndpoints"
                 />
               </div>
@@ -604,7 +604,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Subnets"
                   placeholder="Total Subnets"
                   type="text"
-                  info="The number of sub-networks in the simulated network.<br>Default: 8"
+                  info="The number of sub-networks in the simulated network. Default: 8"
                   :error="errors.totalSubnets"
                 />
               </div>
@@ -614,7 +614,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Databases"
                   placeholder="Total Databases"
                   type="text"
-                  info="The number of databases in the simulated network.<br>Default: 2"
+                  info="The number of databases in the simulated network. Default: 2"
                   :error="errors.totalDatabase"
                 />
               </div>
@@ -624,7 +624,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Layers"
                   placeholder="Total Layers"
                   type="text"
-                  info="The number of layers in the simulated network.<br>Default: 4"
+                  info="The number of layers in the simulated network. Default: 4"
                   :error="errors.totalLayers"
                 />
               </div>
