@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - MTDSIM-43
 
 jobs:
   release:
