@@ -87,9 +87,9 @@ def simulate():
     data["mtd_record"] = result._mtd_record.to_dict()
     data["attack_record"] = result._attack_record.to_dict()
 
-
-
-    data["compromise_checkpoint_metrics"] = result.evaluation_result_by_compromise_checkpoint()
+    data[
+        "compromise_checkpoint_metrics"
+    ] = result.evaluation_result_by_compromise_checkpoint()
 
     return data, 200
 
