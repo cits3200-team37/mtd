@@ -16,9 +16,6 @@ class OSDiversity(MTD):
         )
 
     def mtd_operation(self, adversary=None):
-        """
-        todo: dynamic MTDs based on the network state
-        """
         service_generator = self.network.get_service_generator()
         hosts = self.network.get_hosts()
         for host_id, host_instance in hosts.items():

@@ -55,7 +55,6 @@ export const useSimulationStore = defineStore("simulation", {
       this.network = network;
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
-      // TODO: set other response variables related to the data object from the api call
     },
     async getStrategies() {
       const { data } = await axios.get(`${BACKEND_URL}/strategies`);
