@@ -7,9 +7,10 @@
   </div>
   <div class="relative">
     <div
-      class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
+      class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white"
       :class="{
         'border-red-500 border-4': error,
+        'hover:cursor-pointer': !(maxSelection == 0 && isStrategy),
         'bg-slate-100 hover:cursor-not-allowed':
           maxSelection == 0 && isStrategy,
       }"
