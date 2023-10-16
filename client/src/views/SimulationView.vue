@@ -415,7 +415,7 @@ const plotNetwork = (graphData) => {
       toolTipOffsetX.value = e.clientX + 40;
       tooltipOffsetY.value = e.clientY - 50;
       const { host } = d;
-      currentHost.value = { ...host };
+      currentHost.value = { ...host, subnet: d.subnet, layer: d.layer };
       showTooltip.value = true;
     })
     .on("mouseout", () => {
@@ -947,6 +947,8 @@ const plotServiceNetwork = (graphData) => {
           }`
         }}
       </li>
+      <li>Subnet: {{ currentHost.subnet }}</li>
+      <li>Layer: {{ currentHost.layer }}</li>
     </ul>
   </ToolTip>
 </template>
