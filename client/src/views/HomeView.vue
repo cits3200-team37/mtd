@@ -14,7 +14,7 @@
         class="flex justify-center items-center mt-3 space-x-20 max-w-full mx-auto"
       >
         <a
-          href="https://github.com/cits3200-team37"
+          :href="GITHUB_URL"
           target="_blank"
           class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
@@ -27,7 +27,7 @@
         </a>
 
         <a
-          href="https://research-repository.uwa.edu.au/en/persons/jin-hong"
+          :href="DOCUMENTATION_URL"
           target="_blank"
           class="flex flex-col items-center mt-10 fill-current text-text-color"
         >
@@ -60,6 +60,9 @@ import { mdiGithub } from "@mdi/js";
 import { mdiFileDocument } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { useRouter } from "vue-router";
+const GITHUB_URL = "https://github.com/cits3200-team37/mtd";
+const DOCUMENTATION_URL = "https://cits3200-team37.github.io/mtd/";
+
 const router = useRouter();
 const toSimulateView = async () => {
   await router.push("/simulation");

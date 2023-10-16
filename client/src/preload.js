@@ -7,4 +7,5 @@ contextBridge.exposeInMainWorld("electronAPI", {
   windowClose: () => ipcRenderer.send("window-close"),
   windowMaximise: () => ipcRenderer.send("window-maximise"),
   operatingSystem: () => ipcRenderer.invoke("operating-system"),
+  processVersion: () => ipcRenderer.invoke("process-version"),
 });

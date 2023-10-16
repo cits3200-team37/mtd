@@ -1,8 +1,10 @@
+'''Module of MTD strategy that dynamically changes the ports associated with network services'''
 from mtdnetwork.mtd import MTD
 from mtdnetwork.component import host
 
 
 class PortShuffle(MTD):
+    '''Class of port shuffle strategy'''
     def __init__(self, network=None):
         super().__init__(
             name="PortShuffle",
@@ -14,7 +16,7 @@ class PortShuffle(MTD):
     def mtd_operation(self, adversary=None):
         hosts = self.network.get_hosts()
 
-        for host_id, host_instance in hosts.items():
+        for host_instance in hosts.items():
             # Do not change exposed endpoints as other organisations might
             # require to be fixed
             if host_instance.host_id in self.network.exposed_endpoints:

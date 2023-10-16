@@ -1,22 +1,28 @@
 module.exports = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: "./src/assets/mtd_logo.icns"
+  },
   rebuildConfig: {},
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
-      config: {},
+      config: {
+        iconUrl: "https://github.com/cits3200-team37/mtd/blob/main/client/src/assets/mtd_logo.ico",
+        setupIcon: "./src/assets/mtd_logo.ico",
+      },
     },
     {
       name: "@electron-forge/maker-zip",
       platforms: ["darwin"],
+      config: {
+        icon: "./src/assets/mtd_logo.icns",
+      }
     },
     {
       name: "@electron-forge/maker-deb",
-      config: {},
-    },
-    {
-      name: "@electron-forge/maker-rpm",
-      config: {},
+      config: {
+        icon: "./src/assets/mtd_logo.png",
+      },
     },
   ],
   plugins: [

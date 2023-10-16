@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS
-from experiments.run import simulate_without_saving
+from api.services import run_simulation
 from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
 from mtdnetwork.mtd.ipshuffle import IPShuffle
 from mtdnetwork.mtd.osdiversity import OSDiversity
@@ -17,6 +17,7 @@ strategy_mapping = {
     "Service Diversity": ServiceDiversity,
     "Complete Topology Shuffle": CompleteTopologyShuffle,
 }
+available_schemes = ["random", "simultaneous", "alternative", "single"]
 
 
 @app.route("/strategies", methods=["GET"])
@@ -30,26 +31,28 @@ def strategies():
 
 @app.route("/simulate", methods=["POST"])
 def simulate():
-    finish_time = request.json.get("finishTime")
-    mtd_interval = request.json.get("mtdInterval")
     scheme = request.json.get("scheme")
+    mtd_interval = request.json.get("mtdInterval")
+    finish_time = request.json.get("finishTime")
     total_nodes = request.json.get("totalNodes")
-    seed = request.json.get("seed")
-    total_layers = request.json.get("totalLayers")
+    strategies = request.json.get("strategies")
     total_endpoints = request.json.get("totalEndpoints")
     total_subnets = request.json.get("totalSubnets")
-    target_layer = request.json.get("targetLayer")
     total_database = request.json.get("totalDatabase")
-    terminate_compromise_ratio = request.json.get("terminateCompromiseRatio")
-    strategies = request.json.get("strategies")
+    total_layers = request.json.get("totalLayers")
+    target_layer = request.json.get("targetLayer")
+    seed = request.json.get("seed")
 
     custom_strategies = None
 
-    if not all([mtd_interval, scheme, total_nodes]):
-        return {}, 400
+    if not all([mtd_interval, finish_time, total_nodes]):
+        return {"Error": "mtd_interval, finish_time, total_nodes must be provided"}, 400
+
+    if scheme is not None and scheme not in available_schemes:
+        return {"error": f"scheme {scheme} does not exist"}, 400
 
     # NOTE: custom strategies are ignored if scheme is in random or None
-    if scheme is not None and scheme not in ["random", "None"]:
+    if scheme is not None and scheme != "random":
         if strategies is None:
             return {"error": "MTD strategy not specified"}, 400
         custom_strategies = []
@@ -61,7 +64,7 @@ def simulate():
     if scheme == "single" and len(custom_strategies) > 1:
         return {"error": "More than one MTD strategy specified for single scheme"}, 400
 
-    result = simulate_without_saving(
+    result = run_simulation(
         finish_time=finish_time,
         mtd_interval=mtd_interval,
         scheme=scheme,
@@ -72,7 +75,6 @@ def simulate():
         total_layers=total_layers,
         target_layer=target_layer,
         total_database=total_database,
-        terminate_compromise_ratio=terminate_compromise_ratio,
         custom_strategies=custom_strategies,
     )
 
@@ -84,25 +86,17 @@ def simulate():
     data["network"] = net_graph
     data["mtd_record"] = result._mtd_record.to_dict()
     data["attack_record"] = result._attack_record.to_dict()
-    data["comp_hosts"] = result._adversary.get_compromised_hosts()
 
-    visible_hosts = []
-    for c_host in result._network.reachable:
-        visible_hosts = visible_hosts + list(result._network.graph.neighbors(c_host))
-
-    visible_hosts = visible_hosts + result._network.reachable
-    visible_hosts = visible_hosts + result._network.exposed_endpoints
-
-    data["exposed_hosts"] = visible_hosts
-
-    data["comp_checkpoint"] = result.evaluation_result_by_compromise_checkpoint()
+    data[
+        "compromise_checkpoint_metrics"
+    ] = result.evaluation_result_by_compromise_checkpoint()
 
     return data, 200
 
 
 @app.route("/schemes", methods=["GET"])
 def schemes():
-    return ["random", "simultaneous", "alternative", "single", "None"], 200
+    return available_schemes, 200
 
 
 @app.route("/health", methods=["GET"])

@@ -1,15 +1,17 @@
+"""Module to handle OS diversity problem"""
 import random
-
+import re
+from pulp import LpProblem, LpMaximize, LpVariable, lpSum
+import matplotlib.pyplot as plt
 import networkx as nx
 from mtdnetwork.data.constants import OS_TYPES, OS_VERSION_DICT
-import matplotlib.pyplot as plt
 from mtdnetwork.statistic.utils import powerset, remove_element
-from pulp import *
 from mtdnetwork.mtd import MTD
-import re
 
 
 class OSDiversityAssignment(MTD):
+    """Subclass of MTD to handle OS Diversity problem"""
+
     def __init__(self, network=None, os_types=OS_TYPES):
         super().__init__(
             name="OSDiversity",
@@ -23,6 +25,7 @@ class OSDiversityAssignment(MTD):
         self._checkpoint = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
 
     def mtd_operation(self, adversary=None):
+        """Method assigns new operating system types and versions to each node"""
         diversity_assign = DiversityAssignment(
             graph=self.network.get_graph_copy(),
             sources=self.network.get_exposed_endpoints(),
@@ -79,6 +82,8 @@ class OSDiversityAssignment(MTD):
 
 
 class DiversityAssignment:
+    """Supporting class to OSDiversityAssignment"""
+
     def __init__(self, graph, sources, dests, os_types, pos, colour_map):
         """
         MIP formulation for solving Diversity Assignment Problem
@@ -125,6 +130,7 @@ class DiversityAssignment:
         return dap_graph
 
     def draw_dap_graph(self):
+        """Method to visualise dap graph"""
         dap_graph = self.gen_single_connection_graph()
         plt.figure(1, figsize=(15, 12))
         nx.draw(dap_graph, pos=self._pos, node_color=self._colour_map, with_labels=True)
@@ -138,7 +144,8 @@ class DiversityAssignment:
         services are compatible with certain OS Type and OS version
 
         Compromise Probability:
-            1. calculate the mean of the mean of the cvss of vulnerabilities in each service running on each OS Type.
+            1. calculate the mean of the mean of the cvss of
+            vulnerabilities in each service running on each OS Type.
             2. compromise probability = 1 / AC
 
         Variant -> OS Type
@@ -172,6 +179,7 @@ class DiversityAssignment:
         return E
 
     def objective(self):
+        """Main class method; effectively solves OS diversity assignment"""
         # generate single connection graph
         dap_graph = self.gen_single_connection_graph()
 
@@ -293,10 +301,12 @@ class DiversityAssignment:
                     <= 0
                 )
 
-                # prob += lpSum([f[(c, a, x, i)] - (len(M) - 1) * (1 - min([s[(v, x)] for v in E.keys() for x in N]))
+                # prob += lpSum([f[(c, a, x, i)] - (len(M) - 1) *
+                # (1 - min([s[(v, x)] for v in E.keys() for x in N]))
                 #                for x in N for i in N + M if i != x]) <= 0
                 #
-                # prob += lpSum([f[(c, a, i, x)] - (len(M) - 1) * (1 - min([s[(v, x)] for v in E.keys() for x in N]))
+                # prob += lpSum([f[(c, a, i, x)] - (len(M) - 1) *
+                # (1 - min([s[(v, x)] for v in E.keys() for x in N]))
                 #                for x in N for i in N + M if i != x]) <= 0
 
         # Solve the problem
@@ -366,11 +376,11 @@ ECC = sum( P(e)* (1-P(e))  * sum(connectivity function) )
 
 DAP = argmax(ECC)
 
-1. problems for connectivity function: one type (client only) vs two types (client & database)? 
+1. problems for connectivity function: one type (client only) vs two types (client & database)?
 
 2. how can we determine the probability of compromise of each variant?
 
- - compromise event e = OS variant v, 
+ - compromise event e = OS variant v,
  - but the variants in our model are vulnerabilities on services?
 
 

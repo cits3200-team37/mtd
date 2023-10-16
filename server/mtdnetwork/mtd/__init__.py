@@ -1,7 +1,10 @@
+"""Module for MTD class, the base class to MTD strategy subclasses"""
 from mtdnetwork.data.constants import MTD_DURATION, MTD_PRIORITY
 
 
 class MTD:
+    """Class of generic MTD strategy"""
+
     def __init__(self, name: str, mtd_type: str, resource_type: str, network=None):
         """
         :param name: name of the MTD strategy
@@ -43,25 +46,33 @@ class MTD:
         )
 
     def mtd_operation(self, adversary=None):
+        """Placeholder for mtd_operation() method defined in subclasses"""
         raise NotImplementedError
 
     def get_mtd_type(self):
+        """Method returns mtd type"""
         return self._mtd_type
 
     def get_resource_type(self):
+        """Method returns resource type"""
         return self._resource_type
 
     def get_name(self):
+        """Method returns name of strategy"""
         return self._name
 
     def get_execution_time_mean(self):
+        """Method returns mean execution time"""
         return self._execution_time_mean
 
     def get_execution_time_std(self):
+        """Method returns standard deviation of execution time"""
         return self._execution_time_std
 
     def get_priority(self):
+        """Method returns priority"""
         return self._priority
 
     def set_priority(self, priority):
+        """Method assigns priority"""
         self._priority = priority

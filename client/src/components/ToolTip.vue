@@ -5,22 +5,13 @@
     enter-active-class="transition duration-200"
     leave-active-class="transition duration-200"
   >
-    <!-- NOTE: use v-show here as we only want to toggle css properties. Inefficient and will not work with v-if directive  -->
-    <div
-      v-show="showTooltip"
-      class="absolute bg-gray-700 text-center rounded-lg py-1 px-4 opacity-90"
-    >
-      <ul>
-        <li>IP: {{ ip }}</li>
-        <li>OS: {{ `${osType} ${osVersion}` }}</li>
-        <li>{{ `${totalUsers} ${totalUsers == 1 ? "User" : "Users"}` }}</li>
-        <li>
-          {{
-            `${totalServices} ${totalServices == 1 ? "Service" : "Services"}`
-          }}
-        </li>
-        <li v-if="compromised" class="bg-red-600 rounded-full">Compromised</li>
-      </ul>
+    <div v-if="showTooltip">
+      <div
+        class="absolute transition bg-gray-700 text-center rounded-lg py-1 px-4 opacity-90"
+        :style="{ left: offsetX + 'px', top: offsetY + 'px' }"
+      >
+        <slot />
+      </div>
     </div>
   </transition>
 </template>
@@ -28,11 +19,7 @@
 <script setup>
 const props = defineProps({
   showTooltip: Boolean,
-  ip: String,
-  osType: String,
-  osVersion: String,
-  totalUsers: Number,
-  totalServices: Number,
-  compromised: Boolean,
+  offsetX: Number,
+  offsetY: Number,
 });
 </script>

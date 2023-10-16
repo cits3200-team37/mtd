@@ -13,7 +13,7 @@ class TimeNetwork(Network):
         total_layers=4,
         target_layer=4,
         total_database=5,
-        terminate_compromise_ratio=0.8,
+        # terminate_compromise_ratio=0.8,
         seed=None,
     ):
         # default parameters
