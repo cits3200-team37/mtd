@@ -2,12 +2,8 @@ import random
 from collections import deque
 from mtdnetwork.mtd.completetopologyshuffle import CompleteTopologyShuffle
 from mtdnetwork.mtd.ipshuffle import IPShuffle
-from mtdnetwork.mtd.hosttopologyshuffle import HostTopologyShuffle
-from mtdnetwork.mtd.portshuffle import PortShuffle
 from mtdnetwork.mtd.osdiversity import OSDiversity
 from mtdnetwork.mtd.servicediversity import ServiceDiversity
-from mtdnetwork.mtd.usershuffle import UserShuffle
-from mtdnetwork.mtd.osdiversityassignment import OSDiversityAssignment
 from mtdnetwork.data.constants import MTD_TRIGGER_INTERVAL
 from heapq import heappush, heappop
 
@@ -21,6 +17,11 @@ class MTDScheme:
         mtd_trigger_std=0.5,
         custom_strategies=None,
     ):
+        self.schemes = ["simultaneous", "random", "alternative", "single"]
+
+        if scheme not in self.schemes:
+            raise ValueError(f"scheme {scheme} does not exist")
+
         self._scheme = scheme
         self._mtd_trigger_interval = mtd_trigger_interval
         self._mtd_trigger_std = mtd_trigger_std
@@ -40,7 +41,6 @@ class MTDScheme:
         self._init_mtd_scheme(scheme)
 
     def _init_mtd_scheme(self, scheme):
-        # WARN: simultaneous and single scheme do not work
         """
         assign an MTD scheme based on the parameter
         """

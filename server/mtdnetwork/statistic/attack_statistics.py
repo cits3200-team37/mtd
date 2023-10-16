@@ -1,14 +1,17 @@
-import pandas as pd
+'''Module for managing and recording data from attack operations'''
 import os
+import pandas as pd
 
 
 class AttackStatistics:
+    '''Class for recording attack data'''
     def __init__(self):
         self._attack_operation_record = []
 
     def append_attack_operation_record(
         self, name, start_time, finish_time, adversary, interrupted_mtd=None
     ):
+        '''Method to append record of attack operation with relevant fields'''
         duration = finish_time - start_time
         interrupted_in = "None"
         interrupted_by = "None"
@@ -41,16 +44,20 @@ class AttackStatistics:
         )
 
     def update_compromise_host(self, curr_host):
+        '''Method to update compromise host field with current host fields'''
         self._attack_operation_record[-1]["compromise_host"] = curr_host.host_id
         self._attack_operation_record[-1]["compromise_host_uuid"] = curr_host.uuid
 
     def update_compromise_user(self, user):
+        '''Method to update compromise user field with most recent attack data'''
         self._attack_operation_record[-1]["compromise_users"].append(user)
 
     def get_record(self):
+        '''Method returns attack operation record as pandas dataframe'''
         return pd.DataFrame(self._attack_operation_record)
 
     def save_record(self, sim_time, scheme):
+        '''Method to save attack operation into CSV'''
         current_directory = os.getcwd()
         if not os.path.exists(current_directory + "/experimental_data/attack_records"):
             os.makedirs(current_directory + "/experimental_data/attack_records")
@@ -62,8 +69,3 @@ class AttackStatistics:
             + ".csv",
             index=False,
         )
-
-    # def get_compromised_attack_operation_counts(self):
-    #     record = pd.DataFrame(self._attack_operation_record)
-    #     return record[~record['compromise_host'].isnull()]['name'].str.split(
-    #         expand=True).stack().value_counts().reset_index().rename(columns={'index': 'name', 0: 'frequency'})

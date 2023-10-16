@@ -1,9 +1,11 @@
-site_name: mtd
+site_name: Moving Target Defence Simulator
 repo_url: https://github.com/cits3200-team37/mtd
 repo_name: cits3200-team37/mtd
 
 theme:
   name: material
+  logo: img/logo.png
+  favicon: img/favicon.png
   features:
     - navigation.tabs
     - navigation.sections
@@ -16,16 +18,16 @@ theme:
     - content.code.copy
   language: en
   palette:
-    - scheme: default
+    - scheme: slate
       toggle:
         icon: material/toggle-switch-off-outline
         name: Switch to dark mode
-      primary: blue
-    - scheme: slate
+      primary: teal
+    - scheme: default
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode
-      primary: blue
+      primary: teal
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -42,8 +44,11 @@ markdown_extensions:
   - attr_list
 
 nav:
-  - Home: index.md
-  - Code Review: codereview.md
+  - Home:
+      - Introduction: index.md
+  - User Guide:
+      - Simulation: user/simulation_instructions.md
+      - Download App: user/download_instructions.md
   - Back End:
       - End points: backend/endpoints.md
   - MTD Network Code Base:
@@ -67,3 +72,7 @@ nav:
           - Service: mtdnetwork/component/service.md
       - Statistic:
           - Evaluation: mtdnetwork/statistic/evaluation.md
+  - Deployment:
+      - MTD API: deployment/api_deployment.md
+      - Github Pages: deployment/github_pages.md
+      - Vercel: deployment/vercel.md

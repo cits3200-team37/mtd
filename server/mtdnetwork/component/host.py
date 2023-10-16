@@ -103,7 +103,7 @@ class Host:
             total_vulns += len(service_vulns)
 
             for v in service_vulns:
-                if not v in all_vulns:
+                if v not in all_vulns:
                     all_vulns.append(v)
         # print("Services on this host has average of this many vulns: ", total_vulns/len(all_services))
 
@@ -115,7 +115,7 @@ class Host:
             service_vulns = service.get_all_vulns()
 
             for v in service_vulns:
-                if not v in vulns:
+                if v not in vulns:
                     vulns.append(v)
 
         return vulns
@@ -274,7 +274,7 @@ class Host:
             for n_id in self.graph.neighbors(ec_service_id):
                 if n_id == self.target_node:
                     continue
-                if not n_id in exposed_services and not n_id in adjacent_services:
+                if n_id not in exposed_services and n_id not in adjacent_services:
                     adjacent_services.append(n_id)
 
         return {
@@ -291,7 +291,6 @@ class Host:
                 list of shortest path to target node (including target node)
 
         """
-        target = list.pop(len(list) - 1)
         service_list = []
         for service_id in list:
             service = self.graph.nodes.get(service_id, {}).get("service", None)
@@ -351,7 +350,7 @@ class Host:
             service_id = service_q.pop(0)
             service = services[service_id]
 
-            if not service_id in self.exposed_endpoints:
+            if service_id not in self.exposed_endpoints:
                 port_numbers.append(port_numbers_dict[service_id])
 
             if service.is_exploited():
@@ -530,7 +529,7 @@ class Host:
         other_nodes = [
             node_id
             for node_id in range(self.total_nodes)
-            if node_id != self.target_node and not node_id in self.exposed_endpoints
+            if node_id != self.target_node and node_id not in self.exposed_endpoints
         ]
 
         for o1_node in other_nodes:
@@ -675,7 +674,8 @@ class Host:
                 if path_len < shortest_distance:
                     shortest_distance = path_len
                     shortest_path = path
-            except:
+            except Exception:  # noqa
+                # TODO: handle exception. logging removed as it is triggered on every run
                 pass
 
         # This function is used for sorting so shouldn't raise an exception
@@ -685,7 +685,11 @@ class Host:
         return shortest_path
 
     def to_json(self):
-        # TODO: find out if graph object is required for plotting
+        graph = nx.node_link_data(self.graph)
+        for node in graph["nodes"]:
+            if node.get("service"):
+                node["service"] = node["service"].to_json()
+
         return {
             "osType": self.os_type,
             "osVersion": self.os_version,
@@ -698,4 +702,5 @@ class Host:
             "totalNodes": self.total_nodes,
             "compromised": self.compromised,
             "compromisedServices": self.compromised_services,
+            "graph": graph,
         }

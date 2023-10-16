@@ -1,9 +1,10 @@
 {
-  "name": "test",
-  "productName": "MTDSimTime",
+  "name": "mtdsim",
+  "productName": "MTDSim",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".vite/build/main.js",
+  "repository": "https://github.com/cits3200-team37/mtd.git",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -43,6 +44,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "pinia": "^2.1.6",
     "simple-icons": "^9.16.0",
+    "update-electron-app": "^2.0.1",
     "vue": "^3.3.4",
     "vue-router": "4"
   }
