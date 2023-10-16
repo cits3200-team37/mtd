@@ -23,7 +23,7 @@
                 type="mdi"
                 :path="route.icon"
                 size="36"
-                class="text-navbar-icon hover:text-white hover:cursor-pointer"
+                class="text-navbar-icon hover:text-white hover:cursor-pointer transition"
                 :class="{
                   'text-white': route.active,
                 }"
