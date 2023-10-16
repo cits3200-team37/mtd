@@ -557,7 +557,7 @@ const plotServiceNetwork = (graphData) => {
                   placeholder="Select Scheme"
                   v-model="form.scheme"
                   label="Scheme"
-                  info="The manor in which the simulation will employ MTD strategies."
+                  info="The manner in which the simulation will employ MTD strategies."
                   :menu-options="Schemes"
                   :error="errors.scheme"
                   @update:modelValue="resetStrategy"
