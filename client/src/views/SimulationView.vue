@@ -653,8 +653,16 @@ const toggleView = () => {
     </div>
 
     <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
-      <div v-if="loading" class="bg-blue-8000 flex flex-1 h-[calc(100vh)] items-center justify-center">
-        <svg-icon type="mdi" size="60" :path="mdiLoading" class="animate-spin" />
+      <div
+        v-if="loading"
+        class="flex flex-1 h-[calc(100vh)] items-center justify-center"
+      >
+        <svg-icon
+          type="mdi"
+          size="60"
+          :path="mdiLoading"
+          class="animate-spin"
+        />
       </div>
       <div v-else-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)] justify-center"></div>
       <div v-else class="flex-row">

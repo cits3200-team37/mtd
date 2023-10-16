@@ -1,6 +1,6 @@
 <template>
-  <div class="h-[calc(100vh-36px)] flex flex-col pl-8 pt-8">
-    <div v-if="!isLoading">
+  <div v-if="!isLoading" class="h-[calc(100vh-36px)] flex flex-col pl-8 pt-8">
+    <div>
       <p class="text-2xl pb-4">Settings page</p>
       <p class="text-md">
         Customise your experience, make it more enjoyable and easier to work!
@@ -26,6 +26,12 @@
       </div>
     </div>
   </div>
+  <div
+    v-else
+    class="flex flex-1 h-[calc(100vh-36px)] items-center justify-center"
+  >
+    <svg-icon type="mdi" size="60" :path="mdiLoading" class="animate-spin" />
+  </div>
 </template>
 
 <script setup>
@@ -35,6 +41,8 @@ import dark from "../public/screens/Dark.png";
 import light from "../public/screens/Light.png";
 import getTag from "../helpers/getTag";
 import findVersion from "../helpers/findVersion";
+import { mdiLoading } from "@mdi/js";
+import SvgIcon from "@jamescoyle/vue-icon";
 const LatestVersion = ref();
 const currentVersion = ref();
 const currentTheme = ref();
