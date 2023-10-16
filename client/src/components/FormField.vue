@@ -2,8 +2,8 @@
   <div class="flex items-center justify-between">
     <label>{{ label }}</label>
     <div
-      v-if="info != null"
-      @mouseover="showInfo = true"
+      v-if="true"
+      @mouseover="showInfoTooltip"
       @mouseleave="showInfo = false"
     >
       <svg-icon type="mdi" size="18" :path="mdiInformationOutline" />
@@ -17,23 +17,19 @@
     @input="updateInput"
     :value="modelValue"
   />
-  <div class="relative">
-    <div
-      v-if="info && showInfo"
-      class="border-[2px] rounded p-[2px] max-w-[155px] z-75 bg-background-color absolute top-full left-0 w-full mt-[5px]"
-    >
-      <div v-html="info" class="text-xs"></div>
-    </div>
-  </div>
   <p v-if="error" class="text-red-500 text-xs mt-[5px] max-w-[178px]">
     {{ error }}
   </p>
+  <ToolTip :showTooltip="showInfo" :offsetX="tooltipX" :offsetY="tooltipY">{{
+    info
+  }}</ToolTip>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiInformationOutline } from "@mdi/js";
+import ToolTip from "./ToolTip.vue";
 const props = defineProps({
   label: { type: String, default: "" },
   modelValue: { type: [String, Number], default: "" },
@@ -43,11 +39,18 @@ const props = defineProps({
   info: { type: String, default: null },
 });
 const emit = defineEmits(["update:modelValue", "update"]);
+const tooltipX = ref(0);
+const tooltipY = ref(0);
 
 const showInfo = ref(false);
 
 const updateInput = (e) => {
   emit("update:modelValue", e.target.value);
   emit("update");
+};
+const showInfoTooltip = (e) => {
+  showInfo.value = true;
+  tooltipX.value = e.clientX + 25;
+  tooltipY.value = e.clientY - 40;
 };
 </script>
