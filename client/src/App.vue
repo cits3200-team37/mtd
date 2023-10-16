@@ -14,7 +14,6 @@ onMounted(async () => {
   } catch (error) {
     console.log(error);
   }
-  console.log("mounted");
 });
 
 window.addEventListener("theme-changed", (e) => {
