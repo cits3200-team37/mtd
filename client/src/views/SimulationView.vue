@@ -546,12 +546,12 @@ const plotServiceNetwork = (graphData) => {
               class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
-              <button
+              <div
                 @click="resetSimulation"
-                class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+                class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4 hover:cursor-pointer"
               >
                 Reset
-              </button>
+              </div>
               <div>
                 <DropDown
                   placeholder="Select Scheme"
