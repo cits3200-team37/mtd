@@ -1,0 +1,35 @@
+name: Build/release
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
+          - os: ubuntu-latest
+            script_define: GITHUB_TOKEN=$PUBLISH_TOKEN
+          - os: windows-latest
+            script_define: set GITHUB_TOKEN=$PUBLISH_TOKEN &&
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 16
+      - name: install dependencies
+        working-directory: client
+        run: npm i
+      - name: publish
+        working-directory: client
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+        run: ${{ matrix.script_define }} npm run publish
