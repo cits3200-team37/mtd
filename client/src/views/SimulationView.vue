@@ -7,10 +7,13 @@ import Scenario from "../components/Scenario.vue";
 import * as d3 from "d3";
 import { useSimulationStore } from "../stores/simulation.js";
 import Modal from "../components/Modal.vue";
+import SvgIcon from "@jamescoyle/vue-icon";
+import { mdiChevronDown } from "@mdi/js";
 
 const simulationStore = useSimulationStore();
 
 const graph = ref(true);
+const isOpen = ref(false);
 
 const Schemes = ref([
   "None",
@@ -63,6 +66,11 @@ const strategies = ref(null);
 
 const resetStrategy = () => {
   form.value.strategies = [];
+};
+
+const toggleDropDown = () => {
+  isOpen.value = !isOpen.value;
+  console.log(isOpen.value);
 };
 
 const maxSelection = (scheme) => {
@@ -588,64 +596,81 @@ const plotServiceNetwork = (graphData) => {
                   :max-selection="maxSelection(form.scheme)"
                 />
               </div>
-              <div>
-                <FormField
-                  v-model="form.totalEndpoints"
-                  label="Total Endpoints"
-                  placeholder="Total Endpoints"
-                  type="text"
-                  info="The number of endpoints in the simulated network. Default: 5"
-                  :error="errors.totalEndpoints"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.totalSubnets"
-                  label="Total Subnets"
-                  placeholder="Total Subnets"
-                  type="text"
-                  info="The number of sub-networks in the simulated network. Default: 8"
-                  :error="errors.totalSubnets"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.totalDatabase"
-                  label="Total Databases"
-                  placeholder="Total Databases"
-                  type="text"
-                  info="The number of databases in the simulated network. Default: 2"
-                  :error="errors.totalDatabase"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.totalLayers"
-                  label="Total Layers"
-                  placeholder="Total Layers"
-                  type="text"
-                  info="The number of layers in the simulated network. Default: 4"
-                  :error="errors.totalLayers"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.targetLayer"
-                  label="Target Layer"
-                  placeholder="Target Layer"
-                  type="text"
-                  info="The layer where the target host will be located."
-                  :error="errors.targetLayer"
-                />
-              </div>
-              <div>
-                <FormField
-                  v-model="form.seed"
-                  label="Set Seed"
-                  placeholder="Set Seed"
-                  type="text"
-                  :error="errors.seed"
-                />
+              <!-- advanced drop down -->
+              <div class="">
+                <div class="flex flex-row justify-between">
+                  <p class="pb-2">Advanced</p>
+                  <div class="hover:cursor-pointer" @click="toggleDropDown">
+                    <svg-icon
+                      type="mdi"
+                      size="18"
+                      :path="mdiChevronDown"
+                      :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
+                    />
+                  </div>
+                </div>
+                <hr class="pb-2 text-gray-400" />
+                <div v-if="isOpen == true">
+                  <div>
+                    <FormField
+                      v-model="form.totalEndpoints"
+                      label="Total Endpoints"
+                      placeholder="Total Endpoints"
+                      type="text"
+                      info="The number of endpoints in the simulated network. Default: 5"
+                      :error="errors.totalEndpoints"
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      v-model="form.totalSubnets"
+                      label="Total Subnets"
+                      placeholder="Total Subnets"
+                      type="text"
+                      info="The number of sub-networks in the simulated network. Default: 8"
+                      :error="errors.totalSubnets"
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      v-model="form.totalDatabase"
+                      label="Total Databases"
+                      placeholder="Total Databases"
+                      type="text"
+                      info="The number of databases in the simulated network. Default: 2"
+                      :error="errors.totalDatabase"
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      v-model="form.totalLayers"
+                      label="Total Layers"
+                      placeholder="Total Layers"
+                      type="text"
+                      info="The number of layers in the simulated network. Default: 4"
+                      :error="errors.totalLayers"
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      v-model="form.targetLayer"
+                      label="Target Layer"
+                      placeholder="Target Layer"
+                      type="text"
+                      info="The layer where the target host will be located."
+                      :error="errors.targetLayer"
+                    />
+                  </div>
+                  <div>
+                    <FormField
+                      v-model="form.seed"
+                      label="Set Seed"
+                      placeholder="Set Seed"
+                      type="text"
+                      :error="errors.seed"
+                    />
+                  </div>
+                </div>
               </div>
               <div class="text-center">
                 <button
@@ -892,3 +917,15 @@ const plotServiceNetwork = (graphData) => {
     </ul>
   </ToolTip>
 </template>
+
+<style scoped>
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.25s ease-in-out;
+}
+
+.rotate-0 {
+  transform: rotate(0deg);
+  transition: transform 0.25s ease-in-out;
+}
+</style>
