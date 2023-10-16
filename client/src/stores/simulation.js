@@ -57,12 +57,10 @@ export const useSimulationStore = defineStore("simulation", {
       this.attackRecord = attack_record;
       this.mtdRecord = mtd_record;
       this.compromiseMetrics = compromise_metrics;
-
     },
     async getStrategies() {
       const { data } = await axios.get(`${BACKEND_URL}/strategies`);
       this.strategies = data;
-
     },
     reset() {
       this.parameters = null;
