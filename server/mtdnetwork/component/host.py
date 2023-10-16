@@ -685,7 +685,6 @@ class Host:
         return shortest_path
 
     def to_json(self):
-        # TODO: find out if graph object is required for plotting
         graph = nx.node_link_data(self.graph)
         for node in graph["nodes"]:
             if node.get("service"):
