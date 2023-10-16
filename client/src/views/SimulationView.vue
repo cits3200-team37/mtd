@@ -539,6 +539,7 @@ const plotServiceNetwork = (graphData) => {
                   placeholder="Select Scheme"
                   v-model="form.scheme"
                   label="Scheme"
+                  info="The manor in which the simulation will employ MTD strategies."
                   :menu-options="Schemes"
                   :error="errors.scheme"
                   @update:modelValue="resetStrategy"
@@ -550,6 +551,7 @@ const plotServiceNetwork = (graphData) => {
                   label="MTD Interval"
                   placeholder="MTD Interval"
                   type="text"
+                  info="The frequency of applying MTD strategies."
                   :error="errors.mtdInterval"
                 />
               </div>
@@ -559,6 +561,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Finish Time"
                   placeholder="Finish Time"
                   type="text"
+                  info="The maximum simulation duration."
                   :error="errors.finishTime"
                 />
               </div>
@@ -568,6 +571,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Nodes"
                   placeholder="Total Nodes"
                   type="text"
+                  info="The number of nodes in the simulated network."
                   :error="errors.totalNodes"
                 />
               </div>
@@ -576,6 +580,7 @@ const plotServiceNetwork = (graphData) => {
                   placeholder="Select Strategy"
                   v-model="form.strategies"
                   label="Strategy"
+                  info="The MTD Strategies the simulation will utilise."
                   :menu-options="strategies"
                   :isStrategy="true"
                   :multi-select="true"
@@ -589,6 +594,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Endpoints"
                   placeholder="Total Endpoints"
                   type="text"
+                  info="The number of endpoints in the simulated network.<br>Default: 5"
                   :error="errors.totalEndpoints"
                 />
               </div>
@@ -598,6 +604,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Subnets"
                   placeholder="Total Subnets"
                   type="text"
+                  info="The number of sub-networks in the simulated network.<br>Default: 8"
                   :error="errors.totalSubnets"
                 />
               </div>
@@ -607,6 +614,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Databases"
                   placeholder="Total Databases"
                   type="text"
+                  info="The number of databases in the simulated network.<br>Default: 2"
                   :error="errors.totalDatabase"
                 />
               </div>
@@ -616,6 +624,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Total Layers"
                   placeholder="Total Layers"
                   type="text"
+                  info="The number of layers in the simulated network.<br>Default: 4"
                   :error="errors.totalLayers"
                 />
               </div>
@@ -625,6 +634,7 @@ const plotServiceNetwork = (graphData) => {
                   label="Target Layer"
                   placeholder="Target Layer"
                   type="text"
+                  info="The layer where the target host will be located."
                   :error="errors.targetLayer"
                 />
               </div>
@@ -688,45 +698,6 @@ const plotServiceNetwork = (graphData) => {
         >
           <div class="h-full">
             <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
-
-            <ul class="list-disc text-sm p-4">
-              <li class="mb-2">
-                Scheme: the manor in which the simulation will employ MTD
-                strategies
-              </li>
-              <li class="mb-2">
-                MTD Interval: the frequency of applying MTD strategies<br />
-              </li>
-              <li class="mb-2">
-                Finish Time: the maximum simulation duration<br />
-              </li>
-              <li class="mb-2">
-                Total Nodes: the number of nodes in the simulated network<br />
-              </li>
-              <li class="mb-2">
-                Total Endpoints: the number of endpoints in the simulated
-                network<br /><span class="text-xs">Default: 5</span>
-              </li>
-              <li class="mb-2">
-                Total Subnets: the number of sub-networks in the simulated
-                network<br /><span class="text-xs">Default: 8</span>
-              </li>
-              <li class="mb-2">
-                Total Databases: the number of databases for the simulated
-                network<br /><span class="text-xs">Default: 2</span>
-              </li>
-              <li class="mb-2">
-                Total Layers: the number of layers in the simulated network<br /><span
-                  class="text-xs"
-                  >Default: 4</span
-                >
-              </li>
-              <li class="mb-2">
-                Target Layer: the layer where the target host will be located<br /><span
-                  class="text-xs"
-                ></span>
-              </li>
-            </ul>
           </div>
         </div>
         <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
