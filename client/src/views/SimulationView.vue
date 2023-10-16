@@ -11,6 +11,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiChevronDown, mdiLoading } from "@mdi/js";
 
 const simulationStore = useSimulationStore();
+const isAbleToSwap = ref(false);
 
 const graph = ref(true);
 const isOpen = ref(false);
@@ -73,7 +74,6 @@ const resetStrategy = () => {
 
 const toggleDropDown = () => {
   isOpen.value = !isOpen.value;
-  console.log(isOpen.value);
 };
 
 const maxSelection = (scheme) => {
@@ -248,6 +248,8 @@ const handleSubmit = async () => {
   await nextTick();
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+  activeGraphOption.value = "layer";
+  isAbleToSwap.value = true;
 };
 
 const resetSimulation = () => {
@@ -262,6 +264,7 @@ const resetSimulation = () => {
   resetGraph();
 
   simulationStore.reset();
+  isAbleToSwap.value = false;
 };
 
 const applyPredefinedScenario = (values) => {
@@ -278,7 +281,13 @@ const colorByCompromised = () => {
   nodes
     .transition()
     .duration(300)
-    .attr("fill", (d) => color(d.host.compromised));
+    .attr("fill", (d) => {
+      if (d.host.compromised) {
+        return "#FF0000";
+      } else {
+        return "#50C878";
+      }
+    });
 };
 
 const zoom = d3.zoom().on("zoom", function () {
@@ -414,7 +423,7 @@ const plotNetwork = (graphData) => {
       toolTipOffsetX.value = e.clientX + 40;
       tooltipOffsetY.value = e.clientY - 50;
       const { host } = d;
-      currentHost.value = { ...host };
+      currentHost.value = { ...host, subnet: d.subnet, layer: d.layer };
       showTooltip.value = true;
     })
     .on("mouseout", () => {
@@ -510,35 +519,38 @@ const plotServiceNetwork = (graphData) => {
     serviceNetworkHost.value = { ...d };
   });
 };
+const toggleView = () => {
+  if (
+    simulationStore.parameters == null ||
+    simulationStore.network == null ||
+    simulationStore.attackRecord == null
+  ) {
+    return;
+  } else {
+    isInputView.value = !isInputView.value;
+  }
+};
 </script>
 
 <template>
   <div class="flex flex-row">
     <div>
-      <div
-        class="w-64 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll scrollbar"
-      >
+      <div class="w-64 bg-simulation-color h-[calc(100vh-36px)] float-left px-5 pt-5 overflow-y-scroll scrollbar">
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
-            :class="{ 'bg-sub-color': isInputView }"
-            @click="
-              () => {
-                isInputView = true;
-              }
-            "
-          >
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-default w-1/2"
+            :class="{
+              'bg-sub-color': isInputView,
+              'cursor-pointer': isAbleToSwap == true,
+            }" @click="toggleView">
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
-            :class="{ 'bg-sub-color': !isInputView }"
-            @click="
-              () => {
-                isInputView = false;
-              }
-            "
-          >
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-default w-1/2"
+            :class="{
+              'bg-sub-color': !isInputView,
+              'cursor-pointer': isAbleToSwap == true,
+            }" @click="toggleView">
             Graph
           </div>
         </div>
@@ -546,150 +558,72 @@ const plotServiceNetwork = (graphData) => {
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
-            <button
-              @click="resetSimulation"
-              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-            >
-              Reset
-            </button>
-            <form
-              class="flex flex-col space-y-2 text-sm"
-              @submit.prevent="handleSubmit"
-            >
-              <div>
-                <DropDown
-                  placeholder="Select Scheme"
-                  v-model="form.scheme"
-                  label="Scheme"
-                  info="The manner in which the simulation will employ MTD strategies."
-                  :menu-options="Schemes"
-                  :error="errors.scheme"
-                  @update:modelValue="resetStrategy"
-                />
+            <form class="flex flex-col space-y-2 text-sm" @submit.prevent="handleSubmit">
+              <div @click="resetSimulation"
+                class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4 hover:cursor-pointer">
+                Reset
               </div>
               <div>
-                <FormField
-                  v-model="form.mtdInterval"
-                  label="MTD Interval"
-                  placeholder="MTD Interval"
-                  type="text"
-                  info="The frequency of applying MTD strategies."
-                  :error="errors.mtdInterval"
-                />
+                <DropDown placeholder="Select Scheme" v-model="form.scheme" label="Scheme"
+                  info="The manner in which the simulation will employ MTD strategies." :menu-options="Schemes"
+                  :error="errors.scheme" @update:modelValue="resetStrategy" />
               </div>
               <div>
-                <FormField
-                  v-model="form.finishTime"
-                  label="Finish Time"
-                  placeholder="Finish Time"
-                  type="text"
-                  info="The maximum simulation duration."
-                  :error="errors.finishTime"
-                />
+                <FormField v-model="form.mtdInterval" label="MTD Interval" placeholder="MTD Interval" type="text"
+                  info="The frequency of applying MTD strategies." :error="errors.mtdInterval" />
               </div>
               <div>
-                <FormField
-                  v-model="form.totalNodes"
-                  label="Total Nodes"
-                  placeholder="Total Nodes"
-                  type="text"
-                  info="The number of nodes in the simulated network."
-                  :error="errors.totalNodes"
-                />
+                <FormField v-model="form.finishTime" label="Finish Time" placeholder="Finish Time" type="text"
+                  info="The maximum simulation duration." :error="errors.finishTime" />
               </div>
               <div>
-                <DropDown
-                  placeholder="Select Strategy"
-                  v-model="form.strategies"
-                  label="Strategy"
-                  info="The MTD Strategies the simulation will utilise."
-                  :menu-options="strategies"
-                  :isStrategy="true"
-                  :multi-select="true"
-                  :error="errors.strategies"
-                  :max-selection="maxSelection(form.scheme)"
-                />
+                <FormField v-model="form.totalNodes" label="Total Nodes" placeholder="Total Nodes" type="text"
+                  info="The number of nodes in the simulated network." :error="errors.totalNodes" />
+              </div>
+              <div>
+                <DropDown placeholder="Select Strategy" v-model="form.strategies" label="Strategy"
+                  info="The MTD Strategies the simulation will utilise." :menu-options="strategies" :isStrategy="true"
+                  :multi-select="true" :error="errors.strategies" :max-selection="maxSelection(form.scheme)" />
               </div>
               <!-- advanced drop down -->
-              <div class="">
-                <div class="flex flex-row justify-between">
-                  <p class="pb-2">Advanced</p>
-                  <div class="hover:cursor-pointer" @click="toggleDropDown">
-                    <svg-icon
-                      type="mdi"
-                      size="18"
-                      :path="mdiChevronDown"
-                      :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }"
-                    />
-                  </div>
+              <div class="flex flex-row justify-between">
+                <p class="pb-2">Advanced</p>
+                <div class="hover:cursor-pointer" @click="toggleDropDown">
+                  <svg-icon type="mdi" size="18" :path="mdiChevronDown"
+                    :class="{ 'rotate-180': isOpen, 'rotate-0': !isOpen }" />
                 </div>
-                <hr class="pb-2 text-gray-400" />
-                <div v-if="isOpen == true">
-                  <div>
-                    <FormField
-                      v-model="form.totalEndpoints"
-                      label="Total Endpoints"
-                      placeholder="Total Endpoints"
-                      type="text"
-                      info="The number of endpoints in the simulated network. Default: 5"
-                      :error="errors.totalEndpoints"
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      v-model="form.totalSubnets"
-                      label="Total Subnets"
-                      placeholder="Total Subnets"
-                      type="text"
-                      info="The number of sub-networks in the simulated network. Default: 8"
-                      :error="errors.totalSubnets"
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      v-model="form.totalDatabase"
-                      label="Total Databases"
-                      placeholder="Total Databases"
-                      type="text"
-                      info="The number of databases in the simulated network. Default: 2"
-                      :error="errors.totalDatabase"
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      v-model="form.totalLayers"
-                      label="Total Layers"
-                      placeholder="Total Layers"
-                      type="text"
-                      info="The number of layers in the simulated network. Default: 4"
-                      :error="errors.totalLayers"
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      v-model="form.targetLayer"
-                      label="Target Layer"
-                      placeholder="Target Layer"
-                      type="text"
-                      info="The layer where the target host will be located."
-                      :error="errors.targetLayer"
-                    />
-                  </div>
-                  <div>
-                    <FormField
-                      v-model="form.seed"
-                      label="Set Seed"
-                      placeholder="Set Seed"
-                      type="text"
-                      :error="errors.seed"
-                    />
-                  </div>
+              </div>
+              <hr class="pb-2 text-gray-400 " />
+              <div v-if="isOpen == true" class="space-y-2">
+                <div>
+                  <FormField v-model="form.totalEndpoints" label="Total Endpoints" placeholder="Total Endpoints"
+                    type="text" info="The number of endpoints in the simulated network. Default: 5"
+                    :error="errors.totalEndpoints" />
+                </div>
+                <div>
+                  <FormField v-model="form.totalSubnets" label="Total Subnets" placeholder="Total Subnets" type="text"
+                    info="The number of sub-networks in the simulated network. Default: 8" :error="errors.totalSubnets" />
+                </div>
+                <div>
+                  <FormField v-model="form.totalDatabase" label="Total Databases" placeholder="Total Databases"
+                    type="text" info="The number of databases in the simulated network. Default: 2"
+                    :error="errors.totalDatabase" />
+                </div>
+                <div>
+                  <FormField v-model="form.totalLayers" label="Total Layers" placeholder="Total Layers" type="text"
+                    info="The number of layers in the simulated network. Default: 4" :error="errors.totalLayers" />
+                </div>
+                <div>
+                  <FormField v-model="form.targetLayer" label="Target Layer" placeholder="Target Layer" type="text"
+                    info="The layer where the target host will be located." :error="errors.targetLayer" />
+                </div>
+                <div>
+                  <FormField v-model="form.seed" label="Set Seed" placeholder="Set Seed" type="text"
+                    :error="errors.seed" />
                 </div>
               </div>
               <div class="text-center">
-                <button
-                  class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-                >
+                <button class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4">
                   Submit
                 </button>
               </div>
@@ -699,31 +633,22 @@ const plotServiceNetwork = (graphData) => {
         <div v-else>
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Network Graph Options</p>
-            <button
-              @click="colorByLayer"
+            <button @click="colorByLayer"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{ 'bg-teal-500': activeGraphOption === 'layer' }"
-            >
+              :class="{ 'bg-teal-500': activeGraphOption === 'layer' }">
               Color By Layer
             </button>
-            <button
-              @click="colorBySubnet"
+            <button @click="colorBySubnet"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{ 'bg-teal-500': activeGraphOption === 'subnet' }"
-            >
+              :class="{ 'bg-teal-500': activeGraphOption === 'subnet' }">
               Color By Subnet
             </button>
-            <button
-              @click="colorByCompromised"
+            <button @click="colorByCompromised"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-              :class="{ 'bg-teal-500': activeGraphOption === 'compromised' }"
-            >
+              :class="{ 'bg-teal-500': activeGraphOption === 'compromised' }">
               Color by Compromised
             </button>
-            <button
-              @click="resetZoom"
-              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-            >
+            <button @click="resetZoom" class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4">
               Reset Zoom
             </button>
           </div>
@@ -734,7 +659,7 @@ const plotServiceNetwork = (graphData) => {
     <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
       <div
         v-if="loading"
-        class="bg-blue-8000 flex flex-1 h-[calc(100vh)] items-center justify-center"
+        class="flex flex-1 h-[calc(100vh)] items-center justify-center"
       >
         <svg-icon
           type="mdi"
@@ -743,83 +668,50 @@ const plotServiceNetwork = (graphData) => {
           class="animate-spin"
         />
       </div>
-      <div
-        v-else-if="graph"
-        id="network-graph"
-        class="flex-1 h-[calc(100vh)] justify-center"
-      ></div>
+      <div v-else-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)] justify-center"></div>
       <div v-else class="flex-row">
-        <div
-          id="sim_explanation"
-          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-simulation-color scrollbar"
-        >
+        <div id="sim_explanation"
+          class="flex-2 m-10 border rounded p-4 h-[calc(50vh)] overflow-y-auto bg-simulation-color scrollbar">
           <div class="h-full">
             <h1 class="font-bold ml-2">Simulation quick start guide:</h1>
           </div>
         </div>
         <div class="w-full p-10 grid grid-cols-2 gap-3 max-h-52">
-          <Scenario
-            :scenarioTitle="'Scenario 1'"
-            :scenarioDescription="'Random Scheme'"
-            :scenarioValues="{
-              finishTime: '1000',
-              mtdInterval: '200',
-              scheme: 'random',
-              strategies: [],
-              totalNodes: '20',
-            }"
-            @apply-scenario="applyPredefinedScenario"
-          />
-          <Scenario
-            :scenarioTitle="'Scenario 2'"
-            :scenarioDescription="'Simultaneous Scheme'"
-            :scenarioValues="{
-              finishTime: '500',
-              mtdInterval: '100',
-              scheme: 'simultaneous',
-              strategies: ['IP Shuffle', 'OS Diversity', 'Service Diversity'],
-              totalNodes: '50',
-            }"
-            @apply-scenario="applyPredefinedScenario"
-          />
-          <Scenario
-            :scenarioTitle="'Scenario 3'"
-            :scenarioDescription="'Alternative Scheme'"
-            :scenarioValues="{
-              finishTime: '300',
-              mtdInterval: '50',
-              scheme: 'alternative',
-              strategies: ['IP Shuffle', 'OS Diversity'],
-              totalNodes: '100',
-            }"
-            @apply-scenario="applyPredefinedScenario"
-          />
-          <Scenario
-            :scenarioTitle="'Scenario 4'"
-            :scenarioValues="{
-              finishTime: '400',
-              mtdInterval: '150',
-              scheme: 'None',
-              strategies: [],
-              totalNodes: '70',
-            }"
-            @apply-scenario="applyPredefinedScenario"
-          />
+          <Scenario :scenarioTitle="'Scenario 1'" :scenarioDescription="'Random Scheme'" :scenarioValues="{
+            finishTime: '1000',
+            mtdInterval: '200',
+            scheme: 'random',
+            strategies: [],
+            totalNodes: '20',
+          }" @apply-scenario="applyPredefinedScenario" />
+          <Scenario :scenarioTitle="'Scenario 2'" :scenarioDescription="'Simultaneous Scheme'" :scenarioValues="{
+            finishTime: '500',
+            mtdInterval: '100',
+            scheme: 'simultaneous',
+            strategies: ['IP Shuffle', 'OS Diversity', 'Service Diversity'],
+            totalNodes: '50',
+          }" @apply-scenario="applyPredefinedScenario" />
+          <Scenario :scenarioTitle="'Scenario 3'" :scenarioDescription="'Alternative Scheme'" :scenarioValues="{
+            finishTime: '300',
+            mtdInterval: '50',
+            scheme: 'alternative',
+            strategies: ['IP Shuffle', 'OS Diversity'],
+            totalNodes: '100',
+          }" @apply-scenario="applyPredefinedScenario" />
+          <Scenario :scenarioTitle="'Scenario 4'" :scenario-description="`Predefined scenario`" :scenarioValues="{
+            finishTime: '400',
+            mtdInterval: '150',
+            scheme: 'None',
+            strategies: [],
+            totalNodes: '70',
+          }" @apply-scenario="applyPredefinedScenario" />
         </div>
       </div>
     </div>
   </div>
-  <transition
-    enter-from-class="opacity-0"
-    leave-to-class="opacity-0"
-    enter-active-class="transition duration-200"
-    leave-active-class="transition duration-200"
-  >
-    <Modal
-      v-if="showModal"
-      @mounted="plotServiceNetwork(modalServiceGraph)"
-      @close="closeModal"
-    >
+  <transition enter-from-class="opacity-0" leave-to-class="opacity-0" enter-active-class="transition duration-200"
+    leave-active-class="transition duration-200">
+    <Modal v-if="showModal" @mounted="plotServiceNetwork(modalServiceGraph)" @close="closeModal">
       <div class="h-full divide-x-2 divide-zinc-600 flex overflow-hidden">
         <div id="service-network-graph" class="h-full w-1/2"></div>
         <div class="w-1/2 flex-col">
@@ -828,24 +720,14 @@ const plotServiceNetwork = (graphData) => {
           </div>
           <hr class="h-[2px] my-2 mx-8 bg-zinc-600 border-0" />
           <div class="w-full px-8 flex-1">
-            <transition
-              enter-from-class="opacity-0"
-              leave-to-class="opacity-0"
-              enter-active-class="transition"
-              leave-active-class="transition"
-              mode="out-in"
-            >
+            <transition enter-from-class="opacity-0" leave-to-class="opacity-0" enter-active-class="transition"
+              leave-active-class="transition" mode="out-in">
               <div v-if="serviceNetworkHost && serviceNetworkHost.service">
                 <div class="overflow-auto shadow-md rounded-lg">
-                  <table
-                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80"
-                  >
+                  <table class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80">
                     <tbody class="divide-y divide-gray-500">
                       <tr>
-                        <th
-                          scope="row"
-                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
-                        >
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
                           Name
                         </th>
                         <td class="px-6 py-4">
@@ -853,10 +735,7 @@ const plotServiceNetwork = (graphData) => {
                         </td>
                       </tr>
                       <tr>
-                        <th
-                          scope="row"
-                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
-                        >
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
                           Version
                         </th>
                         <td class="px-6 py-4">
@@ -864,10 +743,7 @@ const plotServiceNetwork = (graphData) => {
                         </td>
                       </tr>
                       <tr>
-                        <th
-                          scope="row"
-                          class="px-6 py-4 font-medium whitespace-nowrap text-white"
-                        >
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap text-white">
                           Port
                         </th>
                         <td class="px-6 py-4">{{ serviceNetworkHost.port }}</td>
@@ -877,12 +753,8 @@ const plotServiceNetwork = (graphData) => {
                 </div>
                 <br />
                 <div class="overflow-auto max-h-64 shadow-md rounded-lg">
-                  <table
-                    class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80 relative"
-                  >
-                    <thead
-                      class="text-xs uppercase bg-gray-600 drop-shadow-md text-gray-200 sticky top-0"
-                    >
+                  <table class="w-full text-sm text-left text-navbar-icon bg-gray-700 opacity-80 relative">
+                    <thead class="text-xs uppercase bg-gray-600 drop-shadow-md text-gray-200 sticky top-0">
                       <tr>
                         <th scope="col" class="px-6 py-3">ID</th>
                         <th scope="col" class="px-6 py-3">CVSS</th>
@@ -890,10 +762,8 @@ const plotServiceNetwork = (graphData) => {
                       </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-500">
-                      <tr
-                        v-for="vul in serviceNetworkHost.service
-                          .vulnerabilities"
-                      >
+                      <tr v-for="vul in serviceNetworkHost.service
+                        .vulnerabilities">
                         <td class="px-6 py-4">
                           {{ vul.id }}
                         </td>
@@ -924,28 +794,24 @@ const plotServiceNetwork = (graphData) => {
       </div>
     </Modal>
   </transition>
-  <ToolTip
-    :showTooltip="showTooltip"
-    :offsetX="toolTipOffsetX"
-    :offsetY="tooltipOffsetY"
-  >
+  <ToolTip :showTooltip="showTooltip" :offsetX="toolTipOffsetX" :offsetY="tooltipOffsetY">
     <ul>
       <li>IP: {{ currentHost.ip }}</li>
       <li>OS: {{ `${currentHost.osType} ${currentHost.osVersion}` }}</li>
       <li>
         {{
-          `${currentHost.totalUsers} ${
-            currentHost.totalUsers == 1 ? "User" : "Users"
+          `${currentHost.totalUsers} ${currentHost.totalUsers == 1 ? "User" : "Users"
           }`
         }}
       </li>
       <li>
         {{
-          `${currentHost.totalServices} ${
-            currentHost.totalServices == 1 ? "Service" : "Services"
+          `${currentHost.totalServices} ${currentHost.totalServices == 1 ? "Service" : "Services"
           }`
         }}
       </li>
+      <li>Subnet: {{ currentHost.subnet }}</li>
+      <li>Layer: {{ currentHost.layer }}</li>
     </ul>
   </ToolTip>
 </template>

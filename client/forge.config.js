@@ -1,6 +1,8 @@
 module.exports = {
   packagerConfig: {
-    icon: "./src/assets/mtd_logo.icns"
+    icon: "./src/assets/mtd_logo.icns",
+    osxSign: {},
+    executableName: "mtdsim",
   },
   rebuildConfig: {},
   makers: [
@@ -21,6 +23,10 @@ module.exports = {
     {
       name: "@electron-forge/maker-deb",
       config: {
+        options: {
+          name: "mtdsim",
+          productName: "mtdsim"
+        },
         icon: "./src/assets/mtd_logo.png",
       },
     },
@@ -51,4 +57,16 @@ module.exports = {
       },
     },
   ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "cits3200-team37",
+          name: "mtd",
+        },
+        prerelease: true,
+      },
+    },
+  ]
 };

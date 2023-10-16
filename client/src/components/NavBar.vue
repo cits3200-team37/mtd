@@ -23,7 +23,7 @@
                 type="mdi"
                 :path="route.icon"
                 size="36"
-                class="text-navbar-icon hover:text-white hover:cursor-pointer"
+                class="text-navbar-icon hover:text-white hover:cursor-pointer transition"
                 :class="{
                   'text-white': route.active,
                 }"
@@ -44,7 +44,6 @@ import { mdiCog } from "@mdi/js";
 import { mdiHomeOutline } from "@mdi/js";
 import { mdiGraphOutline } from "@mdi/js";
 import { mdiChartTimeline } from "@mdi/js";
-import { mdiSigma } from "@mdi/js";
 import { mdiDownload } from "@mdi/js";
 import findVersion from "../helpers/findVersion";
 
@@ -71,11 +70,6 @@ const routes = ref([
     path: "/charts",
     active: false,
     icon: mdiChartTimeline,
-  },
-  {
-    path: "/statistics",
-    active: false,
-    icon: mdiSigma,
   },
   {
     path: "/settings",
