@@ -20,6 +20,7 @@ export default {
         "navbar-icon": `rgb(var(--navbar-icon-color))`,
         "sub-color": `rgb(var(--sub-color))`,
         "dark-background": "#313338",
+        "chip-color":"#00AE99"
 
       },
     },

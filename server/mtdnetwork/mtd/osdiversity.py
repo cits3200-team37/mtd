@@ -1,10 +1,12 @@
-'''Module to diversify operating systems in network'''
+"""Module to diversify operating systems in network"""
 import random
 from mtdnetwork.mtd import MTD
 from mtdnetwork.data import constants
 
+
 class OSDiversity(MTD):
-    '''Subclass to diversify operating systems in network'''
+    """Subclass to diversify operating systems in network"""
+
     def __init__(self, network=None):
         super().__init__(
             name="OSDiversity",
@@ -14,9 +16,6 @@ class OSDiversity(MTD):
         )
 
     def mtd_operation(self, adversary=None):
-        """
-        todo: dynamic MTDs based on the network state
-        """
         service_generator = self.network.get_service_generator()
         hosts = self.network.get_hosts()
         for host_id, host_instance in hosts.items():

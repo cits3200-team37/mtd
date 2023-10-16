@@ -57,6 +57,17 @@ class Vulnerability:
                 )
                 # self.vuln_os_list = random.sample(os_list, k=random.randint(1, 2))
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "complexity": self.complexity,
+            "impact": self.impact,
+            "cvss": self.cvss,
+            "exploitability": self.exploitability,
+            "exploited": self.exploited,
+            "os_dendency": self.has_os_dependency,
+        }
+
     def is_exploited(self):
         return self.exploited
 
@@ -189,11 +200,20 @@ class Service:
         """
         self.name = service_name
         self.version = service_version
-        self.vulnerabilities = sorted(
+        self.vulnerabilities: list[Vulnerability] = sorted(
             vulnerabilities, key=lambda v: v.roa(), reverse=True
         )
         self.exploit_value = 0.0
         self.id = str(uuid.uuid4())
+
+    def to_json(self):
+        return {
+            "name": self.name,
+            "version": self.version,
+            "vulnerabilities": [v.to_json() for v in self.vulnerabilities],
+            "exploitValue": self.exploit_value,
+            "id": self.id,
+        }
 
     def copy(self):
         """

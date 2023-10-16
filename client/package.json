@@ -1,7 +1,7 @@
 {
-  "name": "test",
-  "productName": "MTDSimTime",
-  "version": "0.0.6",
+  "name": "mtdsim",
+  "productName": "MTDSim",
+  "version": "1.0.0",
   "description": "My Electron application description",
   "main": "./.vite/build/main.js",
   "repository": "https://github.com/cits3200-team37/mtd.git",

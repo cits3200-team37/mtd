@@ -1,17 +1,17 @@
-# Welcome to MkDocs
+# Welcome to the Moving Target Defence Simulator
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Welcome to the documentation webpage for the Moving Target Defence Simulator. This webpage contains information on how to use the simulator, as well as information regarding how to download the simulator and some of its core features.
 
-## Commands
+Please navigate to the User Guide tab to learn how to use the simulator.
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+<div style="display: flex; padding-top: 24px;">
+    <div style="flex: 1;">
+        <img src="JinHong.jpeg" alt="Alt Text" width="150" style="border-radius: 10px;">
+    </div>
+    <div style="flex: 4;">
+        <p>Contact person: <a href="https://research-repository.uwa.edu.au/en/persons/jin-hong">Jin Hong</a></p>
+        <p>Email: <a href=mailto:“jin.hong@uwa.edu.au”>jin.hong@uwa.edu.au</a></p>
+    </div>
+</div>
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
