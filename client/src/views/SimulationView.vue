@@ -247,6 +247,7 @@ const handleSubmit = async () => {
   await nextTick();
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+  activeGraphOption.value = "layer";
 };
 
 const resetSimulation = () => {
