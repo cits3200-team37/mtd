@@ -50,6 +50,9 @@ const defaultForm = ref({
   strategies: [],
 });
 
+const activeGraphOption = ref("layer");
+const isResetZoomActive = ref(false);
+
 const serviceNetworkHost = ref(null);
 
 // for tooltip
@@ -262,6 +265,7 @@ const applyPredefinedScenario = (values) => {
 const color = d3.scaleOrdinal(d3.schemeCategory10);
 
 const colorByCompromised = () => {
+  activeGraphOption.value = "compromised";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -281,6 +285,7 @@ const resetZoom = () => {
 };
 
 const colorByLayer = () => {
+  activeGraphOption.value = "layer";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -289,6 +294,7 @@ const colorByLayer = () => {
 };
 
 const colorBySubnet = () => {
+  activeGraphOption.value = "subnet";
   const nodes = d3.select("#network-graph").selectAll("circle");
   nodes
     .transition()
@@ -688,18 +694,21 @@ const plotServiceNetwork = (graphData) => {
             <button
               @click="colorByLayer"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              :class="{ 'bg-teal-500': activeGraphOption === 'layer' }"
             >
               Color By Layer
             </button>
             <button
               @click="colorBySubnet"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              :class="{ 'bg-teal-500': activeGraphOption === 'subnet' }"
             >
               Color By Subnet
             </button>
             <button
               @click="colorByCompromised"
               class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              :class="{ 'bg-teal-500': activeGraphOption === 'compromised' }"
             >
               Color by Compromised
             </button>
