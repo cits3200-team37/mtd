@@ -11,6 +11,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiChevronDown, mdiLoading } from "@mdi/js";
 
 const simulationStore = useSimulationStore();
+const isAbleToSwap = ref(false);
 
 const graph = ref(true);
 const isOpen = ref(false);
@@ -248,6 +249,7 @@ const handleSubmit = async () => {
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
   activeGraphOption.value = "layer";
+  isAbleToSwap.value = true;
 };
 
 const resetSimulation = () => {
@@ -258,6 +260,7 @@ const resetSimulation = () => {
   resetGraph();
 
   simulationStore.reset();
+  isAbleToSwap.value = false;
 };
 
 const applyPredefinedScenario = (values) => {
@@ -512,6 +515,17 @@ const plotServiceNetwork = (graphData) => {
     serviceNetworkHost.value = { ...d };
   });
 };
+const toggleView = () => {
+  if (
+    simulationStore.parameters == null ||
+    simulationStore.network == null ||
+    simulationStore.attackRecord == null
+  ) {
+    return;
+  } else {
+    isInputView.value = !isInputView.value;
+  }
+};
 </script>
 
 <template>
@@ -522,24 +536,22 @@ const plotServiceNetwork = (graphData) => {
       >
         <div class="flex flex-row">
           <div
-            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-pointer w-1/2"
-            :class="{ 'bg-sub-color': isInputView }"
-            @click="
-              () => {
-                isInputView = true;
-              }
-            "
+            class="text-xs p-1 pl-2 pr-1.5 text-center bg-background-secondary text-text-color rounded-l-md cursor-default w-1/2"
+            :class="{
+              'bg-sub-color': isInputView,
+              'cursor-pointer': isAbleToSwap == true,
+            }"
+            @click="toggleView"
           >
             Simulation
           </div>
           <div
-            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-pointer w-1/2"
-            :class="{ 'bg-sub-color': !isInputView }"
-            @click="
-              () => {
-                isInputView = false;
-              }
-            "
+            class="text-xs p-1 pr-2 pl-1.5 text-center bg-background-secondary text-text-color rounded-r-md cursor-default w-1/2"
+            :class="{
+              'bg-sub-color': !isInputView,
+              'cursor-pointer': isAbleToSwap == true,
+            }"
+            @click="toggleView"
           >
             Graph
           </div>
@@ -548,16 +560,16 @@ const plotServiceNetwork = (graphData) => {
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
-            <button
-              @click="resetSimulation"
-              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-            >
-              Reset
-            </button>
             <form
               class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
+              <div
+                @click="resetSimulation"
+                class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4 hover:cursor-pointer"
+              >
+                Reset
+              </div>
               <div>
                 <DropDown
                   placeholder="Select Scheme"
