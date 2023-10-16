@@ -15,7 +15,7 @@ const showTooltip = ref(false);
 
 const isInputView = ref(true);
 
-const activeGraphOption = ref("");
+const activeGraphOption = ref("layer");
 const isResetZoomActive = ref(false);
 
 const currentHost = ref({
