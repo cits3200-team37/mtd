@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between">
     <label>{{ label }}</label>
     <div
-      v-if="true"
+      v-if="info"
       @mouseover="showInfoTooltip"
       @mouseleave="showInfo = false"
     >
