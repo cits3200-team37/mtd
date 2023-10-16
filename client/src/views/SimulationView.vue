@@ -273,7 +273,13 @@ const colorByCompromised = () => {
   nodes
     .transition()
     .duration(300)
-    .attr("fill", (d) => color(d.host.compromised));
+    .attr("fill", (d) => {
+      if (d.host.compromised) {
+        return "#FF0000";
+      } else {
+        return "#50C878";
+      }
+    });
 };
 
 const zoom = d3.zoom().on("zoom", function () {
