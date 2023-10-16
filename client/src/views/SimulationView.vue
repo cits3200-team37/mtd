@@ -73,7 +73,6 @@ const resetStrategy = () => {
 
 const toggleDropDown = () => {
   isOpen.value = !isOpen.value;
-  console.log(isOpen.value);
 };
 
 const maxSelection = (scheme) => {
@@ -248,6 +247,7 @@ const handleSubmit = async () => {
   await nextTick();
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
+  activeGraphOption.value = "layer";
 };
 
 const resetSimulation = () => {
@@ -274,7 +274,13 @@ const colorByCompromised = () => {
   nodes
     .transition()
     .duration(300)
-    .attr("fill", (d) => color(d.host.compromised));
+    .attr("fill", (d) => {
+      if (d.host.compromised) {
+        return "#FF0000";
+      } else {
+        return "#50C878";
+      }
+    });
 };
 
 const zoom = d3.zoom().on("zoom", function () {
@@ -410,7 +416,7 @@ const plotNetwork = (graphData) => {
       toolTipOffsetX.value = e.clientX + 40;
       tooltipOffsetY.value = e.clientY - 50;
       const { host } = d;
-      currentHost.value = { ...host };
+      currentHost.value = { ...host, subnet: d.subnet, layer: d.layer };
       showTooltip.value = true;
     })
     .on("mouseout", () => {
@@ -942,6 +948,8 @@ const plotServiceNetwork = (graphData) => {
           }`
         }}
       </li>
+      <li>Subnet: {{ currentHost.subnet }}</li>
+      <li>Layer: {{ currentHost.layer }}</li>
     </ul>
   </ToolTip>
 </template>

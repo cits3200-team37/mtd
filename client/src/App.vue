@@ -14,6 +14,7 @@ onMounted(async () => {
   } catch (error) {
     console.log(error);
   }
+  // await router.push("/");
 });
 
 window.addEventListener("theme-changed", (e) => {

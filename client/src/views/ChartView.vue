@@ -3,7 +3,10 @@
     <div v-if="attackRecord != null && mtdRecord != null">
       <AttackbyHost :attackRecord="attackRecord" />
       <AttackOperation :attackRecord="attackRecord" />
-      <MTDOperation :mtdRecord="mtdRecord" />
+      <MTDOperation
+        v-if="store.parameters['scheme'] != 'None'"
+        :mtdRecord="mtdRecord"
+      />
     </div>
     <div v-else>
       <div
