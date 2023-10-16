@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import FormField from "../components/FormField.vue";
 import DropDown from "../components/DropDown.vue";
 import ToolTip from "../components/ToolTip.vue";
@@ -8,12 +8,13 @@ import * as d3 from "d3";
 import { useSimulationStore } from "../stores/simulation.js";
 import Modal from "../components/Modal.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiChevronDown } from "@mdi/js";
+import { mdiChevronDown, mdiLoading } from "@mdi/js";
 
 const simulationStore = useSimulationStore();
 
 const graph = ref(true);
 const isOpen = ref(false);
+const loading = ref(false);
 
 const Schemes = ref([
   "None",
@@ -51,7 +52,6 @@ const defaultForm = ref({
 });
 
 const activeGraphOption = ref("layer");
-const isResetZoomActive = ref(false);
 
 const serviceNetworkHost = ref(null);
 
@@ -95,7 +95,9 @@ const maxSelection = (scheme) => {
 onMounted(async () => {
   // load past state of network and form
   if (!simulationStore.strategies) {
+    loading.value = true;
     await simulationStore.getStrategies();
+    loading.value = false;
   }
   strategies.value = [...simulationStore.strategies];
   if (simulationStore.network && simulationStore.parameters) {
@@ -238,10 +240,12 @@ const handleSubmit = async () => {
     return;
   }
 
-  graph.value = true;
-
+  loading.value = true;
   // do not look in store for existing network graph as we run a new simulation
   await simulationStore.simulate(form.value);
+  loading.value = false;
+  graph.value = true;
+  await nextTick();
   resetGraph();
   plotNetwork(simulationStore.network, ".network-graph");
 };
@@ -724,7 +728,22 @@ const plotServiceNetwork = (graphData) => {
     </div>
 
     <div class="w-full flex-1 flex flex-col ml-1 mr-1 h-[calc(100vh-36px)]">
-      <div v-if="graph" id="network-graph" class="flex-1 h-[calc(100vh)]"></div>
+      <div
+        v-if="loading"
+        class="bg-blue-8000 flex flex-1 h-[calc(100vh)] items-center justify-center"
+      >
+        <svg-icon
+          type="mdi"
+          size="60"
+          :path="mdiLoading"
+          class="animate-spin"
+        />
+      </div>
+      <div
+        v-else-if="graph"
+        id="network-graph"
+        class="flex-1 h-[calc(100vh)] justify-center"
+      ></div>
       <div v-else class="flex-row">
         <div
           id="sim_explanation"
