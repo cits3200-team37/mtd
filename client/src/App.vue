@@ -6,7 +6,7 @@ import { onMounted } from "vue";
 import TitleBar from "./components/TitleBar.vue";
 import router from "./router";
 const theme = ref(null);
-// console.log(router);
+
 onMounted(async () => {
   try {
     await router.push("/");
