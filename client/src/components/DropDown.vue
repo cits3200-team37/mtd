@@ -1,21 +1,11 @@
 <template>
   <div class="flex items-center justify-between">
     <label>{{ label }}</label>
-    <div
-      v-if="info != null"
-      @mouseover="showInfo = true"
-      @mouseleave="showInfo = false"
-    >
+    <div v-if="info" @mouseover="showTooltip" @mouseleave="showInfo = false">
       <svg-icon type="mdi" size="18" :path="mdiInformationOutline" />
     </div>
   </div>
   <div class="relative">
-    <div
-      v-if="info && showInfo"
-      class="border-[2px] rounded p-[2px] max-w-[155px] z-75 bg-background-color absolute top-full left-0 w-full mt-[5px]"
-    >
-      <div v-html="info" class="text-xs"></div>
-    </div>
     <div
       class="p-1 mt-2 mb-2.5 pl-2.5 border border-solid rounded-md text-black w-full bg-white hover:cursor-pointer"
       :class="{
@@ -76,10 +66,14 @@
       {{ error }}
     </p>
   </div>
+  <ToolTip :showTooltip="showInfo" :offsetX="tooltipX" :offsetY="tooltipY">{{
+    info
+  }}</ToolTip>
 </template>
 
 <script setup>
 import { ref, watch } from "vue";
+import ToolTip from "./ToolTip.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiChevronDown, mdiInformationOutline } from "@mdi/js";
 import Chip from "./Chip.vue";
@@ -101,6 +95,8 @@ const emit = defineEmits(["update:modelValue"]);
 const showInfo = ref(false);
 const isOpen = ref(false);
 const selectedItems = ref([]);
+const tooltipX = ref(0);
+const tooltipY = ref(0);
 
 watch(
   // close on new max selection value
@@ -148,6 +144,12 @@ const handleChipRemove = (itemToRemove) => {
 };
 
 const isSelected = (item) => selectedItems.value.includes(item);
+
+const showTooltip = (e) => {
+  showInfo.value = true;
+  tooltipX.value = e.clientX + 25;
+  tooltipY.value = e.clientY - 40;
+};
 </script>
 
 <style scoped>
