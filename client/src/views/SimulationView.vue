@@ -73,7 +73,6 @@ const resetStrategy = () => {
 
 const toggleDropDown = () => {
   isOpen.value = !isOpen.value;
-  console.log(isOpen.value);
 };
 
 const maxSelection = (scheme) => {
