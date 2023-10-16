@@ -104,19 +104,20 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
 - Attack Record
 ```json
 {
-'name': {0: 'SCAN_HOST', 1: 'ENUM_HOST', 2: 'SCAN_PORT', 3: 'EXPLOIT_VULN', 4: 'EXPLOIT_VULN', 5: 'EXPLOIT_VULN'},
-'start_time': {0: 0.0, 1: 5.0, 2: 10.0, 3: 35.0, 4: 35.98756603597279, 5: 40.77544625903235}, 
-'finish_time': {0: 5.0, 1: 10.0, 2: 35.0, 3: 35.98756603597279, 4: 40.77544625903235, 5: 48.766037589889386}, 
-'duration': {0: 5.0, 1: 5.0, 2: 25.0, 3: 0.9875660359727902, 4: 4.78788022305956, 5: 7.990591330857036}, 'current_host': {0: -1, 1: -1, 2: 0, 3: 0, 4: 0, 5: 0}, 
-'current_host_uuid': {0: -1, 1: -1, 2: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 3: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 4: '1381b434-3f3b-4b8a-a0b8-3583742eea6c', 5: '1381b434-3f3b-4b8a-a0b8-3583742eea6c'}, 
-'compromise_host': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
-'compromise_host_uuid': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
-'current_host_attempt': {0: 0, 1: 0, 2: 1, 3: 1, 4: 1, 5: 1}, 
-'cumulative_attempts': {0: 0, 1: 0, 2: 0, 3: 0, 4: 1, 5: 2}, 
-'cumulative_compromised_hosts': {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0}, 
-'compromise_users': {0: [], 1: [], 2: [], 3: [], 4: [], 5: []}, 
-'interrupted_in': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}, 
-'interrupted_by': {0: 'None', 1: 'None', 2: 'None', 3: 'None', 4: 'None', 5: 'None'}
+'name': {0: 'SCAN_HOST', 1: 'ENUM_HOST', 2: 'SCAN_PORT'},
+'start_time': {0: 0.0, 1: 5.0, 2: 10.0}, 
+'finish_time': {0: 5.0, 1: 10.0, 2: 35.0}, 
+'duration': {0: 5.0, 1: 5.0, 2: 25.0},
+'current_host': {0: -1, 1: -1, 2: 0}, 
+'current_host_uuid': {0: -1, 1: -1, 2: '1381b434-3f3b-4b8a-a0b8-3583742eea6c'}, 
+'compromise_host': {0: 'None', 1: 'None', 2: 'None'}, 
+'compromise_host_uuid': {0: 'None', 1: 'None', 2: 'None'}, 
+'current_host_attempt': {0: 0, 1: 0, 2: 1}, 
+'cumulative_attempts': {0: 0, 1: 0, 2: 0}, 
+'cumulative_compromised_hosts': {0: 0, 1: 0, 2: 0}, 
+'compromise_users': {0: [], 1: [], 2: []}, 
+'interrupted_in': {0: 'None', 1: 'None', 2: 'None'}, 
+'interrupted_by': {0: 'None', 1: 'None', 2: 'None'},
 } 
 ```
 - Compromise checkpoint metrics
