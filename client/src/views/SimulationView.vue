@@ -810,6 +810,7 @@ const toggleView = () => {
           />
           <Scenario
             :scenarioTitle="'Scenario 4'"
+            :scenario-description="`Predefined scenario`"
             :scenarioValues="{
               finishTime: '400',
               mtdInterval: '150',
