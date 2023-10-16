@@ -253,6 +253,10 @@ const handleSubmit = async () => {
 const resetSimulation = () => {
   // Reset the form values
   form.value = { ...defaultForm.value };
+  isValid.value = true;
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = "";
+  });
 
   graph.value = false;
   resetGraph();
