@@ -542,16 +542,16 @@ const plotServiceNetwork = (graphData) => {
         <div v-if="isInputView">
           <div class="flex flex-col items-center">
             <p class="text-lg pb-5 mt-4 text-center">Simulation Parameters</p>
-            <button
-              @click="resetSimulation"
-              class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
-            >
-              Reset
-            </button>
             <form
               class="flex flex-col space-y-2 text-sm"
               @submit.prevent="handleSubmit"
             >
+              <button
+                @click="resetSimulation"
+                class="bg-background-secondary py-1 px-4 mt-3 w-full text-center rounded-md mb-4"
+              >
+                Reset
+              </button>
               <div>
                 <DropDown
                   placeholder="Select Scheme"
