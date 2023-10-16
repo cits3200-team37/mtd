@@ -4,7 +4,7 @@
 
 #### Description
 
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
+This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting evaluation details of the simulation. Some elements such as the MTD Record and Attack Record require restructuring / further processing on the frontend to extract relevant data and be compatible with the Javascript graphing library [d3](https://d3js.org/).
 
 #### Request body
 
@@ -30,7 +30,16 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
 ```
 
 #### Sample response
-
+- Main
+```json
+{
+  "network": {},
+  "mtd_record": {},
+  "attack_record": {},
+  "compromise_checkpoint_metrics": [],
+}
+```
+- network
 ```json
 {
   "network": {
@@ -82,99 +91,55 @@ This endpoint runs the `simulate_without_saving` function that can be found in `
   }
 }
 ```
-
-#### Request Parameters
-
-- `finishTime` is an optional parameter, if `finishTime` is not provided, the simulation runs till the network reaches compromised threshold (compromise ration > 0.9)
-- `mtdInterval` is the time imterval ot trigger MTD(s)
-- `scheme` is the mtd scheme to be used, please get available schemes from schemes endpoint TODO
-- `totalNodes` is the number of nodes in the network (network size)
-- `seed` can be provided to replicate simulations.
-
-# API Endpoints
-
-## `[POST] /simulate`
-
-#### Description
-
-This endpoint runs the `simulate_without_saving` function that can be found in `experiments/run.py`. It returns the resulting network of the simulation in a format that can be used with Javascript graphing library [d3](https://d3js.org/).
-
-#### Request body
-
-```
-{
-  "finishTime":int (optional),
-  "mtdInterval":int,
-  "scheme":string,
-  "totalNodes":int,
-  "seed": int (optional)
-}
-```
-
-#### Sample request
-
+- MTD Record
 ```json
 {
-  "finishTime": 3000,
-  "mtdInterval": 200,
-  "scheme": "random",
-  "totalNodes": 100
+'name': {0: 'CompleteTopologyShuffle', 1: 'OSDiversity', 2: 'OSDiversity'},
+'start_time': {0: 0.0, 1: 200.3685748174762, 2: 400.9527232348661},
+'finish_time': {0: 121.81486938465021, 1: 280.6090999799783, 2: 481.0931564591807},
+'duration': {0: 121.81486938465021, 1: 80.24052516250208, 2: 80.14043322431462},
+'executed_at': {0: 'network', 1: 'application', 2: 'application'}
 }
 ```
-
-#### Sample response
-
+- Attack Record
 ```json
 {
-  "network": {
-    "directed": false,
-    "links": [
-      { "source": 0, "target": 13 },
-      { "source": 2, "target": 10 },
-      ...
-    ],
-    "nodes": [
-      {
-        "host": {
-          "compromised": true,
-          "compromisedServices": [1, 3, 4, 6, 7, 9],
-          "hostId": 0,
-          "hostUuid": "4806a31a-3f71-4a8d-99d8-880f83547621",
-          "ip": "161.99.9.59",
-          "osType": "freebsd",
-          "osVersion": "12",
-          "pUCompromise": false,
-          "totalNodes": 10,
-          "totalServices": 9,
-          "totalUsers": 5
-        },
-        "id": 0,
-        "layer": 0,
-        "subnet": 0
-      },
-      {
-        "host": {
-          "compromised": false,
-          "compromisedServices": [],
-          "hostId": 1,
-          "hostUuid": "321663a6-13f5-4b2e-bb94-109b4a7b3899",
-          "ip": "169.179.214.27",
-          "osType": "centos",
-          "osVersion": "8",
-          "pUCompromise": false,
-          "totalNodes": 8,
-          "totalServices": 7,
-          "totalUsers": 5
-        },
-        "id": 1,
-        "layer": 0,
-        "subnet": 0
-      },
-      ...
-    ]
-  }
-}
+'name': {0: 'SCAN_HOST', 1: 'ENUM_HOST', 2: 'SCAN_PORT'},
+'start_time': {0: 0.0, 1: 5.0, 2: 10.0}, 
+'finish_time': {0: 5.0, 1: 10.0, 2: 35.0}, 
+'duration': {0: 5.0, 1: 5.0, 2: 25.0},
+'current_host': {0: -1, 1: -1, 2: 0}, 
+'current_host_uuid': {0: -1, 1: -1, 2: '1381b434-3f3b-4b8a-a0b8-3583742eea6c'}, 
+'compromise_host': {0: 'None', 1: 'None', 2: 'None'}, 
+'compromise_host_uuid': {0: 'None', 1: 'None', 2: 'None'}, 
+'current_host_attempt': {0: 0, 1: 0, 2: 1}, 
+'cumulative_attempts': {0: 0, 1: 0, 2: 0}, 
+'cumulative_compromised_hosts': {0: 0, 1: 0, 2: 0}, 
+'compromise_users': {0: [], 1: [], 2: []}, 
+'interrupted_in': {0: 'None', 1: 'None', 2: 'None'}, 
+'interrupted_by': {0: 'None', 1: 'None', 2: 'None'},
+} 
 ```
+- Compromise checkpoint metrics
+```json
+[{
+'time_to_compromise': 2372.763291073691,
+'attack_success_rate': 0.38461538461538464,
+'host_compromise_ratio': 0.1,
+'mtd_execution_frequency': 0.005108120128305538
+}, 
+{
+'time_to_compromise': 4009.0138625032932,
+'attack_success_rate': 0.40816326530612246,
+'host_compromise_ratio': 0.2,
+'mtd_execution_frequency': 0.005108120128305538
+}]
+```
+
+##### Response Elements
+- `network` contains the graph of the network from the _network object. The `host` element of the nodes in the graph have been converted to json for compatibility with the [d3 library](https://d3js.org/).
+- `mtd_record`and `attack_record` comprise the records of the total operation of the simulation, what attack and defense methods were utilised, as well as when and where.
+- `compromise_checkpoint_metrics` contains some of the key metrics of the simulation at particular percentages of compromise.
 
 #### Request Parameters
 
