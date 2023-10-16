@@ -2,7 +2,7 @@ module.exports = {
   packagerConfig: {
     icon: "./src/assets/mtd_logo.icns",
     osxSign: {},
-    executableName: "test",
+    executableName: "mtdsim",
   },
   rebuildConfig: {},
   makers: [
@@ -24,10 +24,9 @@ module.exports = {
       name: "@electron-forge/maker-deb",
       config: {
         options: {
-          name: "test",
-          productName: "test"
+          name: "mtdsim",
+          productName: "mtdsim"
         },
-      
         icon: "./src/assets/mtd_logo.png",
       },
     },
