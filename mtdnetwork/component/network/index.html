@@ -1,0 +1,1716 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../mtd_scheme/">
+      
+      
+        <link rel="next" href="../service/">
+      
+      
+      <link rel="icon" href="../../../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.8">
+    
+    
+      
+        <title>Network - Moving Target Defence Simulator</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.4b4a2bd9.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#network-base-class" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Moving Target Defence Simulator" class="md-header__button md-logo" aria-label="Moving Target Defence Simulator" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Moving Target Defence Simulator
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Network
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/cits3200-team37/mtd" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cits3200-team37/mtd
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../user/simulation_instructions/" class="md-tabs__link">
+          
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../backend/endpoints/" class="md-tabs__link">
+          
+  
+  Back End
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../mtd/mtdinit/" class="md-tabs__link">
+          
+  
+  MTD Network Code Base
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../deployment/api_deployment/" class="md-tabs__link">
+          
+  
+  Deployment
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Moving Target Defence Simulator" class="md-nav__button md-logo" aria-label="Moving Target Defence Simulator" data-md-component="logo">
+      
+  <img src="../../../img/logo.png" alt="logo">
+
+    </a>
+    Moving Target Defence Simulator
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/cits3200-team37/mtd" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    cits3200-team37/mtd
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user/simulation_instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Simulation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../user/download_instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Download App
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Back End
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Back End
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../backend/endpoints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    End points
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    MTD Network Code Base
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            MTD Network Code Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    MTD
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            MTD
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/mtdinit/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MTD init
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/completetopologyshuffle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Complete Topology Shuffle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/portshuffle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Port Shuffle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/hosttopologyshuffle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Host Topology Shuffle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/ipshuffle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IP Shuffle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/osdiversity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Diversity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/osdiversityassignment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OS Diversity Assignment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/usershuffle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    User Shuffle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mtd/servicediversity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Service Diversity
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Operation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Operation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operation/attack_operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attack Operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../operation/mtd_operation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MTD Operation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Component
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Component
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Host
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mtd_scheme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MTD Scheme
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Network
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    Description
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initialization" class="md-nav__link">
+    Initialization
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    Methods
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dependencies" class="md-nav__link">
+    Dependencies
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../service/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Service
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Statistic
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            Statistic
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../statistic/evaluation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Evaluation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Deployment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Deployment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployment/api_deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MTD API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployment/github_pages/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Github Pages
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployment/vercel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vercel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../deployment/electron/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Electron Forge
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="network-base-class">Network Base Class</h1>
+<p><code>network.py</code> is the basic network class, serving as the basis for all network super classes in the simulation.</p>
+<h4 id="description">Description</h4>
+<p>The <code>network</code> class is a data representation of a target network. It includes the basic attributes of networks and the methods to generate, update and manipulate it. This class serves as the basis on which the simulation is run.</p>
+<h4 id="initialization">Initialization</h4>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>total_nodes</code>: The number of nodes in the network.</li>
+<li><code>total_endpoints</code>: The number of nodes exposed on the internet (hacker can interact directly with them).</li>
+<li><code>total_endpoints</code> must be less than total_nodes.</li>
+<li><code>total_subnets</code>: The number of sub-networks in the network</li>
+<li><code>total_layers</code>: The number of layers deep the network structures goes from the exposed endpoints.</li>
+<li><code>total_database</code>: The total size of the simulated database</li>
+<li><code>target_layer</code>: Sets the target layer where a target node will be selected.</li>
+<li><code>user_to_nodes_ratio</code>: The percent of users in comparison to host machines.
+            each node will then be given <code>int(1/user_to_nodes_ratio)</code> users each (less users more users on each computer).</li>
+<li><code>prop_user_reuse_pass</code>: The probability that a user has reused their password.</li>
+</ul>
+</li>
+<li>
+<p>Properties:</p>
+<ul>
+<li><code>graph</code>: The network as a graph from the networkx library.</li>
+<li><code>colour_map</code>: A mapping of colours from constants.py to nodes based on sub-network.</li>
+<li><code>users_per_host</code>: The number of users per host on a node.</li>
+<li><code>total_users</code>: The total number of users.</li>
+<li><code>users_list</code>: A list of users.</li>
+<li><code>pos</code>: A dictionary of positions of items in the networks subgraphs.</li>
+<li><code>_database</code>: A list of the "database" containing values from <code>(total_nodes - total_database -&gt; total_nodes)</code>.</li>
+<li><code>tags</code>: A list of Host tags from constants.py assigned to the networks layers.</li>
+<li><code>tag_priority</code>: An ordered list of tags by priority.</li>
+<li><code>service_generator</code>: A service_generator object from services.py.</li>
+<li><code>nodes</code>: A list of the nodes from total_nodes.</li>
+<li><code>mtd_strategies</code>: A list of mtd_strategies.</li>
+<li><code>reachable</code>: A list of reachable nodes.</li>
+<li><code>compromised_hosts</code>: A list of compromised hosts.</li>
+<li><code>node_per_layer</code>: A list of the number of nodes per layer.</li>
+<li><code>network_type</code>: An int specifying the attack type. 0 for targetted, 1 for general (no target node).</li>
+<li><code>vuln_dict</code>: A dictionary of Hosts and their vulnerabilities.</li>
+<li><code>vuln_count</code>: A dictionary vulnerabilities and their frequency in the network.</li>
+<li><code>service_dict</code>: A dictionary of hosts and their available services.</li>
+<li><code>service_count</code>: A dictionary of services and their frequency in the network.</li>
+<li><code>total_vuln</code>: The total number of vulnerabilities among hosts.</li>
+<li><code>total_services</code>: The total number of services among hosts.</li>
+<li><code>scorer</code>: A scorer object from <code>mtdnetwork.statistic.scorer</code>.</li>
+<li><code>target_node</code>: A target node for an attack.</li>
+</ul>
+</li>
+</ul>
+<h4 id="methods">Methods</h4>
+<ul>
+<li>
+<p><code>init_network()</code>:
+    initializes the network with its additional properties. Assigns tags, tag priority and users. Creates and sets up the network graph. Sets initial statistics.</p>
+</li>
+<li>
+<p><code>update_host_information()</code>:
+    Updates hosts networks to be itself.</p>
+</li>
+<li>
+<p><code>gen_graph()</code>:</p>
+<p>Generates a network of subnets using the Barabasi-Albert Random Graph model.</p>
+<ul>
+<li>Parameters:<ul>
+<li><code>min_nodes_per_subnet</code>: The minimum number of computer nodes for each subnet. Default = 2.</li>
+<li><code>max_subnets_per_layer</code>: The maximum number of subnets per layer. Default = 5.</li>
+<li><code>subnet_m_ratio</code>: A ratio that is used to determine the parameter m for the barabasi albert graph. m is the number of edges to attach from a new node to existing nodes. Default = 0.2.</li>
+<li><code>prob_inter_layer_edge</code>: The probability that a node connects to a different layer in the network. Default = 0.4.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>add_attack_path_exposure()</code>:
+    Adds the Attack Path Exposure Score to statistics.</p>
+</li>
+<li>
+<p><code>attack_path_exposure()</code>:
+    Gets the total attack path exposure, scoring each node based on the % of new vulnerabilities found in each node on the shortest path to the target_node out of 1.</p>
+<ul>
+<li>Returns:<ul>
+<li>ave_score: Score of each host added up, divided by the number of hosts.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>setup_users()</code>:
+    Randomly generates users that use the network.</p>
+<ul>
+<li>Parameters:<ul>
+<li><code>user_to_nodes_ratio</code>:
+        the percent of users in comparison to host machines.
+        each node will then be given <code>int(1/user_to_nodes_ratio)</code> users each (less users more users on each computer).</li>
+<li><code>prob_user_reuse_pass</code>:
+        the probability that a user has reused their password.</li>
+<li><code>users_per_host</code>:
+        how many users are allocated to each host on the network.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>update_reachable_mtd()</code>:
+    Updates the Reachable array with only compromised nodes that are reachable after MTD.</p>
+</li>
+<li>
+<p><code>update_reachable_compromise()</code>:
+    Updates the Reachable with the node_id of the compromised node.</p>
+<ul>
+<li>Parameters:<ul>
+<li><code>compromised_node_id</code>: id of the compromised node.</li>
+<li><code>compromised_hosts</code>: currently compromised hosts.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>assign_tags()</code>:
+     Assigns the tags to layers from constants.py.</p>
+</li>
+<li>
+<p><code>assign_tag_priority()</code>:
+    Orders tags based on priority.</p>
+</li>
+<li>
+<p><code>sort_by_distance_from_exposed_and_pivot_host()</code>:
+    Sorts the Host Stack by the shortest number of hops to reach the target hosts.</p>
+<ul>
+<li>Parameters:<ul>
+<li><code>host_stack</code>:
+    a list of host IDs the attacker wants to attack.</li>
+<li><code>compromised_hosts</code>:
+    a list of host IDs the hacker has compromised.</li>
+<li><code>pivot_host_id</code>:
+    the ID of the host that is compromised that the hacker is using to pivot from. if None then it only sorts by the exposed endpoints. Default = -1 (no pivot)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>setup_network()</code>:
+    Using the generated graph, generates a host for each node on the graph.</p>
+</li>
+<li>
+<p><code>is_target_compromised()</code>:
+    Checks if the target node compromised.</p>
+<ul>
+<li>Returns:
+    boolean.</li>
+</ul>
+</li>
+<li>
+<p><code>is_compromised()</code>:
+    Checks if the Network has been completely compromised.</p>
+<ul>
+<li>
+<p>Parameters:
+    <code>compromised_hosts</code>:
+        the list of host IDs that have been compromised by the hacker.</p>
+</li>
+<li>
+<p>Returns:
+        boolean.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>Getter Methods:</p>
+<ul>
+<li><code>get_total_endpoints()</code>: Returns total endpoints.</li>
+<li><code>get_exposed_endpoints()</code>: Returns exposed endpoints.</li>
+<li><code>get_database()</code>: Returns database.</li>
+<li><code>get_total_database()</code>: Returns total database.</li>
+<li><code>get_scorer()</code>: Returns scorer.</li>
+<li><code>get_statistics()</code>: Returns statistics from scorer.</li>
+<li><code>get_service_generator()</code>: Returns service generator.</li>
+<li><code>get_hosts()</code>: Returns hosts.</li>
+<li><code>get_subnets()</code>: Returns subnets.</li>
+<li><code>get_layers()</code>: Returns layers.</li>
+<li><code>get_graph()</code>: Returns the network graph.</li>
+<li><code>get_graph_copy()</code>: Returns a copy of the network graph.</li>
+<li><code>get_pos()</code>: Returns pos (positions).</li>
+<li><code>get_colourmap()</code>: Returns colour_map.</li>
+<li><code>get_total_nodes()</code>: Returns total nodes.</li>
+<li><code>get_network_type()</code>: Returns network type.</li>
+<li><code>get_unique_subnets()</code>: Returns unique subnets.</li>
+<li><code>get_reachable()</code>: Returns reachable nodes.</li>
+<li><code>get_nodes_per_layer()</code>: Returns nodes per layer.</li>
+<li><code>get_users_list()</code>: Returns users list.</li>
+<li><code>get_users_per_host()</code>: Returns users per host.</li>
+<li>
+<p><code>get_host_id_priority()</code>: 
+    Assign priority of host_id based on layer</p>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>host_id</code>: node id of the desired node</li>
+</ul>
+</li>
+<li>
+<p>Returns:
+    <code>Priority</code>: An integer based on tag_priority array, with target node scoring 0, top priority node scoring 1, and subsequent nodes scoring 1 higher.</p>
+</li>
+<li><code>get_path_from_exposed()</code>:
+Gets the shortest path and distance from the exposed endpoints.</li>
+</ul>
+<p>Can also specify a subgraph to use for finding.</p>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>target_node</code>:
+    the target node to reach.</li>
+<li><code>graph</code>:
+    subgraph of containing target. Default = <code>None</code>.</li>
+</ul>
+</li>
+<li>
+<p>Returns:
+        a tuple where the first element is the shortest path and the second element is the distance</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>get_shortest_distance_from_exposed_or_pivot()</code>: 
+    Gets shortest distance to host from exposed hosts or a pivot host using get_path_from_exposed().</p>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>host_id</code>:
+    the target node to reach.</li>
+<li><code>pivot_host_id</code>:
+    id of the pivot host. Default = -1 (no pivot)</li>
+<li><code>graph</code>:
+    subgraph of containing target. Default = <code>None</code>.</li>
+</ul>
+</li>
+<li>
+<p>Returns:
+    Shortest distance.</p>
+</li>
+<li>
+<p><code>get_neighbors()</code>:
+Returns the neighbours for a host.</p>
+</li>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>host_id</code>:
+    the host ID to get the neighbors from</li>
+</ul>
+</li>
+<li>
+<p>Returns:
+    a list of the neighbors for the host.</p>
+</li>
+<li><code>get_hacker_visible_graph()</code>:
+Returns the Network graph that is visible to the hacker depending on the hosts that have already been compromised.</li>
+</ul>
+</li>
+<li>
+<p><code>get_host()</code>:
+    Gets the Host instance based on the host_id</p>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li><code>host_id</code>: the ID of the Host Instance</li>
+</ul>
+</li>
+<li>
+<p>Returns:
+    the corresponding Host instance</p>
+</li>
+<li><code>get_total_vulns()</code>: Returns total vulnerabilities.</li>
+<li>
+<p><code>get_vuln_dict()</code>: 
+Gets all the vulnerabilities for every hosts and puts them in vuln_dict</p>
+</li>
+<li>
+<p>Returns:
+    <code>vuln_count</code>: the frequency of every vuln</p>
+</li>
+<li><code>get_total_services()</code>: Returns total services.</li>
+<li>
+<p><code>get_service_dict()</code>:
+Gets all the services for every hosts and puts them in service_dict</p>
+</li>
+<li>
+<p>Returns:</p>
+<ul>
+<li><code>service_count</code>: the freuqency of every service</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="dependencies">Dependencies</h4>
+<div class="highlight"><pre><span></span><code>networkx
+pkg_resources
+matplotlib/pyplot
+numpy
+random
+os
+mtdnetwork/data/constants
+mtdnetwork/component/services
+mtdnetwork/component/host
+mtdnetwork/statistic/scorer
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "toc.integrate", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.81fa17fe.min.js"></script>
+      
+    
+  </body>
+</html>
